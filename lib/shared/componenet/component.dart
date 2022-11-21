@@ -7,8 +7,15 @@ class CustomizedTextfield extends StatelessWidget {
   final TextEditingController myController;
   final String? hintText;
   final bool? isPassword;
+  final Function? suffixPressed;
+  final IconData? suffixIcon;
   const CustomizedTextfield(
-      {Key? key, required this.myController, this.hintText, this.isPassword})
+      {Key? key,
+      required this.myController,
+      this.hintText,
+      this.isPassword,
+      this.suffixIcon,
+      this.suffixPressed})
       : super(key: key);
 
   @override
@@ -24,12 +31,14 @@ class CustomizedTextfield extends StatelessWidget {
         obscureText: isPassword ?? true,
         controller: myController,
         decoration: InputDecoration(
-          suffixIcon: isPassword!
-              ? IconButton(
-                  icon: const Icon(Icons.remove_red_eye, color: Colors.grey),
-                  onPressed: () {},
-                )
-              : null,
+          suffixIcon: 
+              IconButton(
+                  icon:Icon(suffixIcon,color: Colors.grey),
+                  onPressed: () {
+                    suffixPressed!();
+                  },
+                ),
+              
           enabledBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: Color(0xffE8ECF4), width: 1),
               borderRadius: BorderRadius.circular(10)),
@@ -68,7 +77,7 @@ class CustomizedButton extends StatelessWidget {
       child: InkWell(
         onTap: onPressed,
         child: Container(
-            height: 60,
+            height: 55,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 color: buttonColor,
