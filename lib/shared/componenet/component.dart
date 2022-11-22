@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/material.dart';
+import 'package:socialapp/modules/register_screen/register_screen.dart';
 
 class CustomizedTextfield extends StatelessWidget {
   final TextEditingController myController;
@@ -31,14 +32,12 @@ class CustomizedTextfield extends StatelessWidget {
         obscureText: isPassword ?? true,
         controller: myController,
         decoration: InputDecoration(
-          suffixIcon: 
-              IconButton(
-                  icon:Icon(suffixIcon,color: Colors.grey),
-                  onPressed: () {
-                    suffixPressed!();
-                  },
-                ),
-              
+          suffixIcon: IconButton(
+            icon: Icon(suffixIcon, color: Colors.grey),
+            onPressed: () {
+              suffixPressed!();
+            },
+          ),
           enabledBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: Color(0xffE8ECF4), width: 1),
               borderRadius: BorderRadius.circular(10)),
@@ -94,4 +93,8 @@ class CustomizedButton extends StatelessWidget {
       ),
     );
   }
+}
+
+navigateTo({required BuildContext context,required Widget widget}) {
+  Navigator.of(context).push(MaterialPageRoute(builder: ((context) => widget)));
 }

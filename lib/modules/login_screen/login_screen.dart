@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:socialapp/modules/login_screen/cubit/cubit.dart';
 import 'package:socialapp/modules/login_screen/cubit/states.dart';
+import 'package:socialapp/modules/register_screen/register_screen.dart';
 
 import 'package:socialapp/shared/componenet/component.dart';
 
@@ -19,8 +20,7 @@ class LoginScreen extends StatelessWidget {
         builder: (context, state) {
           var cubit = CubitLogin.get(context);
           return Scaffold(
-            backgroundColor: Colors.white,
-          
+              backgroundColor: Theme.of(context).backgroundColor,
               body: SafeArea(
                 child: SizedBox(
                     height: MediaQuery.of(context).size.height,
@@ -32,8 +32,10 @@ class LoginScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 30.0,horizontal: 10),
-                                child: Text("Welcome Back! Glad \nto see you again",
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 30.0, horizontal: 10),
+                                child: Text(
+                                    "Welcome Back! Glad \nto see you again",
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 28,
@@ -130,7 +132,7 @@ class LoginScreen extends StatelessWidget {
                               //         child: IconButton(
                               //           icon:  const Icon(
                               //             FontAwesomeIcons.google,
-                                       
+
                               //           ),
                               //           onPressed: () async {},
                               //         ),
@@ -146,7 +148,7 @@ class LoginScreen extends StatelessWidget {
                               //           child: IconButton(
                               //             icon: const Icon(
                               //               FontAwesomeIcons.apple,
-                                          
+
                               //             ),
                               //             onPressed: () {},
                               //           ))
@@ -157,20 +159,28 @@ class LoginScreen extends StatelessWidget {
                                 height: 100,
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(48, 8, 8, 8.0),
+                                padding:
+                                    const EdgeInsets.fromLTRB(48, 8, 8, 8.0),
                                 child: Row(
                                   // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: const [
+                                  children: [
                                     Text("Don't have an account?",
                                         style: TextStyle(
                                           color: Color(0xff1E232C),
                                           fontSize: 15,
                                         )),
-                                    Text("  Register Now",
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 15,
-                                        )),
+                                    TextButton(
+                                      onPressed: (() {
+                                        navigateTo(
+                                            context: context,
+                                            widget: RegisterScreen());
+                                      }),
+                                      child: Text("  Register Now",
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 15,
+                                          )),
+                                    )
                                   ],
                                 ),
                               ),
