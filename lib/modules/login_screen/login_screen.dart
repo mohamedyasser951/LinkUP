@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:socialapp/modules/login_screen/cubit/cubit.dart';
 import 'package:socialapp/modules/login_screen/cubit/states.dart';
 import 'package:socialapp/modules/register_screen/register_screen.dart';
@@ -79,7 +78,11 @@ class LoginScreen extends StatelessWidget {
                                 buttonText: "Login",
                                 buttonColor: Color.fromARGB(255, 0, 0, 0),
                                 textColor: Colors.white,
-                                onPressed: () {},
+                                onPressed: () {
+                                  cubit.userLogin(
+                                      email: email.text,
+                                      password: password.text);
+                                },
                               ),
                               // Padding(
                               //   padding: const EdgeInsets.all(10.0),

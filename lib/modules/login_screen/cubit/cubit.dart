@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socialapp/modules/login_screen/cubit/states.dart';
@@ -8,7 +8,22 @@ class CubitLogin extends Cubit<SocialLoginStates> {
 
   static CubitLogin get(context) => BlocProvider.of(context);
 
-  bool isPassword = false;
+  userLogin({
+    required String email,
+    required String password,
+  }) async {
+    emit(SocialLoginLoadingState());
+    await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password)
+        .then((value) {
+      print(value);
+      emit(SocialLoginSuccesState());
+    }).catchError((e) {
+      emit(SocialLoginErrorState());
+    });
+  }
+
+  bool isPassword = true;
   IconData sufficIcon = Icons.visibility;
 
   changeVisibility() {

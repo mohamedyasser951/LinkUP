@@ -5,6 +5,7 @@ import 'package:socialapp/layout/cubit/cubit.dart';
 import 'package:socialapp/layout/home_layout.dart';
 import 'package:socialapp/modules/login_screen/cubit/cubit.dart';
 import 'package:socialapp/modules/login_screen/login_screen.dart';
+import 'package:socialapp/modules/register_screen/cubit/cubit.dart';
 import 'package:socialapp/shared/style/theme.dart';
 
 import 'shared/componenet/block_observer.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => HomeLayoutCubit(),),
         BlocProvider(create: ((context) => CubitLogin())),
+         BlocProvider(create: ((context) => CubitRegister())),
       ], 
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

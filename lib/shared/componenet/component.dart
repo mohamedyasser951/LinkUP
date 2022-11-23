@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:flutter/material.dart';
-import 'package:socialapp/modules/register_screen/register_screen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CustomizedTextfield extends StatelessWidget {
   final TextEditingController myController;
@@ -24,7 +21,7 @@ class CustomizedTextfield extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: TextFormField(
-        keyboardType: isPassword!
+        keyboardType:  isPassword!
             ? TextInputType.visiblePassword
             : TextInputType.emailAddress,
         enableSuggestions: isPassword! ? false : true,
@@ -95,6 +92,42 @@ class CustomizedButton extends StatelessWidget {
   }
 }
 
-navigateTo({required BuildContext context,required Widget widget}) {
+navigateTo({required BuildContext context, required Widget widget}) {
   Navigator.of(context).push(MaterialPageRoute(builder: ((context) => widget)));
+}
+
+navigateAndFinish({required BuildContext context, required Widget widget}) {
+  Navigator.of(context)
+      .pushReplacement(MaterialPageRoute(builder: ((context) => widget)));
+}
+
+// ignore: constant_identifier_names
+enum ToastState { SUCESS, WORNING, Error }
+
+customizedToast({required String message, required ToastState toastState}) {
+  Fluttertoast.showToast(
+    msg: message,
+    textColor: Colors.white,
+    backgroundColor: changeToastColor(state: toastState),
+    gravity: ToastGravity.BOTTOM,
+    toastLength: Toast.LENGTH_LONG,
+    timeInSecForIosWeb: 5,
+    fontSize: 16.0
+  );
+}
+
+changeToastColor({required ToastState state}) {
+  Color toastColor;
+  switch (state) {
+    case ToastState.SUCESS:
+      toastColor = Colors.green;
+      break;
+    case ToastState.WORNING:
+      toastColor = Colors.amber;
+      break;
+    case ToastState.Error:
+      toastColor = Colors.red;
+      break;
+  }
+  return toastColor;
 }

@@ -7,11 +7,14 @@ class Themes {
     scaffoldBackgroundColor: Colors.white,
     iconTheme: const IconThemeData(color: Colors.black),
     appBarTheme: const AppBarTheme(
-      
+      backgroundColor: Colors.white,
+      elevation: 0.0,
+      iconTheme: IconThemeData(color: Colors.black),
       systemOverlayStyle: SystemUiOverlayStyle(
-        statusBarColor:Colors.black,
+        statusBarColor:Colors.white,
         statusBarIconBrightness:Brightness.dark, 
       )
     ),
+    backgroundColor: Colors.white
   );
 }
