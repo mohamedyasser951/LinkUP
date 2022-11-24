@@ -18,7 +18,6 @@ class HomeLayout extends StatelessWidget {
         var cubit = HomeLayoutCubit.get(context);
         return Scaffold(
           appBar: AppBar(
-            
             elevation: 0.0,
            actions: [
             IconButton(onPressed: (){}, icon: const Icon(IconBroken.Notification)),

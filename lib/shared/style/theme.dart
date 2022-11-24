@@ -15,6 +15,13 @@ class Themes {
         statusBarIconBrightness:Brightness.dark, 
       )
     ),
-    backgroundColor: Colors.white
+    backgroundColor: Colors.white,
+    textTheme: TextTheme(
+      subtitle1: TextStyle(
+        color: Colors.white,
+        fontSize: 16.0,
+        fontWeight: FontWeight.w600
+      )
+    ),
   );
 }
