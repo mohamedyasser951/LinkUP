@@ -50,6 +50,7 @@ dependencies:
   cloud_firestore: ^4.0.5
   custom_navigation_bar: ^0.8.2
   font_awesome_flutter: 
+  
 
 dev_dependencies:
   flutter_test:

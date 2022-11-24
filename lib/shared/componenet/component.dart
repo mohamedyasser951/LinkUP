@@ -21,7 +21,7 @@ class CustomizedTextfield extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: TextFormField(
-        keyboardType:  isPassword!
+        keyboardType: isPassword!
             ? TextInputType.visiblePassword
             : TextInputType.emailAddress,
         enableSuggestions: isPassword! ? false : true,
@@ -97,8 +97,15 @@ navigateTo({required BuildContext context, required Widget widget}) {
 }
 
 navigateAndFinish({required BuildContext context, required Widget widget}) {
-  Navigator.of(context)
-      .pushReplacement(MaterialPageRoute(builder: ((context) => widget)));
+  Navigator.pushAndRemoveUntil(
+    context,
+    MaterialPageRoute(
+      builder: (context) => widget,
+    ),
+    (route) {
+      return false;
+    },
+  );
 }
 
 // ignore: constant_identifier_names
@@ -106,14 +113,13 @@ enum ToastState { SUCESS, WORNING, Error }
 
 customizedToast({required String message, required ToastState toastState}) {
   Fluttertoast.showToast(
-    msg: message,
-    textColor: Colors.white,
-    backgroundColor: changeToastColor(state: toastState),
-    gravity: ToastGravity.BOTTOM,
-    toastLength: Toast.LENGTH_LONG,
-    timeInSecForIosWeb: 5,
-    fontSize: 16.0
-  );
+      msg: message,
+      textColor: Colors.white,
+      backgroundColor: changeToastColor(state: toastState),
+      gravity: ToastGravity.BOTTOM,
+      toastLength: Toast.LENGTH_LONG,
+      timeInSecForIosWeb: 5,
+      fontSize: 16.0);
 }
 
 changeToastColor({required ToastState state}) {

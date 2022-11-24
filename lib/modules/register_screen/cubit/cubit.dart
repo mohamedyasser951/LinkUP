@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:socialapp/models/user_model.dart';
 import 'package:socialapp/modules/register_screen/cubit/states.dart';
 
 class CubitRegister extends Cubit<SocialRegisterStates> {
@@ -21,7 +22,8 @@ class CubitRegister extends Cubit<SocialRegisterStates> {
       print("email${email}");
       print("password${password}");
       print("value${value}");
-      emit(SocialRegisterSuccesState());
+      userCreate(name: name, email: email, phone: phone,uId: value.user!.uid);
+      print("UserCreate successfully");
     }).catchError((e) {
       emit(SocialRegisterErrorState());
     });
@@ -30,13 +32,15 @@ class CubitRegister extends Cubit<SocialRegisterStates> {
   void userCreate({
     required String name,
     required String email,
-    required String Uid,
+    required String phone,
+    required String uId,
   }) async {
-    emit(SocialCreateLoadingState());
+    UserModel userModel = UserModel(name: name, email: email ,phone: phone,uId: uId);
+    //emit(SocialCreateLoadingState());
     FirebaseFirestore.instance
         .collection("Users")
-        .doc()
-        .set({})
+        .doc(uId)
+        .set(userModel.toJson())
         .then((value) {
       emit(SocialCreateSuccesState());
     }).catchError((e) {
