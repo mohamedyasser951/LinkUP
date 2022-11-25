@@ -6,6 +6,7 @@ class CustomizedTextfield extends StatelessWidget {
   final String? hintText;
   final bool? isPassword;
   final Function? suffixPressed;
+  final String? Function(String? val) validator;
   final IconData? suffixIcon;
   const CustomizedTextfield(
       {Key? key,
@@ -13,7 +14,7 @@ class CustomizedTextfield extends StatelessWidget {
       this.hintText,
       this.isPassword,
       this.suffixIcon,
-      this.suffixPressed})
+      this.suffixPressed, required this.validator})
       : super(key: key);
 
   @override
@@ -21,6 +22,7 @@ class CustomizedTextfield extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: TextFormField(
+        validator: validator,
         keyboardType: isPassword!
             ? TextInputType.visiblePassword
             : TextInputType.emailAddress,
@@ -43,6 +45,7 @@ class CustomizedTextfield extends StatelessWidget {
               borderRadius: BorderRadius.circular(10)),
           fillColor: const Color(0xffE8ECF4),
           filled: true,
+          
           hintText: hintText,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),

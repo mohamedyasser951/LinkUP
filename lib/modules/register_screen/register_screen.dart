@@ -56,11 +56,23 @@ class RegisterScreen extends StatelessWidget {
                     myController: nameController,
                     hintText: "Username",
                     isPassword: false,
+                      validator: (val) {
+                              if (val!.isEmpty) {
+                                return "Username must be failed!";
+                              }
+                              return null;
+                            },
                   ),
                   CustomizedTextfield(
                     myController: emailController,
                     hintText: "Email",
                     isPassword: false,
+                      validator: (val) {
+                              if (val!.isEmpty) {
+                                return "Email must be failed!";
+                              }
+                              return null;
+                            },
                   ),
                   CustomizedTextfield(
                     myController: passwordController,
@@ -70,11 +82,23 @@ class RegisterScreen extends StatelessWidget {
                     suffixPressed: () {
                       cubit.changeVisibility();
                     },
+                      validator: (val) {
+                              if (val!.isEmpty) {
+                                return "Password must be failed!";
+                              }
+                              return null;
+                            },
                   ),
                   CustomizedTextfield(
                     myController: phoneController,
                     hintText: "Phone",
                     isPassword: false,
+                      validator: (val) {
+                              if (val!.isEmpty) {
+                                return "Phone must be failed!";
+                              }
+                              return null;
+                            },
                   ),
                   ConditionalBuilder(
                     condition: state is !SocialRegisterLoadingState,
@@ -85,11 +109,13 @@ class RegisterScreen extends StatelessWidget {
                       buttonColor: Colors.black,
                       buttonText: "Register",
                       onPressed: () async {
-                        cubit.userRegister(
+                        if(formkey.currentState!.validate()){
+                           cubit.userRegister(
                             name: nameController.text,
                             email: emailController.text,
                             password: passwordController.text,
                             phone: phoneController.text);
+                        }
                       },
                       textColor: Colors.white,
                     ),

@@ -16,12 +16,22 @@ class Themes {
       )
     ),
     backgroundColor: Colors.white,
-    textTheme: TextTheme(
-      subtitle1: TextStyle(
+    
+    
+    textTheme:const TextTheme(
+        subtitle2: TextStyle(
         color: Colors.white,
         fontSize: 16.0,
         fontWeight: FontWeight.w600
+      ),
+    
+      subtitle1: TextStyle(
+        color: Colors.black,
+        fontSize: 14.0,
+        fontWeight: FontWeight.w500,
+        height: 1.3,
       )
     ),
+    
   );
 }

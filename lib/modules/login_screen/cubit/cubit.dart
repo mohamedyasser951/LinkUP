@@ -17,6 +17,7 @@ class CubitLogin extends Cubit<SocialLoginStates> {
         .signInWithEmailAndPassword(email: email, password: password)
         .then((value) {
       print(value);
+      print("login success");
       emit(SocialLoginSuccesState());
     }).catchError((e) {
       emit(SocialLoginErrorState());

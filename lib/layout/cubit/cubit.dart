@@ -41,6 +41,14 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
     SettingScreen(),
   ];
 
+  List<String> titles = [
+    "Home",
+    "Chats",
+    "addPost",
+    "UsersScreen",
+    "Settings",
+  ];
+
   changeBottomNav(int index) {
     print(currentIndex);
     if (index == 2) {

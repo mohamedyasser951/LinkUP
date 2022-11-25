@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:socialapp/shared/style/icon_broken.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -26,7 +27,7 @@ class HomeScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     "Communicate with Friends",
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: Theme.of(context).textTheme.subtitle2,
                   ),
                 )
               ],
@@ -57,6 +58,7 @@ class HomeScreen extends StatelessWidget {
                             children: [
                               Text(
                                 "Mohamed Yasser",
+                                style: TextStyle(height: 1.4),
                               ),
                               SizedBox(
                                 width: 5.0,
@@ -70,7 +72,10 @@ class HomeScreen extends StatelessWidget {
                           ),
                           Text(
                             "January 22, 2002 at 11:00 pm",
-                            style: Theme.of(context).textTheme.caption,
+                            style: Theme.of(context)
+                                .textTheme
+                                .caption!
+                                .copyWith(height: 1.4),
                           ),
                         ],
                       ),
@@ -90,10 +95,73 @@ class HomeScreen extends StatelessWidget {
                     width: double.infinity,
                     color: Colors.grey[300],
                   ),
-                )
-                ,Text("In literary theory, a text is any object that can be \"read\", whether this object is a work of literature, a street sign, an arrangement of buildings on a city block, or styles of clothing. It is a coherent set of signs that transmits some kind of informative message.")
-             
-              ]),
+                ),
+                Text(
+                  "In literary theory, a text is any object that can be \"read\", whether this object is a work of literature, a street sign, an arrangement of buildings on a city block, or styles of clothing. It is a coherent set of signs that transmits some kind of informative message.",
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+                Container(
+                  height: 140,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(
+                            "https://img.freepik.com/free-photo/portrait-handsome-smiling-stylish-young-man-model-dressed-red-checkered-shirt-fashion-man-posing_158538-4914.jpg?w=740&t=st=1669339465~exp=1669340065~hmac=6ceb463ba998cabc707fdfe7c330b45898ed7820eef428b9a8b1e08a170965ea")),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    children: [
+                      InkWell(
+                        onTap: () {},
+                        child: Row(
+                          children: [
+                            Icon(
+                              IconBroken.Heart,
+                              color: Colors.red,
+                              size: 18,
+                            ),
+                            SizedBox(
+                              width: 4.0,
+                            ),
+                            Text(
+                              "1200",
+                              style: Theme.of(context).textTheme.caption,
+                            )
+                          ],
+                        ),
+                      ),
+                      Spacer(),
+                      InkWell(
+                        onTap: () {},
+                        child: Row(
+                          children: [
+                            Icon(
+                              IconBroken.Chat,
+                              color: Colors.amber,
+                              size: 18,
+                            ),
+                            SizedBox(
+                              width: 4.0,
+                            ),
+                            Text(
+                              "76 comment",
+                              style: Theme.of(context).textTheme.caption,
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                  Container(
+                    height: 1.0,
+                    width: double.infinity,
+                    color: Colors.grey[300],
+                  ),
+              ]
+              ),
             ),
           ),
         ],

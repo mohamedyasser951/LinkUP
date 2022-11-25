@@ -19,6 +19,7 @@ class HomeLayout extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             elevation: 0.0,
+            title: Text(cubit.titles[cubit.currentIndex],style: TextStyle(color: Colors.black),),
            actions: [
             IconButton(onPressed: (){}, icon: const Icon(IconBroken.Notification)),
              IconButton(onPressed: (){}, icon:const Icon(IconBroken.Search))
