@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socialapp/layout/cubit/states.dart';
+import 'package:socialapp/models/user_model.dart';
+import 'package:socialapp/modules/add_post/add_post.dart';
 import 'package:socialapp/modules/chats/chat_screen.dart';
 import 'package:socialapp/modules/home/home.dart';
 import 'package:socialapp/modules/settings/setting_screen.dart';
@@ -12,6 +16,18 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
   HomeLayoutCubit() : super(HomeLayoutIntialState());
 
   static HomeLayoutCubit get(context) => BlocProvider.of(context);
+
+  late UserModel userModel;
+
+  void getUserData({required String uId}) async {
+    emit(SocialGetUserLoadingState());
+    FirebaseFirestore.instance.collection("Users").doc(uId).get().then((value) {
+      userModel = UserModel.fromJson(value.data());
+      emit(SocialGetUserSucessState());
+    }).catchError((error) {
+      emit(SocialGetUserErrorState());
+    });
+  }
 
   int currentIndex = 0;
 
@@ -36,7 +52,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
   List<Widget> Screens = [
     HomeScreen(),
     ChatScreen(),
-    Container(),
+    AddPost(),
     UsersScreen(),
     SettingScreen(),
   ];

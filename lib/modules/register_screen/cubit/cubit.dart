@@ -22,7 +22,7 @@ class CubitRegister extends Cubit<SocialRegisterStates> {
       print("email${email}");
       print("password${password}");
       print("value${value}");
-      userCreate(name: name, email: email, phone: phone,uId: value.user!.uid);
+      userCreate(name: name, email: email, phone: phone, uId: value.user!.uid);
       print("UserCreate successfully");
     }).catchError((e) {
       emit(SocialRegisterErrorState());
@@ -35,7 +35,16 @@ class CubitRegister extends Cubit<SocialRegisterStates> {
     required String phone,
     required String uId,
   }) async {
-    UserModel userModel = UserModel(name: name, email: email ,phone: phone,uId: uId);
+    UserModel userModel = UserModel(
+        name: name,
+        email: email,
+        phone: phone,
+        uId: uId,
+        bio: "write you bio",
+        cover:
+            "https://images.all-free-download.com/images/graphicwebp/beach_cloud_dawn_horizon_horizontal_landscape_ocean_601821.webp",
+        image:
+            "https://i.pinimg.com/564x/a8/59/4c/a8594c270956433c38513751e3b64c80.jpg");
     //emit(SocialCreateLoadingState());
     FirebaseFirestore.instance
         .collection("Users")
