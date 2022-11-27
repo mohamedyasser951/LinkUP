@@ -40,7 +40,7 @@ class CubitRegister extends Cubit<SocialRegisterStates> {
         email: email,
         phone: phone,
         uId: uId,
-        bio: "write you bio",
+        bio: "write your bio",
         cover:
             "https://images.all-free-download.com/images/graphicwebp/beach_cloud_dawn_horizon_horizontal_landscape_ocean_601821.webp",
         image:

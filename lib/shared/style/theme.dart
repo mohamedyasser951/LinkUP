@@ -7,6 +7,7 @@ class Themes {
     scaffoldBackgroundColor: Colors.white,
     iconTheme: const IconThemeData(color: Colors.black),
     appBarTheme: const AppBarTheme(
+      
       backgroundColor: Colors.white,
       elevation: 0.0,
       iconTheme: IconThemeData(color: Colors.black),
@@ -20,7 +21,7 @@ class Themes {
     
     textTheme:const TextTheme(
         subtitle2: TextStyle(
-        color: Colors.white,
+        color: Colors.black,
         fontSize: 16.0,
         fontWeight: FontWeight.w600
       ),

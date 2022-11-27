@@ -101,11 +101,11 @@ class LoginScreen extends StatelessWidget {
                               buttonColor: Color.fromARGB(255, 0, 0, 0),
                               textColor: Colors.white,
                               onPressed: () async {
-                                if (formKey.currentState!.validate()) {
+                               // if (formKey.currentState!.validate()) {
                                   cubit.userLogin(
                                       email: email.text,
                                       password: password.text);
-                                }
+                               // }
                               },
                             ),
                           ),

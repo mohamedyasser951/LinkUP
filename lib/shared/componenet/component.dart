@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:socialapp/shared/style/icon_broken.dart';
 
 class CustomizedTextfield extends StatelessWidget {
   final TextEditingController myController;
   final String? hintText;
+  final String? label;
   final bool? isPassword;
   final Function? suffixPressed;
   final String? Function(String? val) validator;
   final IconData? suffixIcon;
+   final IconData? prefixIcon;
   const CustomizedTextfield(
       {Key? key,
       required this.myController,
       this.hintText,
       this.isPassword,
       this.suffixIcon,
-      this.suffixPressed, required this.validator})
+      this.suffixPressed,
+      required this.validator, this.prefixIcon, this.label})
       : super(key: key);
 
   @override
@@ -23,6 +27,7 @@ class CustomizedTextfield extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child: TextFormField(
         validator: validator,
+        
         keyboardType: isPassword!
             ? TextInputType.visiblePassword
             : TextInputType.emailAddress,
@@ -31,6 +36,7 @@ class CustomizedTextfield extends StatelessWidget {
         obscureText: isPassword ?? true,
         controller: myController,
         decoration: InputDecoration(
+          prefixIcon: Icon(prefixIcon),
           suffixIcon: IconButton(
             icon: Icon(suffixIcon, color: Colors.grey),
             onPressed: () {
@@ -45,10 +51,13 @@ class CustomizedTextfield extends StatelessWidget {
               borderRadius: BorderRadius.circular(10)),
           fillColor: const Color(0xffE8ECF4),
           filled: true,
-          
           hintText: hintText,
+         // labelText: label,
+          //label: Text(label!),
           border: OutlineInputBorder(
+            
             borderRadius: BorderRadius.circular(10),
+            
           ),
         ),
       ),
@@ -140,3 +149,19 @@ changeToastColor({required ToastState state}) {
   }
   return toastColor;
 }
+
+PreferredSizeWidget CustomizedAppBar(
+        {required BuildContext context,
+        required String title,
+        List<Widget>? actions}) =>
+    AppBar(
+      titleSpacing: 1,
+      title: Text(title,style: const TextStyle(color: Colors.black),),
+      actions: actions,
+      leading: IconButton(
+        icon: const Icon(IconBroken.Arrow___Left_2),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      ),
+    );

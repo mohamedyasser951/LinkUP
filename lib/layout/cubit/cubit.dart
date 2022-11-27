@@ -39,13 +39,13 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
       icon: Icon(IconBroken.Chat),
     ),
     CustomNavigationBarItem(
-      icon: Icon(IconBroken.Paper_Download),
+      icon: Icon(IconBroken.Plus),
     ),
     CustomNavigationBarItem(
       icon: Icon(IconBroken.Location),
     ),
     CustomNavigationBarItem(
-      icon: Icon(IconBroken.Setting),
+      icon: Icon(IconBroken.Profile),
     ),
   ];
 
@@ -54,7 +54,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
     ChatScreen(),
     AddPost(),
     UsersScreen(),
-    SettingScreen(),
+    ProfileScreen(),
   ];
 
   List<String> titles = [

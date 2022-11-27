@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => HomeLayoutCubit(),
+          create: (context) => HomeLayoutCubit()..getUserData(uId: "PdVyScRLPKO466jzMCWKt9NMSzQ2"),
         ),
         BlocProvider(create: ((context) => CubitLogin())),
         BlocProvider(create: ((context) => CubitRegister())),
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: Themes.lightTheme,
-        home: HomeLayout(),
+        home: LoginScreen(),
       ),
     );
   }

@@ -50,6 +50,7 @@ dependencies:
   cloud_firestore: ^4.0.5
   custom_navigation_bar: ^0.8.2
   font_awesome_flutter: 
+  image_picker: ^0.8.6
   
 
 dev_dependencies:
