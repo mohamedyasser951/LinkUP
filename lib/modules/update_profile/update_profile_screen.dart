@@ -20,6 +20,10 @@ class UpdateProfileCreen extends StatelessWidget {
       listener: ((context, state) {}),
       builder: ((context, state) {
         var model = HomeLayoutCubit.get(context).userModel;
+        var profileImage = HomeLayoutCubit.get(context).profileImage;
+        nameController.text = model.name!;
+        bioController.text = model.bio!;
+        phoneController.text = model.phone!;
         return Scaffold(
           appBar: CustomizedAppBar(
               context: context,
@@ -48,19 +52,18 @@ class UpdateProfileCreen extends StatelessWidget {
                               Container(
                                 width: double.infinity,
                                 height: 150.0,
-                                decoration:  BoxDecoration(
-                                  borderRadius: BorderRadius.only(
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(4),
                                       topRight: Radius.circular(4)),
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: NetworkImage(
-                                          "${model.cover}")),
+                                      image: NetworkImage("${model.cover}")),
                                 ),
                               ),
                               IconButton(
                                   onPressed: () {},
-                                  icon: CircleAvatar(
+                                  icon: const CircleAvatar(
                                     child: Icon(IconBroken.Camera),
                                   ))
                             ],
@@ -73,15 +76,19 @@ class UpdateProfileCreen extends StatelessWidget {
                               backgroundColor:
                                   Theme.of(context).backgroundColor,
                               radius: 64.0,
-                              child:  CircleAvatar(
+                              child: CircleAvatar(
                                 radius: 60.0,
-                                backgroundImage: NetworkImage(
-                                    "${model.image}"),
+                                backgroundImage: profileImage == null
+                                    ? NetworkImage("${model.image}")
+                                    : FileImage(profileImage)as ImageProvider,
                               ),
                             ),
                             IconButton(
-                                onPressed: () {},
-                                icon: CircleAvatar(
+                                onPressed: () {
+                                  HomeLayoutCubit.get(context)
+                                      .getProfileImage();
+                                },
+                                icon: const CircleAvatar(
                                   child: Icon(IconBroken.Camera),
                                 ))
                           ],
@@ -101,7 +108,7 @@ class UpdateProfileCreen extends StatelessWidget {
                       }),
                       prefixIcon: IconBroken.User),
                   CustomizedTextfield(
-                      myController: nameController,
+                      myController: bioController,
                       isPassword: false,
                       label: "Bio",
                       validator: ((val) {
@@ -112,7 +119,7 @@ class UpdateProfileCreen extends StatelessWidget {
                       }),
                       prefixIcon: IconBroken.Info_Circle),
                   CustomizedTextfield(
-                      myController: nameController,
+                      myController: phoneController,
                       isPassword: false,
                       label: "phone",
                       validator: ((val) {
