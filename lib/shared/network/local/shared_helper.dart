@@ -7,7 +7,7 @@ class SharedHelper {
     sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  static saveData({required String key, required dynamic value}) async {
+  static Future<bool> saveData({required String key, required dynamic value}) async {
     if (value is String) {
       sharedPreferences.setString(key, value);
     }

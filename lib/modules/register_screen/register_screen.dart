@@ -8,6 +8,8 @@ import 'package:socialapp/layout/home_layout.dart';
 import 'package:socialapp/modules/register_screen/cubit/cubit.dart';
 import 'package:socialapp/modules/register_screen/cubit/states.dart';
 import 'package:socialapp/shared/componenet/component.dart';
+import 'package:socialapp/shared/componenet/constant.dart';
+import 'package:socialapp/shared/network/local/shared_helper.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({super.key});
@@ -21,7 +23,17 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<CubitRegister, SocialRegisterStates>(
       listener: (context, state) {
-        if(state is SocialCreateSuccesState) navigateAndFinish(context: context, widget: HomeLayout());
+        if (state is SocialCreateSuccesState) {
+          SharedHelper.saveData(key: "uId", value: state.userModel.uId)
+              .then((value) {
+            uId = state.userModel.uId;
+            navigateAndFinish(context: context, widget: HomeLayout());
+          //  customizedToast(message: message, toastState: ToastState.SUCESS);
+          }).catchError((error) {});
+        }
+        else{
+         // customizedToast(message: message, toastState: ToastState.Error);
+        }
       },
       builder: (context, state) {
         var cubit = CubitRegister.get(context);
@@ -56,23 +68,23 @@ class RegisterScreen extends StatelessWidget {
                     myController: nameController,
                     hintText: "Username",
                     isPassword: false,
-                      validator: (val) {
-                              if (val!.isEmpty) {
-                                return "Username must be failed!";
-                              }
-                              return null;
-                            },
+                    validator: (val) {
+                      if (val!.isEmpty) {
+                        return "Username must be failed!";
+                      }
+                      return null;
+                    },
                   ),
                   CustomizedTextfield(
                     myController: emailController,
                     hintText: "Email",
                     isPassword: false,
-                      validator: (val) {
-                              if (val!.isEmpty) {
-                                return "Email must be failed!";
-                              }
-                              return null;
-                            },
+                    validator: (val) {
+                      if (val!.isEmpty) {
+                        return "Email must be failed!";
+                      }
+                      return null;
+                    },
                   ),
                   CustomizedTextfield(
                     myController: passwordController,
@@ -82,26 +94,26 @@ class RegisterScreen extends StatelessWidget {
                     suffixPressed: () {
                       cubit.changeVisibility();
                     },
-                      validator: (val) {
-                              if (val!.isEmpty) {
-                                return "Password must be failed!";
-                              }
-                              return null;
-                            },
+                    validator: (val) {
+                      if (val!.isEmpty) {
+                        return "Password must be failed!";
+                      }
+                      return null;
+                    },
                   ),
                   CustomizedTextfield(
                     myController: phoneController,
                     hintText: "Phone",
                     isPassword: false,
-                      validator: (val) {
-                              if (val!.isEmpty) {
-                                return "Phone must be failed!";
-                              }
-                              return null;
-                            },
+                    validator: (val) {
+                      if (val!.isEmpty) {
+                        return "Phone must be failed!";
+                      }
+                      return null;
+                    },
                   ),
                   ConditionalBuilder(
-                    condition: state is !SocialRegisterLoadingState,
+                    condition: state is! SocialRegisterLoadingState,
                     fallback: (context) => const Center(
                       child: CircularProgressIndicator(),
                     ),
@@ -109,12 +121,12 @@ class RegisterScreen extends StatelessWidget {
                       buttonColor: Colors.black,
                       buttonText: "Register",
                       onPressed: () async {
-                        if(formkey.currentState!.validate()){
-                           cubit.userRegister(
-                            name: nameController.text,
-                            email: emailController.text,
-                            password: passwordController.text,
-                            phone: phoneController.text);
+                        if (formkey.currentState!.validate()) {
+                          cubit.userRegister(
+                              name: nameController.text,
+                              email: emailController.text,
+                              password: passwordController.text,
+                              phone: phoneController.text);
                         }
                       },
                       textColor: Colors.white,
