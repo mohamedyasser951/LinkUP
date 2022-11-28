@@ -24,15 +24,15 @@ class RegisterScreen extends StatelessWidget {
     return BlocConsumer<CubitRegister, SocialRegisterStates>(
       listener: (context, state) {
         if (state is SocialCreateSuccesState) {
+         
           SharedHelper.saveData(key: "uId", value: state.userModel.uId)
               .then((value) {
             uId = state.userModel.uId;
             navigateAndFinish(context: context, widget: HomeLayout());
-          //  customizedToast(message: message, toastState: ToastState.SUCESS);
+            //  customizedToast(message: message, toastState: ToastState.SUCESS);
           }).catchError((error) {});
-        }
-        else{
-         // customizedToast(message: message, toastState: ToastState.Error);
+        } else {
+          // customizedToast(message: message, toastState: ToastState.Error);
         }
       },
       builder: (context, state) {

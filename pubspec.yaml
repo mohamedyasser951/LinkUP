@@ -51,6 +51,7 @@ dependencies:
   custom_navigation_bar: ^0.8.2
   font_awesome_flutter: 
   image_picker: ^0.8.6
+  firebase_storage: ^11.0.6
   
 
 dev_dependencies:

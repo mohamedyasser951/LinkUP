@@ -19,8 +19,10 @@ class UpdateProfileCreen extends StatelessWidget {
     return BlocConsumer<HomeLayoutCubit, HomeLayoutStates>(
       listener: ((context, state) {}),
       builder: ((context, state) {
+        var cubit = HomeLayoutCubit.get(context);
         var model = HomeLayoutCubit.get(context).userModel;
         var profileImage = HomeLayoutCubit.get(context).profileImage;
+        var coverImage = HomeLayoutCubit.get(context).coverImage;
         nameController.text = model.name!;
         bioController.text = model.bio!;
         phoneController.text = model.phone!;
@@ -29,7 +31,11 @@ class UpdateProfileCreen extends StatelessWidget {
               context: context,
               title: "Edit Profile",
               actions: [
-                TextButton(onPressed: () {}, child: const Text("Update")),
+                TextButton(
+                    onPressed: () {
+                      cubit.updateUserData(name: nameController.text,bio: bioController.text,phone: phoneController.text);
+                    },
+                    child: const Text("Update")),
                 const SizedBox(
                   width: 10.0,
                 )
@@ -39,6 +45,7 @@ class UpdateProfileCreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  if(state is SocialUpdateUserDataLoadingState)const LinearProgressIndicator(),
                   Container(
                     height: 200,
                     child: Stack(
@@ -47,7 +54,7 @@ class UpdateProfileCreen extends StatelessWidget {
                         Align(
                           alignment: Alignment.topCenter,
                           child: Stack(
-                            alignment: Alignment.topRight,
+                            alignment: Alignment.bottomRight,
                             children: [
                               Container(
                                 width: double.infinity,
@@ -57,12 +64,19 @@ class UpdateProfileCreen extends StatelessWidget {
                                       topLeft: Radius.circular(4),
                                       topRight: Radius.circular(4)),
                                   image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage("${model.cover}")),
+                                    fit: BoxFit.cover,
+                                    image: coverImage == null
+                                        ? NetworkImage("${model.cover}")
+                                        : FileImage(coverImage)
+                                            as ImageProvider,
+                                  ),
                                 ),
                               ),
                               IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    HomeLayoutCubit.get(context)
+                                        .getCoverImage();
+                                  },
                                   icon: const CircleAvatar(
                                     child: Icon(IconBroken.Camera),
                                   ))
@@ -80,7 +94,7 @@ class UpdateProfileCreen extends StatelessWidget {
                                 radius: 60.0,
                                 backgroundImage: profileImage == null
                                     ? NetworkImage("${model.image}")
-                                    : FileImage(profileImage)as ImageProvider,
+                                    : FileImage(profileImage) as ImageProvider,
                               ),
                             ),
                             IconButton(

@@ -2,7 +2,7 @@ class UserModel {
   String? name;
   String? email;
   String? phone;
-  String? uId;
+   String? uId;
   String? image;
   String? cover;
   String? bio;

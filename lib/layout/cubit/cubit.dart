@@ -14,6 +14,7 @@ import 'package:socialapp/modules/home/home.dart';
 import 'package:socialapp/modules/settings/setting_screen.dart';
 import 'package:socialapp/modules/users/users_screen.dart';
 import 'package:socialapp/shared/style/icon_broken.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
   HomeLayoutCubit() : super(HomeLayoutIntialState());
@@ -22,7 +23,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
 
   late UserModel userModel;
 
-  void getUserData({required String uId}) async {
+  void getUserData({String? uId}) async {
     emit(SocialGetUserLoadingState());
     FirebaseFirestore.instance.collection("Users").doc(uId).get().then((value) {
       userModel = UserModel.fromJson(value.data());
@@ -90,5 +91,99 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
       print("No image Selected");
       emit(SocialProfileImagePickedErrorState());
     }
+  }
+
+  File? coverImage;
+  getCoverImage() async {
+    var pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      coverImage = File(pickedFile.path);
+      emit(SocialCoverImagePickedSuccesState());
+    } else {
+      emit(SocialCoverImagePickedErrorState());
+      print("error When picked cover..");
+    }
+  }
+
+  String? profileImageUrl;
+  uploadProfileImag() async {
+    firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child("user/${Uri.file(profileImage!.path).pathSegments.last}")
+        .putFile(profileImage!)
+        .then((value) {
+      value.ref.getDownloadURL().then((value) {
+        emit(SocialUploadProfileImageSuccessState());
+        profileImageUrl = value;
+        print(value);
+      }).catchError((error) {
+        emit(SocialUploadProfileImageSuccessState());
+      });
+    }).catchError((e) {
+      emit(SocialUploadProfileImageSuccessState());
+    });
+  }
+
+  String? coveImageUrl;
+
+  uploadCoverImage() async {
+    firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child("user/${Uri.file(coverImage!.path).pathSegments.last}")
+        .putFile(coverImage!)
+        .then((value) {
+      value.ref.getDownloadURL().then((value) {
+        emit(SocialUploadCoveImageSuccessState());
+        coveImageUrl = value;
+        print(value);
+      }).catchError((e) {
+        emit(SocialUploadCoveImageErrorState());
+      });
+    }).catchError((e) {
+      emit(SocialUploadCoveImageErrorState());
+    });
+  }
+
+  updateUserProfile({
+    required String name,
+    required String bio,
+    required String phone,
+  }) async {
+    if (coverImage != null) {
+      uploadCoverImage();
+    } else if (profileImage != null) {
+      uploadProfileImag();
+    } else if (profileImage != null && coverImage != null) {
+      uploadProfileImag();
+      uploadCoverImage();
+    } else {
+      updateUserData(name: name, bio: bio, phone: phone);
+    }
+  }
+
+  updateUserData({
+    required String name,
+    required String bio,
+    required String phone,
+  }) async {
+    UserModel model = UserModel(
+        name: name,
+        bio: bio,
+        phone: phone,
+        cover: userModel.cover,
+        image: userModel.image,
+        email: userModel.email,
+        uId: userModel.uId);
+    emit(SocialUpdateUserDataLoadingState());
+    FirebaseFirestore.instance
+        .collection("Users")
+        .doc(userModel.uId)
+        .update(model.toJson())
+        .then((value) {
+      getUserData(uId: userModel.uId);
+    }).catchError((error) {
+      emit(SocialUpdateUserDataErrorState());
+    });
   }
 }
