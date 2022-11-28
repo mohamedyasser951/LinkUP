@@ -13,6 +13,7 @@ import 'package:socialapp/modules/chats/chat_screen.dart';
 import 'package:socialapp/modules/home/home.dart';
 import 'package:socialapp/modules/settings/setting_screen.dart';
 import 'package:socialapp/modules/users/users_screen.dart';
+import 'package:socialapp/shared/componenet/constant.dart';
 import 'package:socialapp/shared/style/icon_broken.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
@@ -26,7 +27,9 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
   void getUserData({String? uId}) async {
     emit(SocialGetUserLoadingState());
     FirebaseFirestore.instance.collection("Users").doc(uId).get().then((value) {
+      print("getuserDatamethod..........");
       userModel = UserModel.fromJson(value.data());
+      print("usermodel value...........${userModel.uId}");
       emit(SocialGetUserSucessState());
     }).catchError((error) {
       emit(SocialGetUserErrorState());
@@ -106,8 +109,11 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
     }
   }
 
-  String? profileImageUrl;
-  uploadProfileImag() async {
+  uploadProfileImag({
+    required String name,
+    required String bio,
+    required String phone,
+  }) async {
     firebase_storage.FirebaseStorage.instance
         .ref()
         .child("user/${Uri.file(profileImage!.path).pathSegments.last}")
@@ -115,8 +121,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
         .then((value) {
       value.ref.getDownloadURL().then((value) {
         emit(SocialUploadProfileImageSuccessState());
-        profileImageUrl = value;
-        print(value);
+        updateUserData(name: name, bio: bio, phone: phone, image: value);
       }).catchError((error) {
         emit(SocialUploadProfileImageSuccessState());
       });
@@ -125,9 +130,11 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
     });
   }
 
-  String? coveImageUrl;
-
-  uploadCoverImage() async {
+  uploadCoverImage({
+    required String name,
+    required String bio,
+    required String phone,
+  }) async {
     firebase_storage.FirebaseStorage.instance
         .ref()
         .child("user/${Uri.file(coverImage!.path).pathSegments.last}")
@@ -135,8 +142,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
         .then((value) {
       value.ref.getDownloadURL().then((value) {
         emit(SocialUploadCoveImageSuccessState());
-        coveImageUrl = value;
-        print(value);
+        updateUserData(name: name, bio: bio, phone: phone, cover: value);
       }).catchError((e) {
         emit(SocialUploadCoveImageErrorState());
       });
@@ -145,34 +151,36 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
     });
   }
 
-  updateUserProfile({
-    required String name,
-    required String bio,
-    required String phone,
-  }) async {
-    if (coverImage != null) {
-      uploadCoverImage();
-    } else if (profileImage != null) {
-      uploadProfileImag();
-    } else if (profileImage != null && coverImage != null) {
-      uploadProfileImag();
-      uploadCoverImage();
-    } else {
-      updateUserData(name: name, bio: bio, phone: phone);
-    }
-  }
+  // updateUserProfile({
+  //   required String name,
+  //   required String bio,
+  //   required String phone,
+  // }) async {
+  //   if (coverImage != null) {
+  //     uploadCoverImage();
+  //   } else if (profileImage != null) {
+  //     uploadProfileImag();
+  //   } else if (profileImage != null && coverImage != null) {
+  //     uploadProfileImag();
+  //     uploadCoverImage();
+  //   } else {
+  //     updateUserData(name: name, bio: bio, phone: phone);
+  //   }
+  // }
 
   updateUserData({
     required String name,
     required String bio,
     required String phone,
+    String? cover,
+    String? image,
   }) async {
     UserModel model = UserModel(
         name: name,
         bio: bio,
         phone: phone,
-        cover: userModel.cover,
-        image: userModel.image,
+        cover: cover ?? userModel.cover,
+        image: image ?? userModel.image,
         email: userModel.email,
         uId: userModel.uId);
     emit(SocialUpdateUserDataLoadingState());

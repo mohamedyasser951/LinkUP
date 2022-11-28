@@ -1,4 +1,3 @@
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,23 +14,24 @@ import 'shared/componenet/block_observer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
- await Firebase.initializeApp();
+  await Firebase.initializeApp();
   await SharedHelper.init();
-  Widget StartWidget;
+  
+  
+  Bloc.observer = MyBlocObserver();
+  uId = SharedHelper.getData("uId");
 
-  uId = SharedHelper.getData("uId") ;
-  print("uid is ${uId}");
+  Widget  StartWidget;
+
   if (uId != null) {
     StartWidget = HomeLayout();
   } else {
     StartWidget = LoginScreen();
   }
-  BlocOverrides.runZoned(
-    blocObserver: MyBlocObserver(),
-    () => runApp(MyApp(
-      startWidget: StartWidget,
-    )),
-  );
+  
+  runApp(MyApp(
+    startWidget: StartWidget,
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -44,14 +44,13 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => HomeLayoutCubit()
-            ..getUserData(uId: "PdVyScRLPKO466jzMCWKt9NMSzQ2"),
+            ..getUserData(uId: uId),
         ),
         BlocProvider(create: ((context) => CubitLogin())),
         BlocProvider(create: ((context) => CubitRegister())),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
         theme: Themes.lightTheme,
         home: startWidget,
       ),

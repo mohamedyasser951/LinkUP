@@ -68,6 +68,7 @@ class RegisterScreen extends StatelessWidget {
                     myController: nameController,
                     hintText: "Username",
                     isPassword: false,
+                    prefixIcon: Icons.person,
                     validator: (val) {
                       if (val!.isEmpty) {
                         return "Username must be failed!";
@@ -79,6 +80,7 @@ class RegisterScreen extends StatelessWidget {
                     myController: emailController,
                     hintText: "Email",
                     isPassword: false,
+                    prefixIcon: Icons.email,
                     validator: (val) {
                       if (val!.isEmpty) {
                         return "Email must be failed!";
@@ -89,6 +91,7 @@ class RegisterScreen extends StatelessWidget {
                   CustomizedTextfield(
                     myController: passwordController,
                     hintText: "Password",
+                    prefixIcon: Icons.lock,
                     isPassword: cubit.isPassword,
                     suffixIcon: cubit.sufficIcon,
                     suffixPressed: () {
@@ -105,6 +108,7 @@ class RegisterScreen extends StatelessWidget {
                     myController: phoneController,
                     hintText: "Phone",
                     isPassword: false,
+                    prefixIcon: Icons.phone,
                     validator: (val) {
                       if (val!.isEmpty) {
                         return "Phone must be failed!";

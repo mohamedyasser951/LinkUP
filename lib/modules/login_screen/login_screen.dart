@@ -7,6 +7,9 @@ import 'package:socialapp/modules/login_screen/cubit/states.dart';
 import 'package:socialapp/modules/register_screen/register_screen.dart';
 
 import 'package:socialapp/shared/componenet/component.dart';
+import 'package:socialapp/shared/componenet/constant.dart';
+import 'package:socialapp/shared/network/local/shared_helper.dart';
+import 'package:socialapp/shared/style/icon_broken.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -20,7 +23,14 @@ class LoginScreen extends StatelessWidget {
     return BlocConsumer<CubitLogin, SocialLoginStates>(
         listener: (context, state) {
       if (state is SocialLoginSuccesState) {
-        navigateAndFinish(context: context, widget: HomeLayout());
+        SharedHelper.saveData(key: "uId", value: state.uId).then(
+          (value) {
+            uId = state.uId;
+            navigateAndFinish(context: context, widget: HomeLayout());
+          },
+        ).catchError((error) {
+          print(error.toString());
+        });
       }
     }, builder: (context, state) {
       var cubit = CubitLogin.get(context);
@@ -47,6 +57,7 @@ class LoginScreen extends StatelessWidget {
                                 )),
                           ),
                           CustomizedTextfield(
+                            prefixIcon: Icons.email,
                             hintText: "Email",
                             myController: email,
                             isPassword: false,
@@ -58,6 +69,7 @@ class LoginScreen extends StatelessWidget {
                             },
                           ),
                           CustomizedTextfield(
+                            prefixIcon: Icons.lock,
                             hintText: "Password",
                             myController: password,
                             isPassword: cubit.isPassword,
@@ -101,11 +113,10 @@ class LoginScreen extends StatelessWidget {
                               buttonColor: Color.fromARGB(255, 0, 0, 0),
                               textColor: Colors.white,
                               onPressed: () async {
-                               // if (formKey.currentState!.validate()) {
-                                  cubit.userLogin(
-                                      email: email.text,
-                                      password: password.text);
-                               // }
+                                // if (formKey.currentState!.validate()) {
+                                cubit.userLogin(
+                                    email: email.text, password: password.text);
+                                // }
                               },
                             ),
                           ),

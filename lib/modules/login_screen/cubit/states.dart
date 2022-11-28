@@ -1,10 +1,15 @@
 class SocialLoginStates {}
 
-class SocialLoginInitialState extends SocialLoginStates{}
+class SocialLoginInitialState extends SocialLoginStates {}
 
+class SocialLoginLoadingState extends SocialLoginStates {}
 
-class SocialLoginLoadingState extends SocialLoginStates{}
-class SocialLoginSuccesState extends SocialLoginStates{}
-class SocialLoginErrorState extends SocialLoginStates{}
+class SocialLoginSuccesState extends SocialLoginStates {
+  final String uId;
 
-class SocialLoginChangeVisibilityState extends SocialLoginStates{}
+  SocialLoginSuccesState({required this.uId});
+}
+
+class SocialLoginErrorState extends SocialLoginStates {}
+
+class SocialLoginChangeVisibilityState extends SocialLoginStates {}

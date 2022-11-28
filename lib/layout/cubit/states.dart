@@ -36,7 +36,7 @@ class SocialUploadProfileImageSuccessState extends HomeLayoutIntialState {}
 
 class SocialUploadProfileImageErrorState extends HomeLayoutIntialState {}
 
-//UploadCoveImage
+//UploadCoverImage
 
 class SocialUploadCoveImageSuccessState extends HomeLayoutIntialState {}
 

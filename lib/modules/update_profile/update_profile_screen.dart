@@ -33,7 +33,10 @@ class UpdateProfileCreen extends StatelessWidget {
               actions: [
                 TextButton(
                     onPressed: () {
-                      cubit.updateUserData(name: nameController.text,bio: bioController.text,phone: phoneController.text);
+                      cubit.updateUserData(
+                          name: nameController.text,
+                          bio: bioController.text,
+                          phone: phoneController.text);
                     },
                     child: const Text("Update")),
                 const SizedBox(
@@ -45,7 +48,8 @@ class UpdateProfileCreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  if(state is SocialUpdateUserDataLoadingState)const LinearProgressIndicator(),
+                  if (state is SocialUpdateUserDataLoadingState)
+                    const LinearProgressIndicator(),
                   Container(
                     height: 200,
                     child: Stack(
@@ -109,6 +113,52 @@ class UpdateProfileCreen extends StatelessWidget {
                         ),
                       ],
                     ),
+                  ),
+                  if (profileImage != null || coverImage != null)
+                    const SizedBox(
+                      height: 5.0,
+                    ),
+                  Row(
+                    children: [
+                      if (profileImage != null)
+                        Expanded(
+                            child: Column(
+                          children: [
+                            OutlinedButton(
+                                onPressed: () {
+                                  cubit.uploadProfileImag(
+                                      name: nameController.text,
+                                      bio: bioController.text,
+                                      phone: phoneController.text);
+                                },
+                                child: Text("UpLoad profile")),
+                            SizedBox(
+                              height: 4.0,
+                            ),
+                            if (state is SocialUpdateUserDataLoadingState)
+                              const LinearProgressIndicator(),
+                          ],
+                        )),
+                      if (coverImage != null)
+                        Expanded(
+                            child: Column(
+                          children: [
+                            OutlinedButton(
+                                onPressed: () {
+                                  cubit.uploadCoverImage(
+                                      name: nameController.text,
+                                      bio: bioController.text,
+                                      phone: phoneController.text);
+                                },
+                                child: Text("UpLoad cover")),
+                            SizedBox(
+                              height: 4.0,
+                            ),
+                            if (state is SocialUpdateUserDataLoadingState)
+                              const LinearProgressIndicator(),
+                          ],
+                        ))
+                    ],
                   ),
                   CustomizedTextfield(
                       myController: nameController,
