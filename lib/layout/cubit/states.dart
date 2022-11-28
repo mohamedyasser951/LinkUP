@@ -50,4 +50,21 @@ class SocialUpdateUserDataLoadingState extends HomeLayoutIntialState {}
 
 class SocialUpdateUserDataErrorState extends HomeLayoutIntialState {}
 
+//pickedPostImage
+class SocialPickedPostImageSuccessState extends HomeLayoutStates{}
+class SocialPickedPostImageErrorState extends HomeLayoutStates{}
+
+//crate new post
+class SocialCreateNewPostLoadingState extends HomeLayoutIntialState {}
+class SocialCreateNewPostSuccessState extends HomeLayoutIntialState {}
+class SocialCreateNewPostErrorState extends HomeLayoutIntialState {}
+
+//Uplaod new postImage
+
+class SocialUploadNewPostImageLoadingState extends HomeLayoutIntialState {}
+class SocialUploadNewPostImageSuccessState extends HomeLayoutIntialState {}
+class SocialUploadNewPostImageErrorState extends HomeLayoutIntialState {}
+
+
+
 
