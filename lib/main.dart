@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => HomeLayoutCubit()
-            ..getUserData(uId: uId),
+            ..getUserData(uId: uId)..getPosts(),
         ),
         BlocProvider(create: ((context) => CubitLogin())),
         BlocProvider(create: ((context) => CubitRegister())),

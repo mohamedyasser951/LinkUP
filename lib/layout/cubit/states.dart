@@ -65,6 +65,14 @@ class SocialUploadNewPostImageLoadingState extends HomeLayoutIntialState {}
 class SocialUploadNewPostImageSuccessState extends HomeLayoutIntialState {}
 class SocialUploadNewPostImageErrorState extends HomeLayoutIntialState {}
 
+class SocialDeletePostImageState extends HomeLayoutStates{}
+
+
+//Get Posts
+
+class SocialGetPostsSuccessState extends HomeLayoutIntialState{}
+class SocialGetPostsLoadingState extends HomeLayoutIntialState{}
+class SocialGetPostsErrorState extends HomeLayoutIntialState{}
 
 
 

@@ -214,7 +214,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
         .collection("Posts")
         .add(postModel.toJson())
         .then((value) {
-      emit(SocialCreateNewPostSuccessState());
+      // emit(SocialCreateNewPostSuccessState());
     }).catchError((error) {
       emit(SocialCreateNewPostErrorState());
     });
@@ -238,6 +238,25 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
       });
     }).catchError((error) {
       emit(SocialUploadNewPostImageErrorState());
+    });
+  }
+
+  removePostImage() {
+    postImage = null;
+    emit(SocialDeletePostImageState());
+  }
+
+  List<PostModel> posts = [];
+  getPosts() {
+    emit(SocialGetPostsLoadingState());
+
+    FirebaseFirestore.instance.collection("Posts").get().then((value) {
+      value.docs.forEach((element) {
+        posts.add(PostModel.fromJson(element.data()));
+        emit(SocialGetPostsSuccessState());
+      });
+    }).catchError((error) {
+      emit(SocialGetPostsErrorState());
     });
   }
 }
