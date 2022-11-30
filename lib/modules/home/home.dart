@@ -16,53 +16,65 @@ class HomeScreen extends StatelessWidget {
       builder: (context, state) {
         var cubit = HomeLayoutCubit.get(context);
         return ConditionalBuilder(
-            condition: cubit.posts.length > 0, 
+            condition: cubit.posts.length != 0 ,
             builder: (context) {
-             return  SingleChildScrollView(
-      physics:const BouncingScrollPhysics(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Card(
-            clipBehavior: Clip.antiAlias,
-            margin: const EdgeInsets.all(8.0),
-            elevation: 5.0,
-            child: Stack(
-              alignment: AlignmentDirectional.bottomEnd,
-              children: [
-                const Image(
-                    height: 200,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    image: NetworkImage(
-                        "https://img.freepik.com/free-photo/positive-european-male-model-points-right-with-both-index-fingers-suggets-try-use-product-turns-aside_273609-38445.jpg?size=626&ext=jpg")),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Communicate with Friends",
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                )
-              ],
-            ),
-          ),
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: cubit.posts.length,
-              separatorBuilder: (context, index) =>const SizedBox(height: 8.0,),
-               itemBuilder: (context, index) => buildPostItem(cubit.posts[index],context),),
-          SizedBox(height: 300.0,),
-        ],
-      ),
-    );
-            }, fallback:((context) =>  const Center(child: CircularProgressIndicator(),)));
+              return SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Card(
+                      clipBehavior: Clip.antiAlias,
+                      margin: const EdgeInsets.all(8.0),
+                      elevation: 5.0,
+                      child: Stack(
+                        alignment: AlignmentDirectional.bottomEnd,
+                        children: [
+                          const Image(
+                              height: 200,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              image: NetworkImage(
+                                  "https://img.freepik.com/free-photo/positive-european-male-model-points-right-with-both-index-fingers-suggets-try-use-product-turns-aside_273609-38445.jpg?size=626&ext=jpg")),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "Communicate with Friends",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1!
+                                  .copyWith(color: Colors.white),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: cubit.posts.length,
+                      separatorBuilder: (context, index) => const SizedBox(
+                        height: 8.0,
+                      ),
+                      itemBuilder: (context, index) =>
+                          buildPostItem(index, cubit.posts[index], context),
+                    ),
+                    SizedBox(
+                      height: 300.0,
+                    ),
+                  ],
+                ),
+              );
+            },
+            fallback: ((context) => const Center(
+                  child: CircularProgressIndicator(),
+                )));
       },
     );
   }
 }
 
-Widget buildPostItem(PostModel model,BuildContext context) => Card(
+Widget buildPostItem(int index, PostModel model, BuildContext context) => Card(
       margin: EdgeInsets.symmetric(horizontal: 8.0),
       clipBehavior: Clip.antiAlias,
       elevation: 5.0,
@@ -71,10 +83,11 @@ Widget buildPostItem(PostModel model,BuildContext context) => Card(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(
             children: [
-               CircleAvatar(
-                radius: 25.0,
-                backgroundImage: NetworkImage(
-                    "${model.image}",)),
+              CircleAvatar(
+                  radius: 25.0,
+                  backgroundImage: NetworkImage(
+                    "${model.image}",
+                  )),
               const SizedBox(
                 width: 15.0,
               ),
@@ -83,7 +96,7 @@ Widget buildPostItem(PostModel model,BuildContext context) => Card(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      children:  [
+                      children: [
                         Text(
                           "${model.name}",
                           style: TextStyle(height: 1.4),
@@ -234,23 +247,24 @@ Widget buildPostItem(PostModel model,BuildContext context) => Card(
               ],
             ),
           ),
-         
-         if(model.postImage != '')
-          Container(
-            height: 140,
-            decoration:  BoxDecoration(
-              image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(
-                      "${model.postImage}")),
+          if (model.postImage != '')
+            Container(
+              height: 140,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage("${model.postImage}")),
+              ),
             ),
-          ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Row(
               children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    HomeLayoutCubit.get(context).likePost(
+                        posId: HomeLayoutCubit.get(context).postsId[index]);
+                  },
                   child: Row(
                     children: [
                       const Icon(
@@ -262,7 +276,7 @@ Widget buildPostItem(PostModel model,BuildContext context) => Card(
                         width: 4.0,
                       ),
                       Text(
-                        "0",
+                        "${HomeLayoutCubit.get(context).likes[index]}",
                         style: Theme.of(context).textTheme.caption,
                       )
                     ],
@@ -305,7 +319,7 @@ Widget buildPostItem(PostModel model,BuildContext context) => Card(
                 child: InkWell(
                   child: Row(
                     children: [
-                       CircleAvatar(
+                      CircleAvatar(
                         radius: 14.0,
                         backgroundImage: NetworkImage(
                             "${HomeLayoutCubit.get(context).userModel.image}"),

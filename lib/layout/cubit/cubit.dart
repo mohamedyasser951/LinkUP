@@ -247,16 +247,36 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
   }
 
   List<PostModel> posts = [];
-  getPosts() {
+  List<String> postsId = [];
+  List<int> likes = [];
+  void getPosts() {
     emit(SocialGetPostsLoadingState());
 
     FirebaseFirestore.instance.collection("Posts").get().then((value) {
       value.docs.forEach((element) {
-        posts.add(PostModel.fromJson(element.data()));
+        element.reference.collection("Likes").get().then((value) {
+          postsId.add(element.id);
+          posts.add(PostModel.fromJson(element.data()));
+          likes.add(value.docs.length);
+        }).catchError((error) {});
+
         emit(SocialGetPostsSuccessState());
       });
     }).catchError((error) {
       emit(SocialGetPostsErrorState());
+    });
+  }
+
+  void likePost({required String posId}) {
+    FirebaseFirestore.instance
+        .collection("Posts")
+        .doc(posId)
+        .collection("Likes")
+        .doc(userModel.uId)
+        .set({'like': 'tue'}).then((value) {
+      emit(LikePostSuccessState());
+    }).catchError((error) {
+      emit(LikePostErrorState());
     });
   }
 }
