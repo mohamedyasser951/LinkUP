@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:socialapp/modules/chat_details/chat_details.dart';
+import 'package:socialapp/shared/componenet/component.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
@@ -6,20 +8,22 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal:20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: ListView.separated(
-        physics:const BouncingScrollPhysics(),
-        itemBuilder: ((context, index) => buildChatItem()),
-         separatorBuilder: (context, index) => Divider(),
-          itemCount: 20,
+        physics: const BouncingScrollPhysics(),
+        itemBuilder: ((context, index) => buildChatItem(context)),
+        separatorBuilder: (context, index) => Divider(),
+        itemCount: 20,
       ),
     );
   }
 }
 
-Widget buildChatItem() {
+Widget buildChatItem(BuildContext context) {
   return InkWell(
-    onTap: () {},
+    onTap: () {
+      navigateTo(context: context, widget: ChatDetails());
+    },
     child: Row(children: const [
       CircleAvatar(
         radius: 25.0,

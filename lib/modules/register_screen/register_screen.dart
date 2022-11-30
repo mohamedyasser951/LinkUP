@@ -10,6 +10,7 @@ import 'package:socialapp/modules/register_screen/cubit/states.dart';
 import 'package:socialapp/shared/componenet/component.dart';
 import 'package:socialapp/shared/componenet/constant.dart';
 import 'package:socialapp/shared/network/local/shared_helper.dart';
+import 'package:socialapp/shared/style/icon_broken.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({super.key});
@@ -24,7 +25,6 @@ class RegisterScreen extends StatelessWidget {
     return BlocConsumer<CubitRegister, SocialRegisterStates>(
       listener: (context, state) {
         if (state is SocialCreateSuccesState) {
-         
           SharedHelper.saveData(key: "uId", value: state.userModel.uId)
               .then((value) {
             uId = state.userModel.uId;
@@ -44,102 +44,139 @@ class RegisterScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                icon: const Icon(Icons.arrow_back_ios)),
+                icon: const Icon(IconBroken.Arrow___Left_2)),
           ),
-          body: Center(
-              child: SingleChildScrollView(
+          body: SingleChildScrollView(
             child: Form(
-              key: formkey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
-                    child: Text("Hello Register to get \n Started",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                        )),
+          key: formkey,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+             
+                const Padding(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
+                  child: Text("Regitser now ",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                      )),
+                ),
+               
+               
+               
+                CustomizedTextfield(
+                  myController: nameController,
+                  hintText: "Username",
+                  isPassword: false,
+                  prefixIcon: Icons.person,
+                  validator: (val) {
+                    if (val!.isEmpty) {
+                      return "Username must be failed!";
+                    }
+                    return null;
+                  },
+                ),
+                CustomizedTextfield(
+                  myController: emailController,
+                  hintText: "Email",
+                  isPassword: false,
+                  prefixIcon: Icons.email,
+                  validator: (val) {
+                    if (val!.isEmpty) {
+                      return "Email must be failed!";
+                    }
+                    return null;
+                  },
+                ),
+                CustomizedTextfield(
+                  myController: passwordController,
+                  hintText: "Password",
+                  prefixIcon: Icons.lock,
+                  isPassword: cubit.isPassword,
+                  suffixIcon: cubit.sufficIcon,
+                  suffixPressed: () {
+                    cubit.changeVisibility();
+                  },
+                  validator: (val) {
+                    if (val!.isEmpty) {
+                      return "Password must be failed!";
+                    }
+                    return null;
+                  },
+                ),
+                CustomizedTextfield(
+                  myController: phoneController,
+                  hintText: "Phone",
+                  isPassword: false,
+                  prefixIcon: Icons.phone,
+                  validator: (val) {
+                    if (val!.isEmpty) {
+                      return "Phone must be failed!";
+                    }
+                    return null;
+                  },
+                ),
+
+
+
+                ConditionalBuilder(
+                  condition: state is! SocialRegisterLoadingState,
+                  fallback: (context) => const Center(
+                    child: CircularProgressIndicator(),
                   ),
-                  CustomizedTextfield(
-                    myController: nameController,
-                    hintText: "Username",
-                    isPassword: false,
-                    prefixIcon: Icons.person,
-                    validator: (val) {
-                      if (val!.isEmpty) {
-                        return "Username must be failed!";
+                  builder: (context) => CustomizedButton(
+                    buttonColor: Colors.black,
+                    buttonText: "Register",
+                    onPressed: () async {
+                      if (formkey.currentState!.validate()) {
+                        cubit.userRegister(
+                            name: nameController.text,
+                            email: emailController.text,
+                            password: passwordController.text,
+                            phone: phoneController.text);
                       }
-                      return null;
                     },
+                    textColor: Colors.white,
                   ),
-                  CustomizedTextfield(
-                    myController: emailController,
-                    hintText: "Email",
-                    isPassword: false,
-                    prefixIcon: Icons.email,
-                    validator: (val) {
-                      if (val!.isEmpty) {
-                        return "Email must be failed!";
-                      }
-                      return null;
-                    },
-                  ),
-                  CustomizedTextfield(
-                    myController: passwordController,
-                    hintText: "Password",
-                    prefixIcon: Icons.lock,
-                    isPassword: cubit.isPassword,
-                    suffixIcon: cubit.sufficIcon,
-                    suffixPressed: () {
-                      cubit.changeVisibility();
-                    },
-                    validator: (val) {
-                      if (val!.isEmpty) {
-                        return "Password must be failed!";
-                      }
-                      return null;
-                    },
-                  ),
-                  CustomizedTextfield(
-                    myController: phoneController,
-                    hintText: "Phone",
-                    isPassword: false,
-                    prefixIcon: Icons.phone,
-                    validator: (val) {
-                      if (val!.isEmpty) {
-                        return "Phone must be failed!";
-                      }
-                      return null;
-                    },
-                  ),
-                  ConditionalBuilder(
-                    condition: state is! SocialRegisterLoadingState,
-                    fallback: (context) => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                    builder: (context) => CustomizedButton(
-                      buttonColor: Colors.black,
-                      buttonText: "Register",
-                      onPressed: () async {
-                        if (formkey.currentState!.validate()) {
-                          cubit.userRegister(
-                              name: nameController.text,
-                              email: emailController.text,
-                              password: passwordController.text,
-                              phone: phoneController.text);
-                        }
-                      },
-                      textColor: Colors.white,
-                    ),
-                  )
-                ],
-              ),
+                ),
+
+
+                    const Center(child: Text("Or Register with")),
+
+                    Padding(
+                   padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 20),
+                   child: Row(
+                     children: [
+                       Expanded(
+                           child: AppOutlineButton(
+                               asset: "assets/images/google.png",
+                               onTap: () {})),
+                       const SizedBox(width: 12),
+                       Expanded(
+                           child: AppOutlineButton(
+                               asset: "assets/images/facebook.png",
+                               onTap: () {})),
+                       const SizedBox(width: 12),
+                       Expanded(
+                           child: AppOutlineButton(
+                               asset: "assets/images/apple.png",
+                               onTap: () {}))
+                     ],
+                   ),
+                 ),
+
+
+
+
+              ],
             ),
-          )),
+          ),
+            ),
+          ),
         );
       },
     );

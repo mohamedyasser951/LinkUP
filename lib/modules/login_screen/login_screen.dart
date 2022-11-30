@@ -1,6 +1,7 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:socialapp/layout/home_layout.dart';
 import 'package:socialapp/modules/login_screen/cubit/cubit.dart';
 import 'package:socialapp/modules/login_screen/cubit/states.dart';
@@ -120,107 +121,52 @@ class LoginScreen extends StatelessWidget {
                               },
                             ),
                           ),
-                          // Padding(
-                          //   padding: const EdgeInsets.all(10.0),
-                          //   child: Row(
-                          //     children: [
-                          //       Container(
-                          //         height: 1,
-                          //         width:
-                          //             MediaQuery.of(context).size.height * 0.18,
-                          //         color: Colors.grey,
-                          //       ),
-                          //       const Text("Or Login with"),
-                          //       Container(
-                          //         height: 1,
-                          //         width:
-                          //             MediaQuery.of(context).size.height * 0.18,
-                          //         color: Colors.grey,
-                          //       ),
-                          //     ],
-                          //   ),
-                          // ),
-                          // Padding(
-                          //   padding: const EdgeInsets.all(8.0),
-                          //   child: Row(
-                          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          //     children: [
-                          //       Container(
-                          //           height: 50,
-                          //           width: 100,
-                          //           decoration: BoxDecoration(
-                          //             border: Border.all(
-                          //                 color: Colors.black, width: 1),
-                          //             borderRadius: BorderRadius.circular(10),
-                          //           ),
-                          //           child: IconButton(
-                          //             icon: const Icon(
-                          //               FontAwesomeIcons.facebookF,
-                          //               color: Colors.blue,
-                          //             ),
-                          //             onPressed: () {},
-                          //           )),
-                          //       Container(
-                          //         height: 50,
-                          //         width: 100,
-                          //         decoration: BoxDecoration(
-                          //           border: Border.all(
-                          //               color: Colors.black, width: 1),
-                          //           borderRadius: BorderRadius.circular(10),
-                          //         ),
-                          //         child: IconButton(
-                          //           icon:  const Icon(
-                          //             FontAwesomeIcons.google,
-
-                          //           ),
-                          //           onPressed: () async {},
-                          //         ),
-                          //       ),
-                          //       Container(
-                          //           height: 50,
-                          //           width: 100,
-                          //           decoration: BoxDecoration(
-                          //             border: Border.all(
-                          //                 color: Colors.black, width: 1),
-                          //             borderRadius: BorderRadius.circular(10),
-                          //           ),
-                          //           child: IconButton(
-                          //             icon: const Icon(
-                          //               FontAwesomeIcons.apple,
-
-                          //             ),
-                          //             onPressed: () {},
-                          //           ))
-                          //     ],
-                          //   ),
-                          // ),
-                          const SizedBox(
-                            height: 100,
+                          const Center(child: Text("Or Login with")),
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 20.0, horizontal: 20.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      child: AppOutlineButton(
+                                          asset: "assets/images/google.png",
+                                          onTap: () {})),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                      child: AppOutlineButton(
+                                          asset: "assets/images/facebook.png",
+                                          onTap: () {})),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                      child: AppOutlineButton(
+                                          asset: "assets/images/apple.png",
+                                          onTap: () {}))
+                                ],
+                              ),
+                            ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(48, 8, 8, 8.0),
-                            child: Row(
-                              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text("Don't have an account?",
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text("Don't have an account?",
+                                  style: TextStyle(
+                                    color: Color(0xff1E232C),
+                                    fontSize: 15,
+                                  )),
+                              TextButton(
+                                onPressed: (() {
+                                  navigateTo(
+                                      context: context,
+                                      widget: RegisterScreen());
+                                }),
+                                child: const Text("  Register Now",
                                     style: TextStyle(
-                                      color: Color(0xff1E232C),
+                                      color: Colors.grey,
                                       fontSize: 15,
                                     )),
-                                TextButton(
-                                  onPressed: (() {
-                                    navigateTo(
-                                        context: context,
-                                        widget: RegisterScreen());
-                                  }),
-                                  child: Text("  Register Now",
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 15,
-                                      )),
-                                )
-                              ],
-                            ),
+                              )
+                            ],
                           ),
                         ]),
                   ),

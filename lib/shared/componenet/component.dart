@@ -10,7 +10,7 @@ class CustomizedTextfield extends StatelessWidget {
   final Function? suffixPressed;
   final String? Function(String? val) validator;
   final IconData? suffixIcon;
-   final IconData? prefixIcon;
+  final IconData? prefixIcon;
   const CustomizedTextfield(
       {Key? key,
       required this.myController,
@@ -18,7 +18,9 @@ class CustomizedTextfield extends StatelessWidget {
       this.isPassword,
       this.suffixIcon,
       this.suffixPressed,
-      required this.validator, this.prefixIcon, this.label})
+      required this.validator,
+      this.prefixIcon,
+      this.label})
       : super(key: key);
 
   @override
@@ -27,22 +29,23 @@ class CustomizedTextfield extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child: TextFormField(
         validator: validator,
-        
+        controller: myController,
         keyboardType: isPassword!
             ? TextInputType.visiblePassword
             : TextInputType.emailAddress,
         enableSuggestions: isPassword! ? false : true,
         autocorrect: isPassword! ? false : true,
         obscureText: isPassword ?? true,
-        controller: myController,
         decoration: InputDecoration(
           prefixIcon: Icon(prefixIcon),
-          suffixIcon: IconButton(
-            icon: Icon(suffixIcon, color: Colors.grey),
-            onPressed: () {
-              suffixPressed!();
-            },
-          ),
+          suffixIcon: suffixIcon != null
+              ? IconButton(
+                  icon: Icon(suffixIcon, color: Colors.grey),
+                  onPressed: () {
+                    suffixPressed!();
+                  },
+                )
+              : null,
           enabledBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: Color(0xffE8ECF4), width: 1),
               borderRadius: BorderRadius.circular(10)),
@@ -52,12 +55,8 @@ class CustomizedTextfield extends StatelessWidget {
           fillColor: const Color(0xffE8ECF4),
           filled: true,
           hintText: hintText,
-         // labelText: label,
-          //label: Text(label!),
           border: OutlineInputBorder(
-            
             borderRadius: BorderRadius.circular(10),
-            
           ),
         ),
       ),
@@ -104,6 +103,29 @@ class CustomizedButton extends StatelessWidget {
   }
 }
 
+
+
+class AppOutlineButton extends StatelessWidget {
+  final String asset;
+  final VoidCallback onTap;
+
+  AppOutlineButton({required this.asset, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      onPressed: () => onTap,
+      child: Padding(
+        padding: EdgeInsets.all(12),
+        child: Image.asset(
+          asset,
+          height: 24,
+        ),
+      ),
+    );
+
+  }
+}
 navigateTo({required BuildContext context, required Widget widget}) {
   Navigator.of(context).push(MaterialPageRoute(builder: ((context) => widget)));
 }
@@ -156,7 +178,10 @@ PreferredSizeWidget CustomizedAppBar(
         List<Widget>? actions}) =>
     AppBar(
       titleSpacing: 1,
-      title: Text(title,style: const TextStyle(color: Colors.black),),
+      title: Text(
+        title,
+        style: const TextStyle(color: Colors.black),
+      ),
       actions: actions,
       leading: IconButton(
         icon: const Icon(IconBroken.Arrow___Left_2),

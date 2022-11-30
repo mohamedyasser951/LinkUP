@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
       builder: (context, state) {
         var cubit = HomeLayoutCubit.get(context);
         return ConditionalBuilder(
-            condition: cubit.posts.length != 0 ,
+            condition: cubit.posts.length > 0 ,
             builder: (context) {
               return SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
