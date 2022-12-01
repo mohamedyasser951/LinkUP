@@ -26,7 +26,7 @@ class CustomizedTextfield extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.symmetric(horizontal:10.0,vertical: 5.0),
       child: TextFormField(
         validator: validator,
         controller: myController,
@@ -116,7 +116,7 @@ class AppOutlineButton extends StatelessWidget {
     return OutlinedButton(
       onPressed: () => onTap,
       child: Padding(
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         child: Image.asset(
           asset,
           height: 24,

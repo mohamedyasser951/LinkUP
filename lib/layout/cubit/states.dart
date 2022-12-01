@@ -1,4 +1,3 @@
-import 'package:socialapp/layout/cubit/cubit.dart';
 
 class HomeLayoutStates {}
 
@@ -14,6 +13,14 @@ class SocialGetUserLoadingState extends HomeLayoutStates {}
 class SocialGetUserSucessState extends HomeLayoutStates {}
 
 class SocialGetUserErrorState extends HomeLayoutStates {}
+
+
+//GetAllUsersStates
+class SocialGetAllUsersLoadingState extends HomeLayoutStates {}
+
+class SocialGetAllUsersSuccessState extends HomeLayoutStates {}
+
+class SocialGetAllUsersErrorState extends HomeLayoutStates {}
 
 //New Post
 class SocialNewPostAtate extends HomeLayoutStates {}
@@ -79,6 +86,12 @@ class SocialGetPostsErrorState extends HomeLayoutIntialState{}
 class LikePostSuccessState extends HomeLayoutIntialState{}
 class LikePostErrorState extends HomeLayoutIntialState{}
 
+// send and recieve message
+
+class SocialSendMessageSuccessState extends HomeLayoutIntialState{}
+class SocialSendMessageErrorState extends HomeLayoutIntialState{}
+
+class SocialRecieveMessageSuccessState extends HomeLayoutIntialState{}
 
 
 

@@ -1,4 +1,9 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:socialapp/layout/cubit/cubit.dart';
+import 'package:socialapp/layout/cubit/states.dart';
+import 'package:socialapp/models/user_model.dart';
 import 'package:socialapp/modules/chat_details/chat_details.dart';
 import 'package:socialapp/shared/componenet/component.dart';
 
@@ -7,33 +12,46 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: ListView.separated(
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: ((context, index) => buildChatItem(context)),
-        separatorBuilder: (context, index) => Divider(),
-        itemCount: 20,
-      ),
+    return BlocConsumer<HomeLayoutCubit, HomeLayoutStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        var cubit = HomeLayoutCubit.get(context);
+
+        return ConditionalBuilder(
+          condition: cubit.users.length > 0,
+          builder: (context) => ListView.separated(
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: ((context, index) =>
+                buildChatItem(cubit.users[index], context)),
+            separatorBuilder: (context, index) => const Divider(),
+            itemCount: cubit.users.length,
+          ),
+          fallback: (context) => const Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+      },
     );
   }
 }
 
-Widget buildChatItem(BuildContext context) {
+Widget buildChatItem(UserModel model, BuildContext context) {
   return InkWell(
     onTap: () {
-      navigateTo(context: context, widget: ChatDetails());
+      navigateTo(context: context, widget:  ChatDetails(userModel: model,));
     },
-    child: Row(children: const [
-      CircleAvatar(
-        radius: 25.0,
-        backgroundImage: NetworkImage(
-            "https://img.freepik.com/free-photo/no-problem-concept-bearded-man-makes-okay-gesture-has-everything-control-all-fine-gesture-wears-spectacles-jumper-poses-against-pink-wall-says-i-got-this-guarantees-something_273609-42817.jpg?w=1060&t=st=1669253501~exp=1669254101~hmac=2e49622bc5c2dc445d3b7cb1a023d08ad7709fa6af328387719fff7a9345e32d"),
-      ),
-      SizedBox(
-        width: 10.0,
-      ),
-      Text("Ahamed Yasser"),
-    ]),
+    child: Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Row(children: [
+        CircleAvatar(
+          radius: 25.0,
+          backgroundImage: NetworkImage("${model.image}"),
+        ),
+        const SizedBox(
+          width: 10.0,
+        ),
+        Text("${model.name}"),
+      ]),
+    ),
   );
 }

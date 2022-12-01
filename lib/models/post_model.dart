@@ -28,11 +28,10 @@ class PostModel {
     return {
       "name": name,
       "uId": uId,
-      "image":image,
+      "image": image,
       "text": text,
       "postImage": postImage,
       "dateTime": dateTime,
-      
     };
   }
 }
