@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socialapp/layout/cubit/cubit.dart';
@@ -12,7 +13,6 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-     
       return BlocConsumer<HomeLayoutCubit, HomeLayoutStates>(
         listener: ((context, state) {}),
         builder: ((context, state) {
@@ -20,7 +20,7 @@ class ProfileScreen extends StatelessWidget {
 
           return Scaffold(
             body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal:8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Column(
                 children: [
                   Container(
@@ -33,24 +33,22 @@ class ProfileScreen extends StatelessWidget {
                           child: Container(
                             width: double.infinity,
                             height: 150.0,
-                            decoration:  BoxDecoration(
-                              borderRadius:const BorderRadius.only(
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(4),
                                   topRight: Radius.circular(4)),
                               image: DecorationImage(
                                   fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                      "${model.cover}")),
+                                  image: NetworkImage("${model.cover}")),
                             ),
                           ),
                         ),
                         CircleAvatar(
                           backgroundColor: Theme.of(context).backgroundColor,
                           radius: 64.0,
-                          child:  CircleAvatar(
+                          child: CircleAvatar(
                             radius: 60.0,
-                            backgroundImage: NetworkImage(
-                                "${model.image}"),
+                            backgroundImage: NetworkImage("${model.image}"),
                           ),
                         )
                       ],
@@ -161,7 +159,22 @@ class ProfileScreen extends StatelessWidget {
                             ))
                       ],
                     ),
-                  )
+                  ),
+                  // Row(
+                  //   children: [
+                  //     OutlinedButton(
+                  //         onPressed: () {
+                  //           FirebaseMessaging.instance.subscribeToTopic("News");
+                  //         },
+                  //         child: Text("Subscripe")),
+                  //     Spacer(),
+                  //     OutlinedButton(
+                  //         onPressed: () {
+                  //           FirebaseMessaging.instance.unsubscribeFromTopic("News");
+                  //         },
+                  //         child: Text("Subscripe")),
+                  //   ],
+                  // ),
                 ],
               ),
             ),

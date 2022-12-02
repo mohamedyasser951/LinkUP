@@ -74,7 +74,7 @@ class ChatDetails extends StatelessWidget {
                 children: [
                   Expanded(
                       child: ListView.separated(
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
                      
                       if (cubit.userModel.uId == cubit.messages[index].sendId) {
