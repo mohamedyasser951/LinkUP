@@ -9,6 +9,8 @@ class OnBoardingModel {
 }
 
 class OnBoardingScreen extends StatefulWidget {
+
+ 
    OnBoardingScreen({super.key});
   // List<OnBoardingModel> boardingData = [
   //   OnBoardingModel(image,"Share your Thought", subTitle),
@@ -21,8 +23,23 @@ class OnBoardingScreen extends StatefulWidget {
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
+
+   PageController pageController =PageController();
+  bool isLast = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Column(
+      children: [
+        Expanded(child: 
+          PageView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: 3,
+            controller: pageController,
+            itemBuilder: ((context, index) => Container()))
+        ),
+      ],
+    );
   }
 }
+
+
