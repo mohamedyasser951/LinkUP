@@ -1,13 +1,19 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:socialapp/layout/cubit/cubit.dart';
 import 'package:socialapp/layout/cubit/states.dart';
 import 'package:socialapp/models/post_model.dart';
+import 'package:socialapp/modules/comment_page/comment_page.dart';
+import 'package:socialapp/shared/componenet/component.dart';
 import 'package:socialapp/shared/style/icon_broken.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  var refreshController1 = RefreshController();
 
   @override
   Widget build(BuildContext context) {
@@ -15,54 +21,61 @@ class HomeScreen extends StatelessWidget {
       listener: ((context, state) {}),
       builder: (context, state) {
         var cubit = HomeLayoutCubit.get(context);
+        var posts = HomeLayoutCubit.get(context).posts;
+
         return ConditionalBuilder(
-            condition: cubit.posts.length >0 ,
+            condition: posts.isNotEmpty,
             builder: (context) {
-              return SingleChildScrollView(
+              return SmartRefresher(
+                controller: refreshController1,
                 physics: const BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Card(
-                      clipBehavior: Clip.antiAlias,
-                      margin: const EdgeInsets.all(8.0),
-                      elevation: 5.0,
-                      child: Stack(
-                        alignment: AlignmentDirectional.bottomEnd,
-                        children: [
-                          const Image(
-                              height: 200,
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                              image: NetworkImage(
-                                  "https://img.freepik.com/free-photo/positive-european-male-model-points-right-with-both-index-fingers-suggets-try-use-product-turns-aside_273609-38445.jpg?size=626&ext=jpg")),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Communicate with Friends",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1!
-                                  .copyWith(color: Colors.white),
-                            ),
-                          )
-                        ],
+                onRefresh: () => _onRefresh(context),
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Card(
+                        clipBehavior: Clip.antiAlias,
+                        margin: const EdgeInsets.all(8.0),
+                        elevation: 5.0,
+                        child: Stack(
+                          alignment: AlignmentDirectional.bottomEnd,
+                          children: [
+                            const Image(
+                                height: 200,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                image: NetworkImage(
+                                    "https://img.freepik.com/free-photo/positive-european-male-model-points-right-with-both-index-fingers-suggets-try-use-product-turns-aside_273609-38445.jpg?size=626&ext=jpg")),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Communicate with Friends",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1!
+                                    .copyWith(color: Colors.white),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                    ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: cubit.posts.length,
-                      separatorBuilder: (context, index) => const SizedBox(
-                        height: 8.0,
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: cubit.posts.length,
+                        separatorBuilder: (context, index) => const SizedBox(
+                          height: 8.0,
+                        ),
+                        itemBuilder: (context, index) =>
+                            buildPostItem(index, cubit.posts[index], context),
                       ),
-                      itemBuilder: (context, index) =>
-                          buildPostItem(index, cubit.posts[index], context),
-                    ),
-                    SizedBox(
-                      height: 300.0,
-                    ),
-                  ],
+                      SizedBox(
+                        height: 300.0,
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
@@ -71,6 +84,14 @@ class HomeScreen extends StatelessWidget {
                 )));
       },
     );
+  }
+
+  void _onRefresh(BuildContext context) async {
+    Future.delayed(const Duration(seconds: 1)).then((value) {
+      HomeLayoutCubit.get(context).getUserData();
+      HomeLayoutCubit.get(context).getPosts();
+      refreshController1.refreshCompleted();
+    });
   }
 }
 
@@ -284,17 +305,17 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) => Card(
                 ),
                 const Spacer(),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    navigateTo(context: context, widget: CommentScreen());
+                  },
                   child: Row(
                     children: [
-                      Icon(
+                      const Icon(
                         IconBroken.Chat,
                         color: Colors.amber,
                         size: 18,
                       ),
-                      SizedBox(
-                        width: 4.0,
-                      ),
+                      const SizedBox(width: 4.0,),
                       Text(
                         "0 comment",
                         style: Theme.of(context).textTheme.caption,

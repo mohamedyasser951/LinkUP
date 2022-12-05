@@ -297,7 +297,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
         .doc(posId)
         .collection("Likes")
         .doc(userModel.uId)
-        .set({'like': 'tue'}).then((value) {
+        .set({'like': 'true'}).then((value) {
       emit(LikePostSuccessState());
     }).catchError((error) {
       emit(LikePostErrorState());
