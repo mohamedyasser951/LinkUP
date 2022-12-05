@@ -6,6 +6,7 @@ import 'package:socialapp/layout/cubit/cubit.dart';
 import 'package:socialapp/layout/home_layout.dart';
 import 'package:socialapp/modules/login_screen/cubit/cubit.dart';
 import 'package:socialapp/modules/login_screen/login_screen.dart';
+import 'package:socialapp/modules/on_boarding/on_boarding.dart';
 import 'package:socialapp/modules/register_screen/cubit/cubit.dart';
 import 'package:socialapp/shared/componenet/component.dart';
 import 'package:socialapp/shared/componenet/constant.dart';
@@ -26,6 +27,7 @@ void main() async {
   await SharedHelper.init();
 
   var token = await FirebaseMessaging.instance.getToken();
+
   print("token is ${token}");
 
   //foreground fcm
@@ -39,7 +41,7 @@ void main() async {
     customizedToast(
         message: "On meessageOpenedApp", toastState: ToastState.SUCESS);
 
-         print("meessageOpenedApp ${event.data}");
+    print("meessageOpenedApp ${event.data}");
   });
 
   //background fcm
@@ -47,13 +49,17 @@ void main() async {
 
   Bloc.observer = MyBlocObserver();
   uId = SharedHelper.getData("uId");
+  var onBoarding = await SharedHelper.getData("onBoarding");
 
   Widget StartWidget;
-
-  if (uId != null) {
-    StartWidget = HomeLayout();
+  if (onBoarding != null) {
+    if (uId != null) {
+      StartWidget = HomeLayout();
+    } else {
+      StartWidget = LoginScreen();
+    }
   } else {
-    StartWidget = LoginScreen();
+    StartWidget = OnBoardingScreen();
   }
 
   runApp(MyApp(
@@ -80,7 +86,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: Themes.lightTheme,
-        home: startWidget,
+        home: OnBoardingScreen(),
       ),
     );
   }
