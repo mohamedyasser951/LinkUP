@@ -43,18 +43,18 @@ class AddPost extends StatelessWidget {
                       child:  LinearProgressIndicator(),
                     ),
                   Row(
-                    children: const [
+                    children:  [
                       CircleAvatar(
                         radius: 25.0,
                         backgroundImage: NetworkImage(
-                            "https://img.freepik.com/free-photo/no-problem-concept-bearded-man-makes-okay-gesture-has-everything-control-all-fine-gesture-wears-spectacles-jumper-poses-against-pink-wall-says-i-got-this-guarantees-something_273609-42817.jpg?w=1060&t=st=1669253501~exp=1669254101~hmac=2e49622bc5c2dc445d3b7cb1a023d08ad7709fa6af328387719fff7a9345e32d"),
-                      ),
-                      SizedBox(
+                            "${cubit.userModel.image}"
+                        ),),
+                     const SizedBox(
                         width: 15.0,
                       ),
                       Text(
-                        "Mohamed Yasser",
-                        style: TextStyle(height: 1.4),
+                        "${cubit.userModel.name}",
+                        style:const TextStyle(height: 1.4),
                       ),
                     ],
                   ),
@@ -90,7 +90,7 @@ class AddPost extends StatelessWidget {
                                   cubit.removePostImage();
                                 },
                                 icon: const CircleAvatar(
-
+                          
                                   radius: 20,
                                   backgroundColor: Colors.white,
                                   child: Icon(Icons.close,size: 18,),

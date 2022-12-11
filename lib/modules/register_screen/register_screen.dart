@@ -46,10 +46,10 @@ class RegisterScreen extends StatelessWidget {
                 },
                 icon: const Icon(IconBroken.Arrow___Left_2)),
           ),
-          body: SingleChildScrollView(
-            child: Form(
+          body: Form(
           key: formkey,
           child: SingleChildScrollView(
+          child: Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -57,8 +57,8 @@ class RegisterScreen extends StatelessWidget {
              
                 const Padding(
                   padding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
-                  child: Text("Regitser now ",
+                      EdgeInsets.symmetric(vertical: 30.0, horizontal: 10),
+                  child: Text("Sign Up ",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 28,
@@ -130,7 +130,7 @@ class RegisterScreen extends StatelessWidget {
                   ),
                   builder: (context) => CustomizedButton(
                     buttonColor: Colors.black,
-                    buttonText: "Register",
+                    buttonText: "Sign Up",
                     onPressed: () async {
                       if (formkey.currentState!.validate()) {
                         cubit.userRegister(
@@ -145,7 +145,7 @@ class RegisterScreen extends StatelessWidget {
                 ),
 
 
-                    const Center(child: Text("Or Register with")),
+                    const Center(child: Text("Or Sign Up with")),
 
                     Padding(
                    padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 20),
@@ -175,7 +175,7 @@ class RegisterScreen extends StatelessWidget {
               ],
             ),
           ),
-            ),
+          ),
           ),
         );
       },

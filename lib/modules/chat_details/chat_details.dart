@@ -17,17 +17,23 @@ class ChatDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
+    return Builder(
+      builder: (context) {
       HomeLayoutCubit.get(context).getMessages(userModel.uId);
+
       return BlocConsumer<HomeLayoutCubit, HomeLayoutStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is SocialSendMessageSuccessState) {
+            messageController.text = "";
+          }
+        },
         builder: ((context, state) {
           var cubit = HomeLayoutCubit.get(context);
-          HomeLayoutCubit.get(context).getMessages(userModel.uId);
+          // HomeLayoutCubit.get(context).getMessages(userModel.uId);
           return Scaffold(
             appBar: AppBar(
                 leading: IconButton(
-                  icon: Icon(IconBroken.Arrow___Left_2),
+                  icon: const Icon(IconBroken.Arrow___Left_2),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -76,11 +82,13 @@ class ChatDetails extends StatelessWidget {
                       child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
-                     
-                      if (cubit.userModel.uId == cubit.messages[index].sendId) {
-                        return buildMyChatItem(cubit.messages[index]);
-                      }
-                      return buildChatItem(cubit.messages[index]);
+                      var chats = cubit.messages[index];
+                      customizedToast(
+                          message: "${cubit.messages.length}" ?? "1",
+                          toastState: ToastState.SUCESS);
+                      return cubit.userModel.uId == chats.sendId
+                          ? buildMyChatItem(cubit.messages[index])
+                          : buildChatItem(cubit.messages[index]);
                     },
                     separatorBuilder: (context, index) => const SizedBox(
                       height: 12.0,
@@ -151,7 +159,7 @@ class ChatDetails extends StatelessWidget {
 Widget buildChatItem(MessageModel model) => Align(
       alignment: AlignmentDirectional.centerStart,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
         decoration: BoxDecoration(
           color: Colors.grey[300],
           borderRadius: const BorderRadiusDirectional.only(
@@ -169,7 +177,7 @@ Widget buildMyChatItem(MessageModel model) => Align(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
         decoration: const BoxDecoration(
-          color: Color.fromARGB(255, 169, 194, 215),
+          color: Colors.blueAccent,
           borderRadius: BorderRadiusDirectional.only(
             bottomEnd: Radius.circular(10),
             bottomStart: Radius.circular(10),

@@ -87,7 +87,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
   ];
 
   List<String> titles = [
-    "Home",
+    "Feeds",
     "Chats",
     "addPost",
     "UsersScreen",
@@ -362,7 +362,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
       event.docs.forEach((element) {
         print("this is get messages methode");
         messages.add(MessageModel.fromJson(element.data()));
-        emit(SocialRecieveMessageSuccessState());
+        //emit(SocialRecieveMessageSuccessState());
        
       });
     });

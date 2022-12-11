@@ -65,77 +65,77 @@ class ProfileScreen extends StatelessWidget {
                     "${model.bio}",
                     style: Theme.of(context).textTheme.caption,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                            child: InkWell(
-                          onTap: () {},
-                          child: Column(
-                            children: [
-                              Text(
-                                "100",
-                                style: Theme.of(context).textTheme.subtitle1,
-                              ),
-                              Text(
-                                "Posts",
-                                style: Theme.of(context).textTheme.caption,
-                              ),
-                            ],
-                          ),
-                        )),
-                        Expanded(
-                            child: InkWell(
-                          onTap: () {},
-                          child: Column(
-                            children: [
-                              Text(
-                                "265",
-                                style: Theme.of(context).textTheme.subtitle1,
-                              ),
-                              Text(
-                                "Photo",
-                                style: Theme.of(context).textTheme.caption,
-                              ),
-                            ],
-                          ),
-                        )),
-                        Expanded(
-                            child: InkWell(
-                          onTap: () {},
-                          child: Column(
-                            children: [
-                              Text(
-                                "10k",
-                                style: Theme.of(context).textTheme.subtitle1,
-                              ),
-                              Text(
-                                "Followers",
-                                style: Theme.of(context).textTheme.caption,
-                              ),
-                            ],
-                          ),
-                        )),
-                        Expanded(
-                            child: InkWell(
-                          onTap: () {},
-                          child: Column(
-                            children: [
-                              Text(
-                                "67",
-                                style: Theme.of(context).textTheme.subtitle1,
-                              ),
-                              Text(
-                                "Following",
-                                style: Theme.of(context).textTheme.caption,
-                              ),
-                            ],
-                          ),
-                        )),
-                      ],
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  //   child: Row(
+                  //     children: [
+                  //       Expanded(
+                  //           child: InkWell(
+                  //         onTap: () {},
+                  //         child: Column(
+                  //           children: [
+                  //             Text(
+                  //               "100",
+                  //               style: Theme.of(context).textTheme.subtitle1,
+                  //             ),
+                  //             Text(
+                  //               "Posts",
+                  //               style: Theme.of(context).textTheme.caption,
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       )),
+                  //       Expanded(
+                  //           child: InkWell(
+                  //         onTap: () {},
+                  //         child: Column(
+                  //           children: [
+                  //             Text(
+                  //               "265",
+                  //               style: Theme.of(context).textTheme.subtitle1,
+                  //             ),
+                  //             Text(
+                  //               "Photo",
+                  //               style: Theme.of(context).textTheme.caption,
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       )),
+                  //       Expanded(
+                  //           child: InkWell(
+                  //         onTap: () {},
+                  //         child: Column(
+                  //           children: [
+                  //             Text(
+                  //               "10k",
+                  //               style: Theme.of(context).textTheme.subtitle1,
+                  //             ),
+                  //             Text(
+                  //               "Followers",
+                  //               style: Theme.of(context).textTheme.caption,
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       )),
+                  //       Expanded(
+                  //           child: InkWell(
+                  //         onTap: () {},
+                  //         child: Column(
+                  //           children: [
+                  //             Text(
+                  //               "67",
+                  //               style: Theme.of(context).textTheme.subtitle1,
+                  //             ),
+                  //             Text(
+                  //               "Following",
+                  //               style: Theme.of(context).textTheme.caption,
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       )),
+                  //     ],
+                  //   ),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Row(

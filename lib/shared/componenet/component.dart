@@ -26,7 +26,7 @@ class CustomizedTextfield extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal:10.0,vertical: 5.0),
+      padding: const EdgeInsets.symmetric(horizontal:10.0,vertical: 10.0),
       child: TextFormField(
         validator: validator,
         controller: myController,
@@ -46,18 +46,16 @@ class CustomizedTextfield extends StatelessWidget {
                   },
                 )
               : null,
-          enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Color(0xffE8ECF4), width: 1),
-              borderRadius: BorderRadius.circular(10)),
-          focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Color(0xffE8ECF4), width: 1),
-              borderRadius: BorderRadius.circular(10)),
-          fillColor: const Color(0xffE8ECF4),
-          filled: true,
+          // enabledBorder: OutlineInputBorder(
+          //     borderSide: const BorderSide(color: Color(0xffE8ECF4), width: 1),
+          //     borderRadius: BorderRadius.circular(10)),
+          // focusedBorder: OutlineInputBorder(
+          //     borderSide: const BorderSide(color: Color(0xffE8ECF4), width: 1),
+          //     borderRadius: BorderRadius.circular(10)),
+          // fillColor: const Color(0xffE8ECF4),
+          // filled: true,
           hintText: hintText,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
+          border:const UnderlineInputBorder()
         ),
       ),
     );
@@ -84,7 +82,7 @@ class CustomizedButton extends StatelessWidget {
       child: InkWell(
         onTap: onPressed,
         child: Container(
-            height: 55,
+            height: 50,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 color: buttonColor,

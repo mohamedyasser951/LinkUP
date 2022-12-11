@@ -49,7 +49,7 @@ class LoginScreen extends StatelessWidget {
                         const Padding(
                           padding: EdgeInsets.symmetric(
                               vertical: 30.0, horizontal: 10),
-                          child: Text("Welcome Back! Glad \nto see you again",
+                          child: Text("Sign In",
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 28,
@@ -109,7 +109,7 @@ class LoginScreen extends StatelessWidget {
                             child: CircularProgressIndicator(),
                           ),
                           builder: (context) => CustomizedButton(
-                            buttonText: "Login",
+                            buttonText: "Sign In",
                             buttonColor: Color.fromARGB(255, 0, 0, 0),
                             textColor: Colors.white,
                             onPressed: () async {
@@ -120,7 +120,7 @@ class LoginScreen extends StatelessWidget {
                             },
                           ),
                         ),
-                        const Center(child: Text("Or Login with")),
+                        const Center(child: Text("Or Sign In with")),
                         Center(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
@@ -159,7 +159,7 @@ class LoginScreen extends StatelessWidget {
                                     context: context,
                                     widget: RegisterScreen());
                               }),
-                              child: const Text("  Register Now",
+                              child: const Text("Sign Up",
                                   style: TextStyle(
                                     color: Colors.grey,
                                     fontSize: 15,

@@ -85,8 +85,19 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: Themes.lightTheme,
-        home: OnBoardingScreen(),
+        
+        theme: ThemeData(
+          primaryColor: Color(0xFF167473),
+          primarySwatch: Colors.teal,
+          backgroundColor: Colors.white,
+          appBarTheme: AppBarTheme(
+            backgroundColor: Colors.white,
+            
+            elevation: 0.0,
+            iconTheme: IconThemeData(color: Colors.black)
+          )
+        ),
+        home: startWidget,
       ),
     );
   }

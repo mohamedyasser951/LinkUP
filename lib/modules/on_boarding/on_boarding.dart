@@ -89,7 +89,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       submitStateOfOnBoarding();
                     } else {
                       pageController.nextPage(
-                          duration: Duration(microseconds: 750),
+                          duration: Duration(microseconds: 300),
                           curve: Curves.fastLinearToSlowEaseIn);
                     }
                   },
