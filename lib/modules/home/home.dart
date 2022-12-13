@@ -1,4 +1,5 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -19,6 +20,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
      
+
       return BlocConsumer<HomeLayoutCubit, HomeLayoutStates>(
         listener: ((context, state) {}),
         builder: (context, state) {
@@ -26,7 +28,7 @@ class HomeScreen extends StatelessWidget {
           var posts = HomeLayoutCubit.get(context).posts;
 
           return ConditionalBuilder(
-              condition: posts.isNotEmpty,
+              condition: posts.length>0 && cubit.userModel !=null,
               builder: (context) {
                 return SmartRefresher(
                   controller: refreshController1,
@@ -81,8 +83,11 @@ class HomeScreen extends StatelessWidget {
                   ),
                 );
               },
-              fallback: ((context) => const Center(
-                    child: CircularProgressIndicator(),
+              fallback: ((context) => Center(
+                    child: CupertinoActivityIndicator(
+                      radius: 12,
+                      color: Theme.of(context).primaryColor,
+                    ),
                   )));
         },
       );
@@ -153,7 +158,7 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) => Card(
                   ))
             ],
           ),
-        //  Divider(color: Colors.grey,),
+          //  Divider(color: Colors.grey,),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Text(
@@ -161,7 +166,7 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) => Card(
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),
-         
+
           if (model.postImage != '')
             Container(
               height: 140,
@@ -170,11 +175,12 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) => Card(
                     fit: BoxFit.cover,
                     image: NetworkImage("${model.postImage}")),
               ),
-           
             ),
-         Divider(color: Colors.grey,),
+          Divider(
+            color: Colors.grey,
+          ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 10),
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -201,7 +207,6 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) => Card(
                     ],
                   ),
                 ),
-                
                 InkWell(
                   onTap: () {
                     navigateTo(context: context, widget: CommentScreen());
@@ -223,10 +228,7 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) => Card(
                     ],
                   ),
                 ),
-            
-                
-            
-                 InkWell(
+                InkWell(
                   onTap: () {
                     HomeLayoutCubit.get(context).likePost(
                         posId: HomeLayoutCubit.get(context).postsId[index]);
@@ -248,11 +250,12 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) => Card(
                     ],
                   ),
                 ),
-              
               ],
             ),
           ),
-         Divider(color: Colors.grey,),
+          Divider(
+            color: Colors.grey,
+          ),
           Row(
             children: [
               Expanded(
@@ -279,7 +282,6 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) => Card(
                   onTap: () {},
                 ),
               ),
-              
             ],
           ),
         ]),
