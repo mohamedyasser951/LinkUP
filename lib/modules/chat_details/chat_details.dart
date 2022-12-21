@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socialapp/layout/cubit/cubit.dart';
 import 'package:socialapp/layout/cubit/states.dart';
@@ -17,8 +15,7 @@ class ChatDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (context) {
+    return Builder(builder: (context) {
       HomeLayoutCubit.get(context).getMessages(userModel.uId);
 
       return BlocConsumer<HomeLayoutCubit, HomeLayoutStates>(
@@ -84,9 +81,9 @@ class ChatDetails extends StatelessWidget {
                     itemBuilder: (context, index) {
                       var chats = cubit.messages[index];
                       customizedToast(
-                          message: "${cubit.messages.length}" ?? "1",
+                          message: "${cubit.messages.length}",
                           toastState: ToastState.SUCESS);
-                      return cubit.userModel.uId == chats.sendId
+                      return cubit.userModel!.uId == chats.sendId
                           ? buildMyChatItem(cubit.messages[index])
                           : buildChatItem(cubit.messages[index]);
                     },

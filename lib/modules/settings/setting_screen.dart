@@ -19,8 +19,9 @@ class ProfileScreen extends StatelessWidget {
           var model = HomeLayoutCubit.get(context).userModel;
 
           return Scaffold(
+            
             body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 0.0),
               child: Column(
                 children: [
                   Container(
@@ -39,7 +40,7 @@ class ProfileScreen extends StatelessWidget {
                                   topRight: Radius.circular(4)),
                               image: DecorationImage(
                                   fit: BoxFit.cover,
-                                  image: NetworkImage("${model.cover}")),
+                                  image: NetworkImage("${model!.cover}")),
                             ),
                           ),
                         ),
@@ -65,96 +66,84 @@ class ProfileScreen extends StatelessWidget {
                     "${model.bio}",
                     style: Theme.of(context).textTheme.caption,
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  //   child: Row(
-                  //     children: [
-                  //       Expanded(
-                  //           child: InkWell(
-                  //         onTap: () {},
-                  //         child: Column(
-                  //           children: [
-                  //             Text(
-                  //               "100",
-                  //               style: Theme.of(context).textTheme.subtitle1,
-                  //             ),
-                  //             Text(
-                  //               "Posts",
-                  //               style: Theme.of(context).textTheme.caption,
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       )),
-                  //       Expanded(
-                  //           child: InkWell(
-                  //         onTap: () {},
-                  //         child: Column(
-                  //           children: [
-                  //             Text(
-                  //               "265",
-                  //               style: Theme.of(context).textTheme.subtitle1,
-                  //             ),
-                  //             Text(
-                  //               "Photo",
-                  //               style: Theme.of(context).textTheme.caption,
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       )),
-                  //       Expanded(
-                  //           child: InkWell(
-                  //         onTap: () {},
-                  //         child: Column(
-                  //           children: [
-                  //             Text(
-                  //               "10k",
-                  //               style: Theme.of(context).textTheme.subtitle1,
-                  //             ),
-                  //             Text(
-                  //               "Followers",
-                  //               style: Theme.of(context).textTheme.caption,
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       )),
-                  //       Expanded(
-                  //           child: InkWell(
-                  //         onTap: () {},
-                  //         child: Column(
-                  //           children: [
-                  //             Text(
-                  //               "67",
-                  //               style: Theme.of(context).textTheme.subtitle1,
-                  //             ),
-                  //             Text(
-                  //               "Following",
-                  //               style: Theme.of(context).textTheme.caption,
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       )),
-                  //     ],
-                  //   ),
-                  // ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: InkWell(
+                          onTap: () {},
+                          child: Column(
+                            children: [
+                              
+                              Text(
+                                "Posts",
+                                style: Theme.of(context).textTheme.caption,
+                              ),
+                              Text(
+                                "100",
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                            ],
+                          ),
+                        )),
+                        Expanded(
+                            child: InkWell(
+                          onTap: () {},
+                          child: Column(
+                            children: [
+                              Text(
+                                "Photo",
+                                style: Theme.of(context).textTheme.caption,
+                              ),
+                              Text(
+                                "265",
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                              
+                            ],
+                          ),
+                        )),
+                        Expanded(
+                            child: InkWell(
+                          onTap: () {},
+                          child: Column(
+                            children: [
+                               Text(
+                                "Friends",
+                                style: Theme.of(context).textTheme.caption,
+                              ),
+                              Text(
+                                "10k",
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                             
+                            ],
+                          ),
+                        )),
+                ])
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Row(
                       children: [
                         Expanded(
                             child: OutlinedButton(
-                                onPressed: () {},
-                                child: const Text("AddPhoto"))),
+                                onPressed: () {
+                                   navigateTo(
+                                  context: context,
+                                  widget: UpdateProfileCreen());
+                                },
+                                child: const Text("Edit Profile"))),
                         const SizedBox(
-                          width: 10.0,
+                          width: 8.0,
                         ),
                         OutlinedButton(
                             onPressed: () {
-                              navigateTo(
-                                  context: context,
-                                  widget: UpdateProfileCreen());
+                            
                             },
                             child: const Icon(
-                              IconBroken.Edit,
+                              IconBroken.Image,
                               size: 16.0,
                             ))
                       ],
@@ -175,6 +164,16 @@ class ProfileScreen extends StatelessWidget {
                   //         child: Text("Subscripe")),
                   //   ],
                   // ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(onPressed: (){}, child:const Text("Posts")),
+                      TextButton(onPressed: (){}, child:const Text("Photos")),
+                      TextButton(onPressed: (){}, child:const Text("Friends")),
+                    ],
+                    
+                  ),
+                  
                 ],
               ),
             ),

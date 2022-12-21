@@ -1,4 +1,5 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socialapp/layout/cubit/cubit.dart';
@@ -27,7 +28,7 @@ class ChatScreen extends StatelessWidget {
             itemCount: cubit.users.length,
           ),
           fallback: (context) => const Center(
-            child: CircularProgressIndicator(),
+            child: CupertinoActivityIndicator(),
           ),
         );
       },
@@ -41,7 +42,7 @@ Widget buildChatItem(UserModel model, BuildContext context) {
       navigateTo(context: context, widget:  ChatDetails(userModel: model,));
     },
     child: Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(8.0),
       child: Row(children: [
         CircleAvatar(
           radius: 25.0,
@@ -51,6 +52,8 @@ Widget buildChatItem(UserModel model, BuildContext context) {
           width: 10.0,
         ),
         Text("${model.name}"),
+        const Spacer(),
+        IconButton(onPressed: (){}, icon: Icon(Icons.more_vert,size: 20.0,))
       ]),
     ),
   );

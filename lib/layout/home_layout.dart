@@ -7,6 +7,7 @@ import 'package:socialapp/layout/cubit/cubit.dart';
 import 'package:socialapp/layout/cubit/states.dart';
 import 'package:socialapp/modules/add_post/add_post.dart';
 import 'package:socialapp/shared/componenet/component.dart';
+import 'package:socialapp/shared/componenet/constant.dart';
 import 'package:socialapp/shared/style/icon_broken.dart';
 
 class HomeLayout extends StatelessWidget {
@@ -16,25 +17,30 @@ class HomeLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<HomeLayoutCubit, HomeLayoutStates>(
       listener: (context, state) {
-        if (state is SocialNewPostAtate)
+        if (state is SocialNewPostAtate) {
           navigateTo(context: context, widget: AddPost());
+        }
       },
       builder: (context, state) {
         var cubit = HomeLayoutCubit.get(context);
         return Scaffold(
           appBar: AppBar(
+           
             elevation: 0.0,
             title: Text(
               cubit.titles[cubit.currentIndex],
-              style: TextStyle(color: Colors.black),
+              style: const TextStyle(color: Colors.black),
             ),
             actions: [
               IconButton(
-                  onPressed: () {}, icon: const Icon(IconBroken.Notification)),
-              IconButton(onPressed: () {}, icon: const Icon(IconBroken.Search))
+                  onPressed: () {},
+                  icon: const Icon(IconBroken.Notification)),
+              IconButton(
+                  onPressed: () {}, icon: const Icon(IconBroken.Search))
             ],
           ),
           body: cubit.Screens[cubit.currentIndex],
+         
           bottomNavigationBar: CustomNavigationBar(
             currentIndex: cubit.currentIndex,
             onTap: (index) => cubit.changeBottomNav(index),

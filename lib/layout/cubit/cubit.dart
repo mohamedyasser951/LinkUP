@@ -1,9 +1,7 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -25,14 +23,14 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
 
   static HomeLayoutCubit get(context) => BlocProvider.of(context);
 
-  late UserModel userModel;
+    UserModel? userModel ;
 
-  void getUserData({String? uId}) async {
+  void getUserData() async {
     emit(SocialGetUserLoadingState());
     FirebaseFirestore.instance.collection("Users").doc(uId).get().then((value) {
       print("getuserDatamethod..........");
       userModel = UserModel.fromJson(value.data());
-      print("usermodel value...........${userModel.uId}");
+      print("usermodel value...........${userModel!.uId}");
       emit(SocialGetUserSucessState());
     }).catchError((error) {
       emit(SocialGetUserErrorState());
@@ -46,7 +44,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
       FirebaseFirestore.instance.collection("Users").get().then((value) {
         value.docs.forEach(
           (element) {
-            if (element.data()['uId'] != userModel.uId) {
+            if (element.data()['uId'] != userModel!.uId) {
               users.add(UserModel.fromJson(element.data()));
             }
           },
@@ -71,7 +69,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
       icon: Icon(IconBroken.Plus),
     ),
     CustomNavigationBarItem(
-      icon: Icon(IconBroken.Location),
+      icon: Icon(IconBroken.User1),
     ),
     CustomNavigationBarItem(
       icon: Icon(IconBroken.Profile),
@@ -90,8 +88,8 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
     "Feeds",
     "Chats",
     "addPost",
-    "UsersScreen",
-    "Settings",
+    "Users",
+    "Profile",
   ];
 
   changeBottomNav(int index) {
@@ -189,17 +187,17 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
         name: name,
         bio: bio,
         phone: phone,
-        cover: cover ?? userModel.cover,
-        image: image ?? userModel.image,
-        email: userModel.email,
-        uId: userModel.uId);
+        cover: cover ?? userModel!.cover,
+        image: image ?? userModel!.image,
+        email: userModel!.email,
+        uId: userModel!.uId);
 
     FirebaseFirestore.instance
         .collection("Users")
-        .doc(userModel.uId)
+        .doc(userModel!.uId)
         .update(model.toJson())
         .then((value) {
-      getUserData(uId: userModel.uId);
+      getUserData();
     }).catchError((error) {
       emit(SocialUpdateUserDataErrorState());
     });
@@ -226,9 +224,9 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
     String? postImage,
   }) async {
     PostModel postModel = PostModel(
-      name: userModel.name,
-      uId: userModel.uId,
-      image: userModel.image,
+      name: userModel!.name,
+      uId: userModel!.uId,
+      image: userModel!.image,
       postImage: postImage ?? '',
       text: postText,
       dateTime: dateTime,
@@ -238,7 +236,8 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
         .collection("Posts")
         .add(postModel.toJson())
         .then((value) {
-      // emit(SocialCreateNewPostSuccessState());
+          //comment here and i removed it
+      emit(SocialCreateNewPostSuccessState());
     }).catchError((error) {
       emit(SocialCreateNewPostErrorState());
     });
@@ -276,7 +275,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
   void getPosts() {
     emit(SocialGetPostsLoadingState());
 
-    FirebaseFirestore.instance.collection("Posts").get().then((value) {
+    FirebaseFirestore.instance.collection("Posts").orderBy("dateTime").get().then((value) {
       value.docs.forEach((element) {
         element.reference.collection("Likes").get().then((value) {
           postsId.add(element.id);
@@ -296,7 +295,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
         .collection("Posts")
         .doc(posId)
         .collection("Likes")
-        .doc(userModel.uId)
+        .doc(userModel!.uId)
         .set({'like': 'true'}).then((value) {
       emit(LikePostSuccessState());
     }).catchError((error) {
@@ -310,14 +309,14 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
     required String dateTime,
   }) {
     MessageModel messageModel = MessageModel(
-        sendId: userModel.uId,
+        sendId: userModel!.uId,
         reciverId: recieverId,
         text: text,
         dateTime: dateTime);
 
     FirebaseFirestore.instance
         .collection("Users")
-        .doc(userModel.uId)
+        .doc(userModel!.uId)
         .collection("chats")
         .doc(recieverId)
         .collection("Messages")
@@ -332,7 +331,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
         .collection("Users")
         .doc(recieverId)
         .collection("chats")
-        .doc(userModel.uId)
+        .doc(userModel!.uId)
         .collection("Messages")
         .add(messageModel.toJson())
         .then((value) {
@@ -351,7 +350,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
     
     FirebaseFirestore.instance
         .collection("Users")
-        .doc(userModel.uId)
+        .doc(userModel!.uId)
         .collection("chats")
         .doc(recieverId)
         .collection("Messages")

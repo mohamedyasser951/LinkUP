@@ -9,26 +9,35 @@ import 'package:socialapp/layout/cubit/states.dart';
 import 'package:socialapp/models/post_model.dart';
 import 'package:socialapp/modules/comment_page/comment_page.dart';
 import 'package:socialapp/shared/componenet/component.dart';
+import 'package:socialapp/shared/componenet/constant.dart';
 import 'package:socialapp/shared/style/icon_broken.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   var refreshController1 = RefreshController();
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-     
-
+      // HomeLayoutCubit.get(context).getUserData();
+      // HomeLayoutCubit.get(context).getPosts();
       return BlocConsumer<HomeLayoutCubit, HomeLayoutStates>(
         listener: ((context, state) {}),
         builder: (context, state) {
-          var cubit = HomeLayoutCubit.get(context);
+          var userModel = HomeLayoutCubit.get(context).userModel;
           var posts = HomeLayoutCubit.get(context).posts;
-
           return ConditionalBuilder(
-              condition: posts.length>0 && cubit.userModel !=null,
+              condition: posts.length > 0,
               builder: (context) {
                 return SmartRefresher(
                   controller: refreshController1,
@@ -41,7 +50,7 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         Card(
                           clipBehavior: Clip.antiAlias,
-                          margin: const EdgeInsets.all(8.0),
+                          margin: const EdgeInsets.symmetric(horizontal:8.0),
                           elevation: 5.0,
                           child: Stack(
                             alignment: AlignmentDirectional.bottomEnd,
@@ -68,12 +77,12 @@ class HomeScreen extends StatelessWidget {
                         ListView.separated(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: cubit.posts.length,
+                          itemCount: posts.length,
                           separatorBuilder: (context, index) => const SizedBox(
                             height: 8.0,
                           ),
                           itemBuilder: (context, index) =>
-                              buildPostItem(index, cubit.posts[index], context),
+                              buildPostItem(index, posts[index], context),
                         ),
                         SizedBox(
                           height: 300.0,
@@ -104,11 +113,11 @@ class HomeScreen extends StatelessWidget {
 }
 
 Widget buildPostItem(int index, PostModel model, BuildContext context) => Card(
-      margin: EdgeInsets.symmetric(horizontal: 8.0),
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
       clipBehavior: Clip.antiAlias,
-      elevation: 5.0,
+      elevation: 12.0,
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(8.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(
             children: [
@@ -128,15 +137,15 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) => Card(
                       children: [
                         Text(
                           "${model.name}",
-                          style: TextStyle(height: 1.4),
+                          style: const TextStyle(height: 1.4),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5.0,
                         ),
-                        Icon(
-                          Icons.verified,
+                        const Icon(
+                          Icons.check_circle,
                           size: 16,
-                          color: Colors.blue,
+                          color: Colors.indigo,
                         ),
                       ],
                     ),
@@ -154,36 +163,36 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) => Card(
                   onPressed: () {},
                   icon: const Icon(
                     Icons.more_horiz,
-                    size: 16,
+                    size: 22,
                   ))
             ],
           ),
-          //  Divider(color: Colors.grey,),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Text(
               "${model.text}",
-              style: Theme.of(context).textTheme.subtitle1,
+              style: Theme.of(context).textTheme.subtitle2,
             ),
           ),
-
           if (model.postImage != '')
             Container(
-              height: 140,
+              height: 300,
               decoration: BoxDecoration(
                 image: DecorationImage(
                     fit: BoxFit.cover,
                     image: NetworkImage("${model.postImage}")),
               ),
             ),
-          Divider(
+        
+          const Divider(
             color: Colors.grey,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // mainAxisAlignment: MainAxisAlignment.start,
               children: [
+               
                 InkWell(
                   onTap: () {
                     HomeLayoutCubit.get(context).likePost(
@@ -194,10 +203,10 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) => Card(
                     children: [
                       const Icon(
                         IconBroken.Heart,
-                        color: Colors.red,
-                        size: 18,
+                        size: 20,
+                        color: Colors.black54,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 4.0,
                       ),
                       Text(
@@ -207,6 +216,7 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) => Card(
                     ],
                   ),
                 ),
+                Spacer(),
                 InkWell(
                   onTap: () {
                     navigateTo(context: context, widget: CommentScreen());
@@ -214,9 +224,9 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) => Card(
                   child: Row(
                     children: [
                       const Icon(
-                        IconBroken.Chat,
-                        color: Colors.amber,
-                        size: 18,
+                        Icons.comment_outlined,
+                        size: 20,
+                        color: Colors.black54,
                       ),
                       const SizedBox(
                         width: 4.0,
@@ -228,62 +238,40 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) => Card(
                     ],
                   ),
                 ),
-                InkWell(
-                  onTap: () {
-                    HomeLayoutCubit.get(context).likePost(
-                        posId: HomeLayoutCubit.get(context).postsId[index]);
-                  },
-                  child: Row(
-                    children: [
-                      const Icon(
-                        IconBroken.Send,
-                        color: Colors.green,
-                        size: 18,
-                      ),
-                      SizedBox(
-                        width: 4.0,
-                      ),
-                      Text(
-                        "${HomeLayoutCubit.get(context).likes[index]}",
-                        style: Theme.of(context).textTheme.caption,
-                      )
-                    ],
-                  ),
-                ),
               ],
             ),
           ),
-          Divider(
-            color: Colors.grey,
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: InkWell(
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 16.0,
-                        backgroundImage: NetworkImage(
-                            "${HomeLayoutCubit.get(context).userModel.image}"),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          "Write a comment..",
-                          style: Theme.of(context).textTheme.caption,
-                        ),
-                      ),
-                    ],
-                  ),
-                  onTap: () {},
-                ),
-              ),
-            ],
-          ),
+          // const Divider(
+          //   color: Colors.grey,
+          // ),
+          // Row(
+          //   children: [
+          //     Expanded(
+          //       child: InkWell(
+          //         child: Row(
+          //           children: [
+          //             CircleAvatar(
+          //               radius: 16.0,
+          //               backgroundImage: NetworkImage(
+          //                   "${HomeLayoutCubit.get(context).userModel!.image}"),
+          //             ),
+          //             const SizedBox(
+          //               width: 5,
+          //             ),
+          //             Padding(
+          //               padding: const EdgeInsets.symmetric(horizontal: 10),
+          //               child: Text(
+          //                 "Write a comment..",
+          //                 style: Theme.of(context).textTheme.caption,
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //         onTap: () {},
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ]),
       ),
     );

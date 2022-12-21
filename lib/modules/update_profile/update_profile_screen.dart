@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -23,7 +24,7 @@ class UpdateProfileCreen extends StatelessWidget {
         var model = HomeLayoutCubit.get(context).userModel;
         var profileImage = HomeLayoutCubit.get(context).profileImage;
         var coverImage = HomeLayoutCubit.get(context).coverImage;
-        nameController.text = model.name!;
+        nameController.text = model!.name!;
         bioController.text = model.bio!;
         phoneController.text = model.phone!;
         return Scaffold(
@@ -38,7 +39,9 @@ class UpdateProfileCreen extends StatelessWidget {
                           bio: bioController.text,
                           phone: phoneController.text);
                     },
-                    child: const Text("Update")),
+                    child: state is SocialUpdateUserDataLoadingState
+                        ? const CupertinoActivityIndicator()
+                        : const Icon(Icons.done)),
                 const SizedBox(
                   width: 10.0,
                 )
@@ -48,8 +51,8 @@ class UpdateProfileCreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  if (state is SocialUpdateUserDataLoadingState)
-                    const LinearProgressIndicator(),
+                  // if (state is SocialUpdateUserDataLoadingState)
+                  //   const LinearProgressIndicator(),
                   Container(
                     height: 200,
                     child: Stack(
@@ -58,7 +61,7 @@ class UpdateProfileCreen extends StatelessWidget {
                         Align(
                           alignment: Alignment.topCenter,
                           child: Stack(
-                            alignment: Alignment.bottomRight,
+                            alignment: Alignment.topLeft,
                             children: [
                               Container(
                                 width: double.infinity,
@@ -81,8 +84,9 @@ class UpdateProfileCreen extends StatelessWidget {
                                     HomeLayoutCubit.get(context)
                                         .getCoverImage();
                                   },
-                                  icon: const CircleAvatar(
-                                    child: Icon(IconBroken.Camera),
+                                  icon:  CircleAvatar(
+                                    backgroundColor: Colors.grey[200],
+                                    child:const Icon(IconBroken.Camera),
                                   ))
                             ],
                           ),
@@ -96,6 +100,7 @@ class UpdateProfileCreen extends StatelessWidget {
                               radius: 64.0,
                               child: CircleAvatar(
                                 radius: 60.0,
+                                
                                 backgroundImage: profileImage == null
                                     ? NetworkImage("${model.image}")
                                     : FileImage(profileImage) as ImageProvider,
@@ -106,7 +111,8 @@ class UpdateProfileCreen extends StatelessWidget {
                                   HomeLayoutCubit.get(context)
                                       .getProfileImage();
                                 },
-                                icon: const CircleAvatar(
+                                icon:  CircleAvatar(
+                                  backgroundColor: Colors.grey[200],
                                   child: Icon(IconBroken.Camera),
                                 ))
                           ],
@@ -135,8 +141,8 @@ class UpdateProfileCreen extends StatelessWidget {
                             SizedBox(
                               height: 4.0,
                             ),
-                            if (state is SocialUpdateUserDataLoadingState)
-                              const LinearProgressIndicator(),
+                            // if (state is SocialUpdateUserDataLoadingState)
+                            //   const LinearProgressIndicator(),
                           ],
                         )),
                       if (coverImage != null)
@@ -150,12 +156,12 @@ class UpdateProfileCreen extends StatelessWidget {
                                       bio: bioController.text,
                                       phone: phoneController.text);
                                 },
-                                child: Text("UpLoad cover")),
+                                child:const Text("UpLoad cover")),
                             SizedBox(
                               height: 4.0,
                             ),
-                            if (state is SocialUpdateUserDataLoadingState)
-                              const LinearProgressIndicator(),
+                            // if (state is SocialUpdateUserDataLoadingState)
+                            //   const LinearProgressIndicator(),
                           ],
                         ))
                     ],

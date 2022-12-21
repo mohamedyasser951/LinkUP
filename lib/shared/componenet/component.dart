@@ -28,6 +28,7 @@ class CustomizedTextfield extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal:10.0,vertical: 10.0),
       child: TextFormField(
+        
         validator: validator,
         controller: myController,
         keyboardType: isPassword!
@@ -82,11 +83,11 @@ class CustomizedButton extends StatelessWidget {
       child: InkWell(
         onTap: onPressed,
         child: Container(
-            height: 50,
+            height: 48,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 color: buttonColor,
-                border: Border.all(width: 1, color: Colors.black),
+                //border: Border.all(width: 1, color: Colors.white),
                 borderRadius: BorderRadius.circular(10)),
             child: Center(
                 child: Text(

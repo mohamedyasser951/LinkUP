@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:socialapp/modules/login_screen/login_screen.dart';
 import 'package:socialapp/shared/componenet/component.dart';
+import 'package:socialapp/shared/componenet/constant.dart';
 import 'package:socialapp/shared/network/local/shared_helper.dart';
 
 class OnBoardingModel {
@@ -43,8 +44,19 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+           TextButton(
+                  onPressed: () {
+                    submitStateOfOnBoarding();
+                  },
+                  child: const Text("Skip")),
+        ],
+      ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
+         
           Expanded(
             child: PageView.builder(
                 onPageChanged: (value) {
@@ -68,19 +80,18 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TextButton(
-                  onPressed: () {
-                    submitStateOfOnBoarding();
-                  },
-                  child: const Text("Skip")),
-              SmoothPageIndicator(
-                controller: pageController,
-                count: boardingData.length,
-                effect: const JumpingDotEffect(
-                  activeDotColor: Colors.blue,
-                  dotWidth: 10.0,
-                  dotHeight: 10.0,
-                  spacing: 5.0,
+              
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal:20.0),
+                child: SmoothPageIndicator(
+                  controller: pageController,
+                  count: boardingData.length,
+                  effect:  WormEffect(
+                    activeDotColor:primaryColor,
+                    dotWidth: 10.0,
+                    dotHeight: 10.0,
+                    spacing: 6.0,
+                  ),
                 ),
               ),
               TextButton(
@@ -89,7 +100,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       submitStateOfOnBoarding();
                     } else {
                       pageController.nextPage(
-                          duration: Duration(microseconds: 300),
+                          duration:const Duration(microseconds: 100),
                           curve: Curves.fastLinearToSlowEaseIn);
                     }
                   },

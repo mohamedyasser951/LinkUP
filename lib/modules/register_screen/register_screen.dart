@@ -129,7 +129,7 @@ class RegisterScreen extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   ),
                   builder: (context) => CustomizedButton(
-                    buttonColor: Colors.black,
+                    buttonColor: primaryColor,
                     buttonText: "Sign Up",
                     onPressed: () async {
                       if (formkey.currentState!.validate()) {

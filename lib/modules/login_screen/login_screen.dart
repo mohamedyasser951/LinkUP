@@ -110,7 +110,7 @@ class LoginScreen extends StatelessWidget {
                           ),
                           builder: (context) => CustomizedButton(
                             buttonText: "Sign In",
-                            buttonColor: Color.fromARGB(255, 0, 0, 0),
+                            buttonColor: primaryColor,
                             textColor: Colors.white,
                             onPressed: () async {
                                if (formKey.currentState!.validate()) {

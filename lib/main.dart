@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socialapp/layout/cubit/cubit.dart';
 import 'package:socialapp/layout/home_layout.dart';
@@ -77,8 +78,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => HomeLayoutCubit()
-            ..getUserData(uId: uId)
-            ..getPosts(),
+            ..getUserData()
+             ..getPosts()
+            ,
         ),
         BlocProvider(create: ((context) => CubitLogin())),
         BlocProvider(create: ((context) => CubitRegister())),
@@ -87,13 +89,19 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         
         theme: ThemeData(
-          primaryColor: Color(0xFF167473),
-          primarySwatch: Colors.teal,
+          
+          primaryColor: Colors.indigo,
+          primarySwatch: Colors.indigo,
           backgroundColor: Colors.white,
+          scaffoldBackgroundColor: Colors.white,
           appBarTheme: AppBarTheme(
             backgroundColor: Colors.white,
-            
-            elevation: 0.0,
+            systemOverlayStyle: SystemUiOverlayStyle(
+              statusBarColor: primaryColor,
+              statusBarIconBrightness:  Brightness.light
+            ),
+           
+            elevation: 0.0, 
             iconTheme: IconThemeData(color: Colors.black)
           )
         ),
