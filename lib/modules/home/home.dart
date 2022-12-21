@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Card(
                           clipBehavior: Clip.antiAlias,
-                          margin: const EdgeInsets.symmetric(horizontal:8.0),
+                          margin: const EdgeInsets.symmetric(horizontal: 8.0),
                           elevation: 5.0,
                           child: Stack(
                             alignment: AlignmentDirectional.bottomEnd,
@@ -105,6 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _onRefresh(BuildContext context) async {
     Future.delayed(const Duration(seconds: 1)).then((value) {
+      
       HomeLayoutCubit.get(context).getUserData();
       HomeLayoutCubit.get(context).getPosts();
       refreshController1.refreshCompleted();
@@ -183,7 +184,7 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) => Card(
                     image: NetworkImage("${model.postImage}")),
               ),
             ),
-        
+
           const Divider(
             color: Colors.grey,
           ),
@@ -192,7 +193,6 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) => Card(
             child: Row(
               // mainAxisAlignment: MainAxisAlignment.start,
               children: [
-               
                 InkWell(
                   onTap: () {
                     HomeLayoutCubit.get(context).likePost(

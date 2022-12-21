@@ -9,10 +9,10 @@ import 'package:socialapp/modules/login_screen/cubit/cubit.dart';
 import 'package:socialapp/modules/login_screen/login_screen.dart';
 import 'package:socialapp/modules/on_boarding/on_boarding.dart';
 import 'package:socialapp/modules/register_screen/cubit/cubit.dart';
+import 'package:socialapp/modules/splash/Splash_Screen.dart';
 import 'package:socialapp/shared/componenet/component.dart';
 import 'package:socialapp/shared/componenet/constant.dart';
 import 'package:socialapp/shared/network/local/shared_helper.dart';
-import 'package:socialapp/shared/style/theme.dart';
 
 import 'shared/componenet/block_observer.dart';
 
@@ -22,12 +22,14 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print(message.data);
 }
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await SharedHelper.init();
 
   var token = await FirebaseMessaging.instance.getToken();
+  
 
   print("token is ${token}");
 
@@ -52,7 +54,7 @@ void main() async {
   uId = SharedHelper.getData("uId");
   var onBoarding = await SharedHelper.getData("onBoarding");
 
-  Widget StartWidget;
+  
   if (onBoarding != null) {
     if (uId != null) {
       StartWidget = HomeLayout();
@@ -79,33 +81,26 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => HomeLayoutCubit()
             ..getUserData()
-             ..getPosts()
-            ,
+            ..getPosts(),
         ),
         BlocProvider(create: ((context) => CubitLogin())),
         BlocProvider(create: ((context) => CubitRegister())),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        
         theme: ThemeData(
-          
-          primaryColor: Colors.indigo,
-          primarySwatch: Colors.indigo,
-          backgroundColor: Colors.white,
-          scaffoldBackgroundColor: Colors.white,
-          appBarTheme: AppBarTheme(
+            primaryColor: Colors.indigo,
+            primarySwatch: Colors.indigo,
             backgroundColor: Colors.white,
-            systemOverlayStyle: SystemUiOverlayStyle(
-              statusBarColor: primaryColor,
-              statusBarIconBrightness:  Brightness.light
-            ),
-           
-            elevation: 0.0, 
-            iconTheme: IconThemeData(color: Colors.black)
-          )
-        ),
-        home: startWidget,
+            scaffoldBackgroundColor: Colors.white,
+            appBarTheme: AppBarTheme(
+                backgroundColor: Colors.white,
+                systemOverlayStyle: SystemUiOverlayStyle(
+                    statusBarColor: primaryColor,
+                    statusBarIconBrightness: Brightness.light),
+                elevation: 0.0,
+                iconTheme:const IconThemeData(color: Colors.black))),
+        home: SplashScreen(),
       ),
     );
   }

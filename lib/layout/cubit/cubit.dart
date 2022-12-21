@@ -23,7 +23,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
 
   static HomeLayoutCubit get(context) => BlocProvider.of(context);
 
-    UserModel? userModel ;
+  UserModel? userModel;
 
   void getUserData() async {
     emit(SocialGetUserLoadingState());
@@ -236,7 +236,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
         .collection("Posts")
         .add(postModel.toJson())
         .then((value) {
-          //comment here and i removed it
+      //comment here and i removed it
       emit(SocialCreateNewPostSuccessState());
     }).catchError((error) {
       emit(SocialCreateNewPostErrorState());
@@ -274,8 +274,13 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
   List<int> likes = [];
   void getPosts() {
     emit(SocialGetPostsLoadingState());
-
-    FirebaseFirestore.instance.collection("Posts").orderBy("dateTime").get().then((value) {
+    
+    FirebaseFirestore.instance
+        .collection("Posts")
+        .orderBy("dateTime")
+        .get()
+        
+        .then((value) {
       value.docs.forEach((element) {
         element.reference.collection("Likes").get().then((value) {
           postsId.add(element.id);
@@ -341,13 +346,10 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
     });
   }
 
-
-
   List<MessageModel> messages = [];
   void getMessages(
     String? recieverId,
   ) {
-    
     FirebaseFirestore.instance
         .collection("Users")
         .doc(userModel!.uId)
@@ -362,7 +364,6 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
         print("this is get messages methode");
         messages.add(MessageModel.fromJson(element.data()));
         //emit(SocialRecieveMessageSuccessState());
-       
       });
     });
   }

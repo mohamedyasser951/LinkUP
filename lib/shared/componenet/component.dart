@@ -88,7 +88,7 @@ class CustomizedButton extends StatelessWidget {
             decoration: BoxDecoration(
                 color: buttonColor,
                 //border: Border.all(width: 1, color: Colors.white),
-                borderRadius: BorderRadius.circular(10)),
+                borderRadius: BorderRadius.circular(8.0)),
             child: Center(
                 child: Text(
               buttonText!,
