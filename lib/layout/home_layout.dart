@@ -1,17 +1,15 @@
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socialapp/layout/cubit/cubit.dart';
 import 'package:socialapp/layout/cubit/states.dart';
 import 'package:socialapp/modules/add_post/add_post.dart';
 import 'package:socialapp/shared/componenet/component.dart';
-import 'package:socialapp/shared/componenet/constant.dart';
 import 'package:socialapp/shared/style/icon_broken.dart';
 
 class HomeLayout extends StatelessWidget {
-  HomeLayout({super.key});
+  const HomeLayout({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +23,6 @@ class HomeLayout extends StatelessWidget {
         var cubit = HomeLayoutCubit.get(context);
         return Scaffold(
           appBar: AppBar(
-           
             elevation: 0.0,
             title: Text(
               cubit.titles[cubit.currentIndex],
@@ -33,14 +30,15 @@ class HomeLayout extends StatelessWidget {
             ),
             actions: [
               IconButton(
-                  onPressed: () {},
-                  icon: const Icon(IconBroken.Notification)),
+                  onPressed: () {}, icon: const Icon(IconBroken.Notification)),
               IconButton(
-                  onPressed: () {}, icon: const Icon(IconBroken.Search))
+                  onPressed: () {
+                    logOut(context);
+                  },
+                  icon: const Icon(IconBroken.Search))
             ],
           ),
           body: cubit.Screens[cubit.currentIndex],
-         
           bottomNavigationBar: CustomNavigationBar(
             currentIndex: cubit.currentIndex,
             onTap: (index) => cubit.changeBottomNav(index),

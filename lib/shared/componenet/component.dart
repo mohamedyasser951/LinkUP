@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:socialapp/modules/login_screen/login_screen.dart';
+import 'package:socialapp/shared/network/local/shared_helper.dart';
 import 'package:socialapp/shared/style/icon_broken.dart';
 
 class CustomizedTextfield extends StatelessWidget {
@@ -26,9 +28,8 @@ class CustomizedTextfield extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal:10.0,vertical: 10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
       child: TextFormField(
-        
         validator: validator,
         controller: myController,
         keyboardType: isPassword!
@@ -38,26 +39,25 @@ class CustomizedTextfield extends StatelessWidget {
         autocorrect: isPassword! ? false : true,
         obscureText: isPassword ?? true,
         decoration: InputDecoration(
-          prefixIcon: Icon(prefixIcon),
-          suffixIcon: suffixIcon != null
-              ? IconButton(
-                  icon: Icon(suffixIcon, color: Colors.grey),
-                  onPressed: () {
-                    suffixPressed!();
-                  },
-                )
-              : null,
-          // enabledBorder: OutlineInputBorder(
-          //     borderSide: const BorderSide(color: Color(0xffE8ECF4), width: 1),
-          //     borderRadius: BorderRadius.circular(10)),
-          // focusedBorder: OutlineInputBorder(
-          //     borderSide: const BorderSide(color: Color(0xffE8ECF4), width: 1),
-          //     borderRadius: BorderRadius.circular(10)),
-          // fillColor: const Color(0xffE8ECF4),
-          // filled: true,
-          hintText: hintText,
-          border:const UnderlineInputBorder()
-        ),
+            prefixIcon: Icon(prefixIcon),
+            suffixIcon: suffixIcon != null
+                ? IconButton(
+                    icon: Icon(suffixIcon, color: Colors.grey),
+                    onPressed: () {
+                      suffixPressed!();
+                    },
+                  )
+                : null,
+            // enabledBorder: OutlineInputBorder(
+            //     borderSide: const BorderSide(color: Color(0xffE8ECF4), width: 1),
+            //     borderRadius: BorderRadius.circular(10)),
+            // focusedBorder: OutlineInputBorder(
+            //     borderSide: const BorderSide(color: Color(0xffE8ECF4), width: 1),
+            //     borderRadius: BorderRadius.circular(10)),
+            // fillColor: const Color(0xffE8ECF4),
+            // filled: true,
+            hintText: hintText,
+            border: const UnderlineInputBorder()),
       ),
     );
   }
@@ -102,13 +102,11 @@ class CustomizedButton extends StatelessWidget {
   }
 }
 
-
-
 class AppOutlineButton extends StatelessWidget {
   final String asset;
   final VoidCallback onTap;
 
-  AppOutlineButton({required this.asset, required this.onTap});
+  const AppOutlineButton({super.key, required this.asset, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -122,9 +120,9 @@ class AppOutlineButton extends StatelessWidget {
         ),
       ),
     );
-
   }
 }
+
 navigateTo({required BuildContext context, required Widget widget}) {
   Navigator.of(context).push(MaterialPageRoute(builder: ((context) => widget)));
 }
@@ -189,3 +187,11 @@ PreferredSizeWidget CustomizedAppBar(
         },
       ),
     );
+
+void logOut(BuildContext context) {
+  SharedHelper.removeData(key: "uId").then((value) {
+    if (value) {
+      navigateAndFinish(context: context, widget: LoginScreen());
+    }
+  });
+}

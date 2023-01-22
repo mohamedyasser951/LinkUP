@@ -53,7 +53,7 @@ Widget buildChatItem(UserModel model, BuildContext context) {
         ),
         Text("${model.name}"),
         const Spacer(),
-        IconButton(onPressed: (){}, icon: Icon(Icons.more_vert,size: 20.0,))
+        IconButton(onPressed: (){}, icon: const Icon(Icons.more_vert,size: 20.0,))
       ]),
     ),
   );

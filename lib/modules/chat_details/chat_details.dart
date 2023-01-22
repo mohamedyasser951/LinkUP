@@ -5,12 +5,14 @@ import 'package:socialapp/layout/cubit/cubit.dart';
 import 'package:socialapp/layout/cubit/states.dart';
 import 'package:socialapp/models/message_model.dart';
 import 'package:socialapp/models/user_model.dart';
-import 'package:socialapp/shared/componenet/component.dart';
+import 'package:socialapp/shared/componenet/constant.dart';
 import 'package:socialapp/shared/style/icon_broken.dart';
 
 class ChatDetails extends StatelessWidget {
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   ChatDetails({super.key, required this.userModel});
   var messageController = TextEditingController();
+
   UserModel userModel;
 
   @override
@@ -26,7 +28,7 @@ class ChatDetails extends StatelessWidget {
         },
         builder: ((context, state) {
           var cubit = HomeLayoutCubit.get(context);
-          // HomeLayoutCubit.get(context).getMessages(userModel.uId);
+
           return Scaffold(
             appBar: AppBar(
                 leading: IconButton(
@@ -70,82 +72,90 @@ class ChatDetails extends StatelessWidget {
                                 .copyWith())),
                   ],
                 )),
-            body: Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                      child: ListView.separated(
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      var chats = cubit.messages[index];
-                      customizedToast(
-                          message: "${cubit.messages.length}",
-                          toastState: ToastState.SUCESS);
-                      return cubit.userModel!.uId == chats.sendId
-                          ? buildMyChatItem(cubit.messages[index])
-                          : buildChatItem(cubit.messages[index]);
-                    },
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: 12.0,
-                    ),
-                    itemCount: HomeLayoutCubit.get(context).messages.length,
-                  )),
-                  Row(
+            body: Builder(builder: (context) {
+              return Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
-                          child: TextFormField(
-                        controller: messageController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderSide: const BorderSide(width: 1.0),
-                              borderRadius: BorderRadius.circular(40.0)),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Color(0xffE8ECF4), width: 1),
-                              borderRadius: BorderRadius.circular(40.0)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Color(0xffE8ECF4), width: 1),
-                              borderRadius: BorderRadius.circular(40.0)),
-                          prefixIcon: IconButton(
-                            icon: const Icon(
-                              Icons.emoji_emotions,
-                              color: Colors.grey,
-                            ),
-                            onPressed: () {},
-                          ),
-                          hintText: "Message",
-                          suffixIcon: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(IconBroken.Camera)),
+                          child: ListView.separated(
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          var message = cubit.messages[index];
+                          if (cubit.userModel!.uId == message.reciverId)
+                            return buildChatItem(message);
+                          return buildMyChatItem(message);
+                        },
+                        separatorBuilder: (context, index) => const SizedBox(
+                          height: 12.0,
                         ),
+                        itemCount: cubit.messages.length,
                       )),
-                      const SizedBox(
-                        width: 4.0,
-                      ),
-                      CircleAvatar(
-                          radius: 22,
-                          backgroundColor: Colors.blue,
-                          child: IconButton(
-                            icon: const Icon(
-                              IconBroken.Send,
-                              size: 20,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              cubit.sendMessage(
-                                  recieverId: userModel.uId,
-                                  text: messageController.text,
-                                  dateTime: DateTime.now().toString());
+                      Row(
+                        children: [
+                          Expanded(
+                              child: TextFormField(
+                            controller: messageController,
+                            validator: (val) {
+                              if (val!.isNotEmpty) return "";
+                              return null;
                             },
-                          ))
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderSide: const BorderSide(width: 1.0),
+                                  borderRadius: BorderRadius.circular(40.0)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: Color(0xffE8ECF4), width: 1),
+                                  borderRadius: BorderRadius.circular(40.0)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: Color(0xffE8ECF4), width: 1),
+                                  borderRadius: BorderRadius.circular(40.0)),
+                              prefixIcon: IconButton(
+                                icon: const Icon(
+                                  Icons.emoji_emotions,
+                                  color: Colors.grey,
+                                ),
+                                onPressed: () {},
+                              ),
+                              hintText: "Message",
+                              suffixIcon: IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(IconBroken.Camera)),
+                            ),
+                          )),
+                          const SizedBox(
+                            width: 4.0,
+                          ),
+                          CircleAvatar(
+                              radius: 22,
+                              backgroundColor: primaryColor,
+                              child: IconButton(
+                                icon: const Icon(
+                                  IconBroken.Send,
+                                  size: 20,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  if (formKey.currentState!.validate()) {
+                                    cubit.sendMessage(
+                                        recieverId: userModel.uId,
+                                        text: messageController.text,
+                                        dateTime: DateTime.now().toString());
+                                  }
+                                },
+                              ))
+                        ],
+                      ),
                     ],
                   ),
-                ],
-              ),
-            ),
+                ),
+              );
+            }),
           );
         }),
       );
@@ -173,14 +183,17 @@ Widget buildMyChatItem(MessageModel model) => Align(
       alignment: AlignmentDirectional.centerEnd,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
-        decoration: const BoxDecoration(
-          color: Colors.blueAccent,
-          borderRadius: BorderRadiusDirectional.only(
+        decoration: BoxDecoration(
+          color: primaryColor,
+          borderRadius: const BorderRadiusDirectional.only(
             bottomEnd: Radius.circular(10),
             bottomStart: Radius.circular(10),
             topStart: Radius.circular(10),
           ),
         ),
-        child: Text("${model.text}"),
+        child: Text(
+          "${model.text}",
+          style: const TextStyle(color: Colors.white),
+        ),
       ),
     );

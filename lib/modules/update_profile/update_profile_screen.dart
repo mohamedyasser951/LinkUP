@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socialapp/layout/cubit/cubit.dart';
 import 'package:socialapp/layout/cubit/states.dart';
@@ -53,7 +51,7 @@ class UpdateProfileCreen extends StatelessWidget {
                 children: [
                   // if (state is SocialUpdateUserDataLoadingState)
                   //   const LinearProgressIndicator(),
-                  Container(
+                  SizedBox(
                     height: 200,
                     child: Stack(
                       alignment: Alignment.bottomCenter,
@@ -113,7 +111,7 @@ class UpdateProfileCreen extends StatelessWidget {
                                 },
                                 icon:  CircleAvatar(
                                   backgroundColor: Colors.grey[200],
-                                  child: Icon(IconBroken.Camera),
+                                  child: const Icon(IconBroken.Camera),
                                 ))
                           ],
                         ),
@@ -137,8 +135,8 @@ class UpdateProfileCreen extends StatelessWidget {
                                       bio: bioController.text,
                                       phone: phoneController.text);
                                 },
-                                child: Text("UpLoad profile")),
-                            SizedBox(
+                                child:const Text("UpLoad profile")),
+                           const SizedBox(
                               height: 4.0,
                             ),
                             // if (state is SocialUpdateUserDataLoadingState)
@@ -157,7 +155,7 @@ class UpdateProfileCreen extends StatelessWidget {
                                       phone: phoneController.text);
                                 },
                                 child:const Text("UpLoad cover")),
-                            SizedBox(
+                           const SizedBox(
                               height: 4.0,
                             ),
                             // if (state is SocialUpdateUserDataLoadingState)

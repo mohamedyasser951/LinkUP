@@ -1,18 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:socialapp/main.dart';
 import 'package:socialapp/shared/componenet/component.dart';
 import 'package:socialapp/shared/componenet/constant.dart';
 
 class SplashScreen extends StatefulWidget {
-   
-  
-   SplashScreen({super.key,});
-   
-   
+ final Widget startWidget;
+
+  const SplashScreen({
+    required this.startWidget,
+    super.key,
+  });
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -22,13 +19,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 4)).then((value) {
-      navigateAndFinish(context: context, widget: StartWidget);
+      navigateAndFinish(context: context, widget: widget.startWidget);
     });
     super.initState();
   }
-
- 
-  
 
   @override
   Widget build(BuildContext context) {

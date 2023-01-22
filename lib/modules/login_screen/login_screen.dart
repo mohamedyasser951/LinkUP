@@ -1,7 +1,6 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:socialapp/layout/home_layout.dart';
 import 'package:socialapp/modules/login_screen/cubit/cubit.dart';
 import 'package:socialapp/modules/login_screen/cubit/states.dart';
@@ -10,7 +9,6 @@ import 'package:socialapp/modules/register_screen/register_screen.dart';
 import 'package:socialapp/shared/componenet/component.dart';
 import 'package:socialapp/shared/componenet/constant.dart';
 import 'package:socialapp/shared/network/local/shared_helper.dart';
-import 'package:socialapp/shared/style/icon_broken.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -27,7 +25,7 @@ class LoginScreen extends StatelessWidget {
         SharedHelper.saveData(key: "uId", value: state.uId).then(
           (value) {
             uId = state.uId;
-            navigateAndFinish(context: context, widget: HomeLayout());
+            navigateAndFinish(context: context, widget:const HomeLayout());
           },
         ).catchError((error) {
           print(error.toString());

@@ -2,14 +2,12 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:socialapp/layout/cubit/cubit.dart';
 import 'package:socialapp/layout/cubit/states.dart';
 import 'package:socialapp/models/post_model.dart';
 import 'package:socialapp/modules/comment_page/comment_page.dart';
 import 'package:socialapp/shared/componenet/component.dart';
-import 'package:socialapp/shared/componenet/constant.dart';
 import 'package:socialapp/shared/style/icon_broken.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,14 +21,16 @@ class _HomeScreenState extends State<HomeScreen> {
   var refreshController1 = RefreshController();
   @override
   void initState() {
+    // HomeLayoutCubit.get(context).getUserData();
+    // HomeLayoutCubit.get(context).getPosts();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-      // HomeLayoutCubit.get(context).getUserData();
-      // HomeLayoutCubit.get(context).getPosts();
+      HomeLayoutCubit.get(context).getUserData();
+      HomeLayoutCubit.get(context).getPosts();
       return BlocConsumer<HomeLayoutCubit, HomeLayoutStates>(
         listener: ((context, state) {}),
         builder: (context, state) {
@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemBuilder: (context, index) =>
                               buildPostItem(index, posts[index], context),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 300.0,
                         ),
                       ],
@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _onRefresh(BuildContext context) async {
     Future.delayed(const Duration(seconds: 1)).then((value) {
-      
+      HomeLayoutCubit.get(context).posts = [];
       HomeLayoutCubit.get(context).getUserData();
       HomeLayoutCubit.get(context).getPosts();
       refreshController1.refreshCompleted();
@@ -216,7 +216,7 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) => Card(
                     ],
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 InkWell(
                   onTap: () {
                     navigateTo(context: context, widget: CommentScreen());

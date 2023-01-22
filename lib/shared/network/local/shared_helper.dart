@@ -27,7 +27,7 @@ class SharedHelper {
     return sharedPreferences.get(key);
   }
 
-  static dynamic removeData({required String key}) async {
+  static Future<dynamic> removeData({required String key}) async {
     return await sharedPreferences.remove(key);
   }
 }

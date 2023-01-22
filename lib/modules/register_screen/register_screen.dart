@@ -1,8 +1,5 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socialapp/layout/home_layout.dart';
 import 'package:socialapp/modules/register_screen/cubit/cubit.dart';
@@ -28,7 +25,7 @@ class RegisterScreen extends StatelessWidget {
           SharedHelper.saveData(key: "uId", value: state.userModel.uId)
               .then((value) {
             uId = state.userModel.uId;
-            navigateAndFinish(context: context, widget: HomeLayout());
+            navigateAndFinish(context: context, widget:const HomeLayout());
             //  customizedToast(message: message, toastState: ToastState.SUCESS);
           }).catchError((error) {});
         } else {

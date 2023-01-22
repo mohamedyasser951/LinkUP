@@ -60,28 +60,28 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
 
   List<CustomNavigationBarItem> NavigationBarItem = [
     CustomNavigationBarItem(
-      icon: Icon(IconBroken.Home),
+      icon: const Icon(IconBroken.Home),
     ),
     CustomNavigationBarItem(
-      icon: Icon(IconBroken.Chat),
+      icon:const Icon(IconBroken.Chat),
     ),
     CustomNavigationBarItem(
-      icon: Icon(IconBroken.Plus),
+      icon:const Icon(IconBroken.Plus),
     ),
     CustomNavigationBarItem(
-      icon: Icon(IconBroken.User1),
+      icon:const Icon(IconBroken.User1),
     ),
     CustomNavigationBarItem(
-      icon: Icon(IconBroken.Profile),
+      icon:const Icon(IconBroken.Profile),
     ),
   ];
 
   List<Widget> Screens = [
     HomeScreen(),
-    ChatScreen(),
+   const ChatScreen(),
     AddPost(),
-    UsersScreen(),
-    ProfileScreen(),
+   const UsersScreen(),
+   const ProfileScreen(),
   ];
 
   List<String> titles = [

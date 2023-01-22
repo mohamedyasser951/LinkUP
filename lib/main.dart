@@ -54,15 +54,15 @@ void main() async {
   uId = SharedHelper.getData("uId");
   var onBoarding = await SharedHelper.getData("onBoarding");
 
-  
+   Widget StartWidget;
   if (onBoarding != null) {
     if (uId != null) {
-      StartWidget = HomeLayout();
+      StartWidget = const HomeLayout();
     } else {
       StartWidget = LoginScreen();
     }
   } else {
-    StartWidget = OnBoardingScreen();
+    StartWidget =const OnBoardingScreen();
   }
 
   runApp(MyApp(
@@ -80,8 +80,8 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => HomeLayoutCubit()
-            ..getUserData()
-            ..getPosts(),
+            // ..getUserData()
+            // ..getPosts(),
         ),
         BlocProvider(create: ((context) => CubitLogin())),
         BlocProvider(create: ((context) => CubitRegister())),
@@ -100,7 +100,7 @@ class MyApp extends StatelessWidget {
                     statusBarIconBrightness: Brightness.light),
                 elevation: 0.0,
                 iconTheme:const IconThemeData(color: Colors.black))),
-        home: SplashScreen(),
+        home: SplashScreen(startWidget: startWidget),
       ),
     );
   }

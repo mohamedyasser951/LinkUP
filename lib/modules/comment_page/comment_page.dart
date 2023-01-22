@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socialapp/layout/cubit/cubit.dart';
 import 'package:socialapp/layout/cubit/states.dart';
@@ -24,7 +22,7 @@ class CommentScreen extends StatelessWidget {
             ),
             title: const Text("Comments"),
             actions: [
-              TextButton(onPressed: () {}, child: Text("Post")),
+              TextButton(onPressed: () {}, child:const Text("Post")),
               const SizedBox(
                 width: 4.0,
               )
@@ -34,7 +32,7 @@ class CommentScreen extends StatelessWidget {
             children: [
               Expanded(
                   child: ListView.builder(
-                      itemBuilder: ((context, index) => buildCommentItem()),
+                      itemBuilder: ((context, index) =>const buildCommentItem()),
                       itemCount: 5)),
               Row(
                 children: [
@@ -96,20 +94,18 @@ class buildCommentItem extends StatelessWidget {
         const SizedBox(
           width: 10.0,
         ),
-        Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Mohamed yasser",
-                style: TextStyle(fontWeight: FontWeight.w600),
-              ),
-              SizedBox(
-                height: 2,
-              ),
-              Text("Very Good!!"),
-            ],
-          ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children:const [
+            Text(
+              "Mohamed yasser",
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+            SizedBox(
+              height: 2,
+            ),
+            Text("Very Good!!"),
+          ],
         ),
       ]),
     );
