@@ -1,5 +1,6 @@
-import 'dart:io';
+// ignore_for_file: avoid_print
 
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +78,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
   ];
 
   List<Widget> Screens = [
-    HomeScreen(),
+   const HomeScreen(),
    const ChatScreen(),
     AddPost(),
    const UsersScreen(),
@@ -279,7 +280,6 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
         .collection("Posts")
         .orderBy("dateTime")
         .get()
-        
         .then((value) {
       value.docs.forEach((element) {
         element.reference.collection("Likes").get().then((value) {

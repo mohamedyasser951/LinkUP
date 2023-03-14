@@ -141,12 +141,12 @@ class ChatDetails extends StatelessWidget {
                                   color: Colors.white,
                                 ),
                                 onPressed: () {
-                                  if (formKey.currentState!.validate()) {
+                                //  if (formKey.currentState!.validate()) {
                                     cubit.sendMessage(
                                         recieverId: userModel.uId,
                                         text: messageController.text,
                                         dateTime: DateTime.now().toString());
-                                  }
+                                 // }
                                 },
                               ))
                         ],

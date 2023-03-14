@@ -11,31 +11,38 @@ import 'package:socialapp/shared/componenet/component.dart';
 import 'package:socialapp/shared/style/icon_broken.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
+
+
+
 
 class _HomeScreenState extends State<HomeScreen> {
   var refreshController1 = RefreshController();
   @override
   void initState() {
     // HomeLayoutCubit.get(context).getUserData();
-    // HomeLayoutCubit.get(context).getPosts();
+    HomeLayoutCubit.get(context).getPosts();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-      HomeLayoutCubit.get(context).getUserData();
-      HomeLayoutCubit.get(context).getPosts();
       return BlocConsumer<HomeLayoutCubit, HomeLayoutStates>(
         listener: ((context, state) {}),
         builder: (context, state) {
           var userModel = HomeLayoutCubit.get(context).userModel;
           var posts = HomeLayoutCubit.get(context).posts;
+          if (state is SocialGetPostsLoadingState) {
+            return CupertinoActivityIndicator(
+              radius: 12,
+              color: Theme.of(context).primaryColor,
+            );
+          }
           return ConditionalBuilder(
               condition: posts.length > 0,
               builder: (context) {

@@ -19,7 +19,7 @@ import 'shared/componenet/block_observer.dart';
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   customizedToast(
       message: "Handle background message", toastState: ToastState.SUCESS);
-  print(message.data);
+  // print(message.data);
 }
 
 
@@ -31,20 +31,20 @@ void main() async {
   var token = await FirebaseMessaging.instance.getToken();
   
 
-  print("token is ${token}");
+  // print("token is ${token}");
 
   //foreground fcm
   FirebaseMessaging.onMessage.listen(((event) {
     customizedToast(message: "on message ", toastState: ToastState.SUCESS);
 
-    print("on message ${event.data}");
+    // print("on message ${event.data}");
   }));
   // when click on notification to open app
   FirebaseMessaging.onMessageOpenedApp.listen((event) {
     customizedToast(
         message: "On meessageOpenedApp", toastState: ToastState.SUCESS);
 
-    print("meessageOpenedApp ${event.data}");
+    // print("meessageOpenedApp ${event.data}");
   });
 
   //background fcm
@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => HomeLayoutCubit()
-            // ..getUserData()
+            ..getUserData()
             // ..getPosts(),
         ),
         BlocProvider(create: ((context) => CubitLogin())),

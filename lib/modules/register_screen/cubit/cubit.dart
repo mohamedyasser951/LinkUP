@@ -19,9 +19,9 @@ class CubitRegister extends Cubit<SocialRegisterStates> {
     await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((value) {
-      print("email${email}");
-      print("password${password}");
-      print("value${value}");
+      // print("email${email}");
+      // print("password${password}");
+      // print("value${value}");
       userCreate(name: name, email: email, phone: phone, uId: value.user!.uid);
       print("UserCreate successfully");
     }).catchError((e) {

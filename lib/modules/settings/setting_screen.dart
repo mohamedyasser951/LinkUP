@@ -23,7 +23,7 @@ class ProfileScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 0.0),
               child: Column(
                 children: [
-                  Container(
+                  SizedBox(
                     height: 200,
                     child: Stack(
                       alignment: Alignment.bottomCenter,
