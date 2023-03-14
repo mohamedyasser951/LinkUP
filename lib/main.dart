@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => HomeLayoutCubit()
             ..getUserData()
-            // ..getPosts(),
+            ..getPosts(),
         ),
         BlocProvider(create: ((context) => CubitLogin())),
         BlocProvider(create: ((context) => CubitRegister())),
@@ -100,7 +100,7 @@ class MyApp extends StatelessWidget {
                     statusBarIconBrightness: Brightness.light),
                 elevation: 0.0,
                 iconTheme:const IconThemeData(color: Colors.black))),
-        home: SplashScreen(startWidget: startWidget),
+        home: HomeLayout(),
       ),
     );
   }

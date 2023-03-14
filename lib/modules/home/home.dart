@@ -17,9 +17,6 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-
-
-
 class _HomeScreenState extends State<HomeScreen> {
   var refreshController1 = RefreshController();
   @override
@@ -35,16 +32,24 @@ class _HomeScreenState extends State<HomeScreen> {
       return BlocConsumer<HomeLayoutCubit, HomeLayoutStates>(
         listener: ((context, state) {}),
         builder: (context, state) {
-          var userModel = HomeLayoutCubit.get(context).userModel;
+          // var userModel = HomeLayoutCubit.get(context).userModel;
           var posts = HomeLayoutCubit.get(context).posts;
-          if (state is SocialGetPostsLoadingState) {
-            return CupertinoActivityIndicator(
-              radius: 12,
-              color: Theme.of(context).primaryColor,
-            );
-          }
+
+          // if (state is SocialGetPostsLoadingState) {
+          //   return CupertinoActivityIndicator(
+          //     radius: 12,
+          //     color: Theme.of(context).primaryColor,
+          //   );
+          // }
+          // if (state is SocialGetPostsSuccessState) {
+          //   return PostsBuilder(
+          //     posts: state.posts,
+          //   );
+          // }
+          // return const Text("something went wrong !");
+
           return ConditionalBuilder(
-              condition: posts.length > 0,
+              condition: state is SocialGetPostsSuccessState,
               builder: (context) {
                 return SmartRefresher(
                   controller: refreshController1,
@@ -55,42 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Card(
-                          clipBehavior: Clip.antiAlias,
-                          margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                          elevation: 5.0,
-                          child: Stack(
-                            alignment: AlignmentDirectional.bottomEnd,
-                            children: [
-                              const Image(
-                                  height: 200,
-                                  fit: BoxFit.cover,
-                                  width: double.infinity,
-                                  image: NetworkImage(
-                                      "https://img.freepik.com/free-photo/positive-european-male-model-points-right-with-both-index-fingers-suggets-try-use-product-turns-aside_273609-38445.jpg?size=626&ext=jpg")),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Communicate with Friends",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .subtitle1!
-                                      .copyWith(color: Colors.white),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        ListView.separated(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: posts.length,
-                          separatorBuilder: (context, index) => const SizedBox(
-                            height: 8.0,
-                          ),
-                          itemBuilder: (context, index) =>
-                              buildPostItem(index, posts[index], context),
-                        ),
+                       const HomeBanner(),
+                        PostsBuilder(posts: posts),
                         const SizedBox(
                           height: 300.0,
                         ),
@@ -120,168 +91,236 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-Widget buildPostItem(int index, PostModel model, BuildContext context) => Card(
-      margin: const EdgeInsets.symmetric(horizontal: 8.0),
-      clipBehavior: Clip.antiAlias,
-      elevation: 12.0,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(
-            children: [
-              CircleAvatar(
-                  radius: 25.0,
-                  backgroundImage: NetworkImage(
-                    "${model.image}",
-                  )),
-              const SizedBox(
-                width: 15.0,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          "${model.name}",
-                          style: const TextStyle(height: 1.4),
-                        ),
-                        const SizedBox(
-                          width: 5.0,
-                        ),
-                        const Icon(
-                          Icons.check_circle,
-                          size: 16,
-                          color: Colors.indigo,
-                        ),
-                      ],
-                    ),
-                    Text(
-                      "${model.dateTime}",
-                      style: Theme.of(context)
-                          .textTheme
-                          .caption!
-                          .copyWith(height: 1.4),
-                    ),
-                  ],
-                ),
-              ),
-              IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.more_horiz,
-                    size: 22,
-                  ))
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Text(
-              "${model.text}",
-              style: Theme.of(context).textTheme.subtitle2,
-            ),
-          ),
-          if (model.postImage != '')
-            Container(
-              height: 300,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage("${model.postImage}")),
-              ),
-            ),
+class HomeBanner extends StatelessWidget {
+  const HomeBanner({
+    super.key,
+  });
 
-          const Divider(
-            color: Colors.grey,
-          ),
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+      elevation: 5.0,
+      child: Stack(
+        alignment: AlignmentDirectional.bottomEnd,
+        children: [
+          const Image(
+              height: 200,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              image: NetworkImage(
+                  "https://img.freepik.com/free-photo/positive-european-male-model-points-right-with-both-index-fingers-suggets-try-use-product-turns-aside_273609-38445.jpg?size=626&ext=jpg")),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
-            child: Row(
-              // mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                InkWell(
-                  onTap: () {
-                    HomeLayoutCubit.get(context).likePost(
-                        posId: HomeLayoutCubit.get(context).postsId[index]);
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Icon(
-                        IconBroken.Heart,
-                        size: 20,
-                        color: Colors.black54,
-                      ),
-                      const SizedBox(
-                        width: 4.0,
-                      ),
-                      Text(
-                        "${HomeLayoutCubit.get(context).likes[index]}",
-                        style: Theme.of(context).textTheme.caption,
-                      )
-                    ],
-                  ),
-                ),
-                const Spacer(),
-                InkWell(
-                  onTap: () {
-                    navigateTo(context: context, widget: CommentScreen());
-                  },
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.comment_outlined,
-                        size: 20,
-                        color: Colors.black54,
-                      ),
-                      const SizedBox(
-                        width: 4.0,
-                      ),
-                      Text(
-                        "0 comment",
-                        style: Theme.of(context).textTheme.caption,
-                      )
-                    ],
-                  ),
-                ),
-              ],
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "Communicate with Friends",
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle1!
+                  .copyWith(color: Colors.white),
             ),
-          ),
-          // const Divider(
-          //   color: Colors.grey,
-          // ),
-          // Row(
-          //   children: [
-          //     Expanded(
-          //       child: InkWell(
-          //         child: Row(
-          //           children: [
-          //             CircleAvatar(
-          //               radius: 16.0,
-          //               backgroundImage: NetworkImage(
-          //                   "${HomeLayoutCubit.get(context).userModel!.image}"),
-          //             ),
-          //             const SizedBox(
-          //               width: 5,
-          //             ),
-          //             Padding(
-          //               padding: const EdgeInsets.symmetric(horizontal: 10),
-          //               child: Text(
-          //                 "Write a comment..",
-          //                 style: Theme.of(context).textTheme.caption,
-          //               ),
-          //             ),
-          //           ],
-          //         ),
-          //         onTap: () {},
-          //       ),
-          //     ),
-          //   ],
-          // ),
-        ]),
+          )
+        ],
       ),
     );
+  }
+}
+
+class PostsBuilder extends StatelessWidget {
+  final List<PostModel> posts;
+  const PostsBuilder({
+    required this.posts,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // var cubit = HomeLayoutCubit.get(context);
+
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: posts.length,
+      separatorBuilder: (context, index) => const SizedBox(
+        height: 8.0,
+      ),
+      itemBuilder: (context, index) =>
+          buildPostItem(index, posts[index], context),
+    );
+  }
+}
+
+Widget buildPostItem(int index, PostModel model, BuildContext context) {
+  return BlocBuilder<HomeLayoutCubit, HomeLayoutStates>(
+    builder: (context, state) {
+      return Card(
+        margin: const EdgeInsets.symmetric(horizontal: 8.0),
+        clipBehavior: Clip.antiAlias,
+        elevation: 12.0,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Row(
+              children: [
+                CircleAvatar(
+                    radius: 25.0,
+                    backgroundImage: NetworkImage(
+                      "${model.image}",
+                    )),
+                const SizedBox(
+                  width: 15.0,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            "${model.name}",
+                            style: const TextStyle(height: 1.4),
+                          ),
+                          const SizedBox(
+                            width: 5.0,
+                          ),
+                          const Icon(
+                            Icons.check_circle,
+                            size: 16,
+                            color: Colors.indigo,
+                          ),
+                        ],
+                      ),
+                      Text(
+                        "${model.dateTime}",
+                        style: Theme.of(context)
+                            .textTheme
+                            .caption!
+                            .copyWith(height: 1.4),
+                      ),
+                    ],
+                  ),
+                ),
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.more_horiz,
+                      size: 22,
+                    ))
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Text(
+                "${model.text}",
+                style: Theme.of(context).textTheme.subtitle2,
+              ),
+            ),
+            if (model.postImage != '')
+              Container(
+                height: 300,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage("${model.postImage}")),
+                ),
+              ),
+
+            const Divider(
+              color: Colors.grey,
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
+              child: Row(
+                // mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      HomeLayoutCubit.get(context).likePost(
+                          posId: HomeLayoutCubit.get(context).postsId[index]);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        const Icon(
+                          IconBroken.Heart,
+                          size: 20,
+                          color: Colors.black54,
+                        ),
+                        const SizedBox(
+                          width: 4.0,
+                        ),
+                        Text(
+                          "${HomeLayoutCubit.get(context).likes[index]}",
+                          style: Theme.of(context).textTheme.caption,
+                        )
+                      ],
+                    ),
+                  ),
+                  const Spacer(),
+                  InkWell(
+                    onTap: () {
+                      navigateTo(context: context, widget: CommentScreen());
+                    },
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.comment_outlined,
+                          size: 20,
+                          color: Colors.black54,
+                        ),
+                        const SizedBox(
+                          width: 4.0,
+                        ),
+                        Text(
+                          "0 comment",
+                          style: Theme.of(context).textTheme.caption,
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // const Divider(
+            //   color: Colors.grey,
+            // ),
+            // Row(
+            //   children: [
+            //     Expanded(
+            //       child: InkWell(
+            //         child: Row(
+            //           children: [
+            //             CircleAvatar(
+            //               radius: 16.0,
+            //               backgroundImage: NetworkImage(
+            //                   "${HomeLayoutCubit.get(context).userModel!.image}"),
+            //             ),
+            //             const SizedBox(
+            //               width: 5,
+            //             ),
+            //             Padding(
+            //               padding: const EdgeInsets.symmetric(horizontal: 10),
+            //               child: Text(
+            //                 "Write a comment..",
+            //                 style: Theme.of(context).textTheme.caption,
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //         onTap: () {},
+            //       ),
+            //     ),
+            //   ],
+            // ),
+          ]),
+        ),
+      );
+    },
+  );
+}
 
 
 // InkWell(

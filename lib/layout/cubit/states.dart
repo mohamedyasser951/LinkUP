@@ -1,3 +1,4 @@
+import 'package:socialapp/models/post_model.dart';
 
 class HomeLayoutStates {}
 
@@ -13,7 +14,6 @@ class SocialGetUserLoadingState extends HomeLayoutStates {}
 class SocialGetUserSucessState extends HomeLayoutStates {}
 
 class SocialGetUserErrorState extends HomeLayoutStates {}
-
 
 //GetAllUsersStates
 class SocialGetAllUsersLoadingState extends HomeLayoutStates {}
@@ -58,40 +58,48 @@ class SocialUpdateUserDataLoadingState extends HomeLayoutIntialState {}
 class SocialUpdateUserDataErrorState extends HomeLayoutIntialState {}
 
 //pickedPostImage
-class SocialPickedPostImageSuccessState extends HomeLayoutStates{}
-class SocialPickedPostImageErrorState extends HomeLayoutStates{}
+class SocialPickedPostImageSuccessState extends HomeLayoutStates {}
+
+class SocialPickedPostImageErrorState extends HomeLayoutStates {}
 
 //crate new post
 class SocialCreateNewPostLoadingState extends HomeLayoutIntialState {}
+
 class SocialCreateNewPostSuccessState extends HomeLayoutIntialState {}
+
 class SocialCreateNewPostErrorState extends HomeLayoutIntialState {}
 
 //Uplaod new postImage
 
 class SocialUploadNewPostImageLoadingState extends HomeLayoutIntialState {}
+
 class SocialUploadNewPostImageSuccessState extends HomeLayoutIntialState {}
+
 class SocialUploadNewPostImageErrorState extends HomeLayoutIntialState {}
 
-class SocialDeletePostImageState extends HomeLayoutStates{}
-
+class SocialDeletePostImageState extends HomeLayoutStates {}
 
 //Get Posts
 
-class SocialGetPostsSuccessState extends HomeLayoutIntialState{}
-class SocialGetPostsLoadingState extends HomeLayoutIntialState{}
-class SocialGetPostsErrorState extends HomeLayoutIntialState{}
+class SocialGetPostsSuccessState extends HomeLayoutIntialState {
+  List<PostModel> posts;
+  SocialGetPostsSuccessState({required this.posts});
+}
+
+class SocialGetPostsLoadingState extends HomeLayoutIntialState {}
+
+class SocialGetPostsErrorState extends HomeLayoutIntialState {}
 
 //Like Post
 
-class LikePostSuccessState extends HomeLayoutIntialState{}
-class LikePostErrorState extends HomeLayoutIntialState{}
+class LikePostSuccessState extends HomeLayoutIntialState {}
+
+class LikePostErrorState extends HomeLayoutIntialState {}
 
 // send and recieve message
 
-class SocialSendMessageSuccessState extends HomeLayoutIntialState{}
-class SocialSendMessageErrorState extends HomeLayoutIntialState{}
+class SocialSendMessageSuccessState extends HomeLayoutIntialState {}
 
-class SocialRecieveMessageSuccessState extends HomeLayoutIntialState{}
+class SocialSendMessageErrorState extends HomeLayoutIntialState {}
 
-
-
+class SocialRecieveMessageSuccessState extends HomeLayoutIntialState {}

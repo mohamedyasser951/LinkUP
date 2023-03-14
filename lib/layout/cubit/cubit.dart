@@ -288,10 +288,10 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
           likes.add(value.docs.length);
         }).catchError((error) {});
 
-        emit(SocialGetPostsSuccessState());
+        emit(SocialGetPostsSuccessState(posts: posts));
       });
     }).catchError((error) {
-      emit(SocialGetPostsErrorState());
+       emit(SocialGetPostsErrorState());
     });
   }
 
