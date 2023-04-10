@@ -32,7 +32,6 @@ class _HomeScreenState extends State<HomeScreen> {
       return BlocConsumer<HomeLayoutCubit, HomeLayoutStates>(
         listener: ((context, state) {}),
         builder: (context, state) {
-          // var userModel = HomeLayoutCubit.get(context).userModel;
           var posts = HomeLayoutCubit.get(context).posts;
 
           // if (state is SocialGetPostsLoadingState) {
@@ -238,8 +237,8 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) {
                 children: [
                   InkWell(
                     onTap: () {
-                      HomeLayoutCubit.get(context).likePost(
-                          posId: HomeLayoutCubit.get(context).postsId[index]);
+                      // HomeLayoutCubit.get(context).likePost(
+                      //     posId: HomeLayoutCubit.get(context).postsId[index]);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,

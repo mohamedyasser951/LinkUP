@@ -11,7 +11,7 @@ import 'package:socialapp/shared/style/icon_broken.dart';
 class ChatDetails extends StatelessWidget {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   ChatDetails({super.key, required this.userModel});
-  var messageController = TextEditingController();
+  final TextEditingController messageController = TextEditingController();
 
   UserModel userModel;
 
@@ -68,7 +68,7 @@ class ChatDetails extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1!
+                                .bodyLarge!
                                 .copyWith())),
                   ],
                 )),

@@ -9,7 +9,6 @@ import 'package:socialapp/modules/login_screen/cubit/cubit.dart';
 import 'package:socialapp/modules/login_screen/login_screen.dart';
 import 'package:socialapp/modules/on_boarding/on_boarding.dart';
 import 'package:socialapp/modules/register_screen/cubit/cubit.dart';
-import 'package:socialapp/modules/splash/Splash_Screen.dart';
 import 'package:socialapp/shared/componenet/component.dart';
 import 'package:socialapp/shared/componenet/constant.dart';
 import 'package:socialapp/shared/network/local/shared_helper.dart';
@@ -100,7 +99,7 @@ class MyApp extends StatelessWidget {
                     statusBarIconBrightness: Brightness.light),
                 elevation: 0.0,
                 iconTheme:const IconThemeData(color: Colors.black))),
-        home: HomeLayout(),
+        home: startWidget,
       ),
     );
   }

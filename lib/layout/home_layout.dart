@@ -32,7 +32,7 @@ class HomeLayout extends StatelessWidget {
                   onPressed: () {}, icon: const Icon(IconBroken.Notification)),
               IconButton(
                   onPressed: () {
-                    logOut(context);
+                    // logOut(context);
                   },
                   icon: const Icon(IconBroken.Search))
             ],

@@ -110,11 +110,11 @@ class ProfileScreen extends StatelessWidget {
                             children: [
                                Text(
                                 "Friends",
-                                style: Theme.of(context).textTheme.caption,
+                                style: Theme.of(context).textTheme.bodySmall,
                               ),
                               Text(
                                 "10k",
-                                style: Theme.of(context).textTheme.subtitle1,
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
                              
                             ],
