@@ -4,11 +4,49 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socialapp/layout/cubit/cubit.dart';
 import 'package:socialapp/layout/cubit/states.dart';
 import 'package:socialapp/modules/add_post/add_post.dart';
+import 'package:socialapp/modules/chats/chat_screen.dart';
+import 'package:socialapp/modules/home/home.dart';
+import 'package:socialapp/modules/settings/setting_screen.dart';
+import 'package:socialapp/modules/users/users_screen.dart';
 import 'package:socialapp/shared/componenet/component.dart';
 import 'package:socialapp/shared/style/icon_broken.dart';
 
 class HomeLayout extends StatelessWidget {
-  const HomeLayout({super.key});
+   HomeLayout({super.key});
+
+
+   List<CustomNavigationBarItem> NavigationBarItem = [
+    CustomNavigationBarItem(
+      icon: const Icon(IconBroken.Home),
+    ),
+    CustomNavigationBarItem(
+      icon: const Icon(IconBroken.Chat),
+    ),
+    CustomNavigationBarItem(
+      icon: const Icon(IconBroken.Plus),
+    ),
+    CustomNavigationBarItem(
+      icon: const Icon(IconBroken.User1),
+    ),
+    CustomNavigationBarItem(
+      icon: const Icon(IconBroken.Profile),
+    ),
+  ];
+
+  List<String> titles = [
+    "Feeds",
+    "Chats",
+    "addPost",
+    "Users",
+    "Profile",
+  ];
+  List<Widget> Screens = [
+    const HomeScreen(),
+    const ChatScreen(),
+    AddPost(),
+    const UsersScreen(),
+    const ProfileScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +62,7 @@ class HomeLayout extends StatelessWidget {
           appBar: AppBar(
             elevation: 0.0,
             title: Text(
-              cubit.titles[cubit.currentIndex],
+              titles[cubit.currentIndex],
               style: const TextStyle(color: Colors.black),
             ),
             actions: [
@@ -37,11 +75,11 @@ class HomeLayout extends StatelessWidget {
                   icon: const Icon(IconBroken.Search))
             ],
           ),
-          body: cubit.Screens[cubit.currentIndex],
+          body: Screens[cubit.currentIndex],
           bottomNavigationBar: CustomNavigationBar(
             currentIndex: cubit.currentIndex,
             onTap: (index) => cubit.changeBottomNav(index),
-            items: cubit.NavigationBarItem,
+            items: NavigationBarItem,
           ),
         );
       },

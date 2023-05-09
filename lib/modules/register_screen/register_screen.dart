@@ -25,7 +25,7 @@ class RegisterScreen extends StatelessWidget {
           SharedHelper.saveData(key: "uId", value: state.userModel.uId)
               .then((value) {
             uId = state.userModel.uId;
-            navigateAndFinish(context: context, widget:const HomeLayout());
+            navigateAndFinish(context: context, widget: HomeLayout());
             //  customizedToast(message: message, toastState: ToastState.SUCESS);
           }).catchError((error) {});
         } else {

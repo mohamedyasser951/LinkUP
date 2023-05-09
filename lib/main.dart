@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:socialapp/Business%20Logic/chats/chats_cubit.dart';
 import 'package:socialapp/layout/cubit/cubit.dart';
 import 'package:socialapp/layout/home_layout.dart';
 import 'package:socialapp/modules/login_screen/cubit/cubit.dart';
@@ -21,14 +22,12 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // print(message.data);
 }
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await SharedHelper.init();
 
   var token = await FirebaseMessaging.instance.getToken();
-  
 
   // print("token is ${token}");
 
@@ -53,15 +52,15 @@ void main() async {
   uId = SharedHelper.getData("uId");
   var onBoarding = await SharedHelper.getData("onBoarding");
 
-   Widget StartWidget;
+  Widget StartWidget;
   if (onBoarding != null) {
     if (uId != null) {
-      StartWidget = const HomeLayout();
+      StartWidget =  HomeLayout();
     } else {
       StartWidget = LoginScreen();
     }
   } else {
-    StartWidget =const OnBoardingScreen();
+    StartWidget = const OnBoardingScreen();
   }
 
   runApp(MyApp(
@@ -77,13 +76,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => HomeLayoutCubit()
-            ..getUserData()
-            ..getPosts(),
-        ),
+        BlocProvider(create: (context) => HomeLayoutCubit()..getUserData()
+            // ..getPosts(),
+            ),
         BlocProvider(create: ((context) => CubitLogin())),
         BlocProvider(create: ((context) => CubitRegister())),
+        BlocProvider(
+          create: (context) => ChatsCubit(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -98,7 +98,7 @@ class MyApp extends StatelessWidget {
                     statusBarColor: primaryColor,
                     statusBarIconBrightness: Brightness.light),
                 elevation: 0.0,
-                iconTheme:const IconThemeData(color: Colors.black))),
+                iconTheme: const IconThemeData(color: Colors.black))),
         home: startWidget,
       ),
     );

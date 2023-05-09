@@ -25,7 +25,7 @@ class LoginScreen extends StatelessWidget {
         SharedHelper.saveData(key: "uId", value: state.uId).then(
           (value) {
             uId = state.uId;
-            navigateAndFinish(context: context, widget:const HomeLayout());
+            navigateAndFinish(context: context, widget: HomeLayout());
           },
         ).catchError((error) {
           print(error.toString());
@@ -46,7 +46,7 @@ class LoginScreen extends StatelessWidget {
                       children: [
                         const Padding(
                           padding: EdgeInsets.symmetric(
-                              vertical: 30.0, horizontal: 10),
+                              vertical: 30.0, horizontal: 12),
                           child: Text("Sign In",
                               style: TextStyle(
                                 color: Colors.black,

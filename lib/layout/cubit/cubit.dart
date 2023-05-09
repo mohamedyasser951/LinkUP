@@ -2,21 +2,12 @@
 
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:custom_navigation_bar/custom_navigation_bar.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:socialapp/layout/cubit/states.dart';
-import 'package:socialapp/models/message_model.dart';
 import 'package:socialapp/models/post_model.dart';
 import 'package:socialapp/models/user_model.dart';
-import 'package:socialapp/modules/add_post/add_post.dart';
-import 'package:socialapp/modules/chats/chat_screen.dart';
-import 'package:socialapp/modules/home/home.dart';
-import 'package:socialapp/modules/settings/setting_screen.dart';
-import 'package:socialapp/modules/users/users_screen.dart';
 import 'package:socialapp/shared/componenet/constant.dart';
-import 'package:socialapp/shared/style/icon_broken.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
@@ -39,7 +30,8 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
   }
 
   List<UserModel> users = [];
-  void getAllUsers() {
+
+  getAllUsers() {
     emit(SocialGetAllUsersLoadingState());
     if (users.isEmpty) {
       FirebaseFirestore.instance.collection("Users").get().then((value) {
@@ -58,40 +50,6 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
   }
 
   int currentIndex = 0;
-
-  List<CustomNavigationBarItem> NavigationBarItem = [
-    CustomNavigationBarItem(
-      icon: const Icon(IconBroken.Home),
-    ),
-    CustomNavigationBarItem(
-      icon:const Icon(IconBroken.Chat),
-    ),
-    CustomNavigationBarItem(
-      icon:const Icon(IconBroken.Plus),
-    ),
-    CustomNavigationBarItem(
-      icon:const Icon(IconBroken.User1),
-    ),
-    CustomNavigationBarItem(
-      icon:const Icon(IconBroken.Profile),
-    ),
-  ];
-
-  List<Widget> Screens = [
-   const HomeScreen(),
-   const ChatScreen(),
-    AddPost(),
-   const UsersScreen(),
-   const ProfileScreen(),
-  ];
-
-  List<String> titles = [
-    "Feeds",
-    "Chats",
-    "addPost",
-    "Users",
-    "Profile",
-  ];
 
   changeBottomNav(int index) {
     if (index == 1) {
@@ -270,29 +228,37 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
     emit(SocialDeletePostImageState());
   }
 
-  List<PostModel> posts = [];
   List<String> postsId = [];
   List<int> likes = [];
-  void getPosts() {
-    emit(SocialGetPostsLoadingState());
-    
-    FirebaseFirestore.instance
-        .collection("Posts")
-        .orderBy("dateTime")
-        .get()
-        .then((value) {
-      value.docs.forEach((element) {
-        element.reference.collection("Likes").get().then((value) {
-          postsId.add(element.id);
-          posts.add(PostModel.fromJson(element.data()));
-          likes.add(value.docs.length);
-        }).catchError((error) {});
 
-        emit(SocialGetPostsSuccessState(posts: posts));
-      });
-    }).catchError((error) {
-       emit(SocialGetPostsErrorState());
-    });
+  Stream<QuerySnapshot<Map<String, dynamic>>> getPosts() {
+    // List<PostModel> posts = [];
+
+    // emit(SocialGetPostsLoadingState());
+
+    // FirebaseFirestore.instance
+    //     .collection("Posts")
+    //     .orderBy("dateTime")
+    //     .get()
+    //     .then((value) {
+    //   value.docs.forEach((element) {
+    //     element.reference.collection("Likes").get().then((value) {
+    //       postsId.add(element.id);
+    //       posts.add(PostModel.fromJson(element.data()));
+    //       likes.add(value.docs.length);
+    //     }).catchError((error) {});
+
+    //     emit(SocialGetPostsSuccessState(posts: posts));
+    //   });
+    // }).catchError((error) {
+    //   emit(SocialGetPostsErrorState());
+    // });
+    // return posts;
+
+    return FirebaseFirestore.instance
+        .collection("Posts")
+        .orderBy("dateTime", descending: true)
+        .snapshots();
   }
 
   void likePost({required String posId}) {
@@ -305,66 +271,6 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
       emit(LikePostSuccessState());
     }).catchError((error) {
       emit(LikePostErrorState());
-    });
-  }
-
-  void sendMessage({
-    String? recieverId,
-    required String text,
-    required String dateTime,
-  }) {
-    MessageModel messageModel = MessageModel(
-        sendId: userModel!.uId,
-        reciverId: recieverId,
-        text: text,
-        dateTime: dateTime);
-
-    FirebaseFirestore.instance
-        .collection("Users")
-        .doc(userModel!.uId)
-        .collection("chats")
-        .doc(recieverId)
-        .collection("Messages")
-        .add(messageModel.toJson())
-        .then((value) {
-      emit(SocialSendMessageSuccessState());
-    }).catchError((error) {
-      emit(SocialSendMessageErrorState());
-    });
-
-    FirebaseFirestore.instance
-        .collection("Users")
-        .doc(recieverId)
-        .collection("chats")
-        .doc(userModel!.uId)
-        .collection("Messages")
-        .add(messageModel.toJson())
-        .then((value) {
-      emit(SocialSendMessageSuccessState());
-    }).catchError((error) {
-      emit(SocialSendMessageErrorState());
-    });
-  }
-
-  List<MessageModel> messages = [];
-  void getMessages(
-    String? recieverId,
-  ) {
-    FirebaseFirestore.instance
-        .collection("Users")
-        .doc(userModel!.uId)
-        .collection("chats")
-        .doc(recieverId)
-        .collection("Messages")
-        .orderBy("dateTime")
-        .snapshots()
-        .listen((event) {
-      messages = [];
-      event.docs.forEach((element) {
-        print("this is get messages methode");
-        messages.add(MessageModel.fromJson(element.data()));
-        //emit(SocialRecieveMessageSuccessState());
-      });
     });
   }
 }

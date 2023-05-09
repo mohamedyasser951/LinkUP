@@ -19,74 +19,75 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var refreshController1 = RefreshController();
+  List<PostModel> posts = [];
+
   @override
   void initState() {
-    // HomeLayoutCubit.get(context).getUserData();
-    HomeLayoutCubit.get(context).getPosts();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      return BlocConsumer<HomeLayoutCubit, HomeLayoutStates>(
-        listener: ((context, state) {}),
-        builder: (context, state) {
-          var posts = HomeLayoutCubit.get(context).posts;
+    // posts = HomeLayoutCubit.get(context).getPosts();
 
-          // if (state is SocialGetPostsLoadingState) {
-          //   return CupertinoActivityIndicator(
-          //     radius: 12,
-          //     color: Theme.of(context).primaryColor,
-          //   );
-          // }
-          // if (state is SocialGetPostsSuccessState) {
-          //   return PostsBuilder(
-          //     posts: state.posts,
-          //   );
-          // }
-          // return const Text("something went wrong !");
+    // print(HomeLayoutCubit.get(context).getPosts());
+    return Builder(
+      builder: (context) {
+        // return PostsBuilder(posts: posts);
 
-          return ConditionalBuilder(
-              condition: state is SocialGetPostsSuccessState,
-              builder: (context) {
-                return SmartRefresher(
-                  controller: refreshController1,
-                  physics: const BouncingScrollPhysics(),
-                  onRefresh: () => _onRefresh(context),
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                       const HomeBanner(),
-                        PostsBuilder(posts: posts),
-                        const SizedBox(
-                          height: 300.0,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-              fallback: ((context) => Center(
-                    child: CupertinoActivityIndicator(
-                      radius: 12,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  )));
-        },
-      );
-    });
+      return  SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const HomeBanner(),
+              PostsBuilder(posts: posts),
+              const SizedBox(
+                height: 300.0,
+              ),
+            ],
+          ),
+        );
+
+        // return ConditionalBuilder(
+        //     condition: posts.isNotEmpty,
+        //     builder: (context) {
+        //       return SmartRefresher(
+        //         controller: refreshController1,
+        //         physics: const BouncingScrollPhysics(),
+        //         onRefresh: () => _onRefresh(context),
+        //         child: SingleChildScrollView(
+        //           physics: const BouncingScrollPhysics(),
+        //           child: Column(
+        //             crossAxisAlignment: CrossAxisAlignment.start,
+        //             children: [
+        //               const HomeBanner(),
+        //               PostsBuilder(posts: posts),
+        //               const SizedBox(
+        //                 height: 300.0,
+        //               ),
+        //             ],
+        //           ),
+        //         ),
+        //       );
+        //     },
+        //     fallback: ((context) => Center(
+        //           child: CupertinoActivityIndicator(
+        //             radius: 12,
+        //             color: Theme.of(context).primaryColor,
+        //           ),
+        //         )));
+      },
+    );
   }
 
   void _onRefresh(BuildContext context) async {
-    Future.delayed(const Duration(seconds: 1)).then((value) {
-      HomeLayoutCubit.get(context).posts = [];
-      HomeLayoutCubit.get(context).getUserData();
-      HomeLayoutCubit.get(context).getPosts();
-      refreshController1.refreshCompleted();
-    });
+    // Future.delayed(const Duration(seconds: 1)).then((value) {
+    // HomeLayoutCubit.get(context).posts = [];
+    // HomeLayoutCubit.get(context).getUserData();
+    // HomeLayoutCubit.get(context).getPosts();
+    refreshController1.refreshCompleted();
+    // });
   }
 }
 
@@ -135,22 +136,32 @@ class PostsBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // var cubit = HomeLayoutCubit.get(context);
+    return StreamBuilder(
+        stream: BlocProvider.of<HomeLayoutCubit>(context).getPosts(),
+        builder: (context, snapshot) {
+          print(snapshot.data?.docs[0].data());
 
-    return ListView.separated(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: posts.length,
-      separatorBuilder: (context, index) => const SizedBox(
-        height: 8.0,
-      ),
-      itemBuilder: (context, index) =>
-          buildPostItem(index, posts[index], context),
-    );
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          return ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: snapshot.data!.docs.length,
+            separatorBuilder: (context, index) => const SizedBox(
+              height: 8.0,
+            ),
+            itemBuilder: (context, index) =>
+                buildPostItem(index, snapshot.data!.docs[index], context),
+          );
+        });
   }
 }
 
-Widget buildPostItem(int index, PostModel model, BuildContext context) {
+Widget buildPostItem(int index, var data, BuildContext context) {
   return BlocBuilder<HomeLayoutCubit, HomeLayoutStates>(
     builder: (context, state) {
       return Card(
@@ -166,7 +177,7 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) {
                 CircleAvatar(
                     radius: 25.0,
                     backgroundImage: NetworkImage(
-                      "${model.image}",
+                      "${data['image']}",
                     )),
                 const SizedBox(
                   width: 15.0,
@@ -178,7 +189,7 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) {
                       Row(
                         children: [
                           Text(
-                            "${model.name}",
+                            "${data['name']}",
                             style: const TextStyle(height: 1.4),
                           ),
                           const SizedBox(
@@ -192,7 +203,7 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) {
                         ],
                       ),
                       Text(
-                        "${model.dateTime}",
+                        "${data['dateTime']}",
                         style: Theme.of(context)
                             .textTheme
                             .caption!
@@ -212,17 +223,17 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Text(
-                "${model.text}",
+                "${data['text']}",
                 style: Theme.of(context).textTheme.subtitle2,
               ),
             ),
-            if (model.postImage != '')
+            if (data['postImage'] != '')
               Container(
                 height: 300,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: NetworkImage("${model.postImage}")),
+                      image: NetworkImage("${data['postImage']}")),
                 ),
               ),
 
@@ -252,7 +263,7 @@ Widget buildPostItem(int index, PostModel model, BuildContext context) {
                           width: 4.0,
                         ),
                         Text(
-                          "${HomeLayoutCubit.get(context).likes[index]}",
+                          "10",
                           style: Theme.of(context).textTheme.caption,
                         )
                       ],

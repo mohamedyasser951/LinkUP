@@ -96,10 +96,4 @@ class LikePostSuccessState extends HomeLayoutIntialState {}
 
 class LikePostErrorState extends HomeLayoutIntialState {}
 
-// send and recieve message
 
-class SocialSendMessageSuccessState extends HomeLayoutIntialState {}
-
-class SocialSendMessageErrorState extends HomeLayoutIntialState {}
-
-class SocialRecieveMessageSuccessState extends HomeLayoutIntialState {}
