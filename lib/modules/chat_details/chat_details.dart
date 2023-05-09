@@ -25,6 +25,7 @@ class ChatDetails extends StatelessWidget {
         },
         child: Scaffold(
           appBar: AppBar(
+              elevation: 1,
               leading: IconButton(
                 icon: const Icon(IconBroken.Arrow___Left_2),
                 onPressed: () {
@@ -102,6 +103,9 @@ class ChatDetails extends StatelessWidget {
                               itemCount: snapshot.data!.docs.length,
                             );
                           })),
+                  const SizedBox(
+                    height: 15.0,
+                  ),
                   Row(
                     children: [
                       Expanded(

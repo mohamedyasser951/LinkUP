@@ -1,7 +1,9 @@
 // ignore_for_file: avoid_print
 
 import 'dart:io';
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:socialapp/layout/cubit/states.dart';
@@ -20,9 +22,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
   void getUserData() async {
     emit(SocialGetUserLoadingState());
     FirebaseFirestore.instance.collection("Users").doc(uId).get().then((value) {
-      print("getuserDatamethod..........");
       userModel = UserModel.fromJson(value.data());
-      print("usermodel value...........${userModel!.uId}");
       emit(SocialGetUserSucessState());
     }).catchError((error) {
       emit(SocialGetUserErrorState());
@@ -232,8 +232,6 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
   List<int> likes = [];
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getPosts() {
-    // List<PostModel> posts = [];
-
     // emit(SocialGetPostsLoadingState());
 
     // FirebaseFirestore.instance
@@ -253,7 +251,6 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
     // }).catchError((error) {
     //   emit(SocialGetPostsErrorState());
     // });
-    // return posts;
 
     return FirebaseFirestore.instance
         .collection("Posts")
@@ -261,7 +258,28 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
         .snapshots();
   }
 
-  void likePost({required String posId}) {
+  bool isLikeByMe = false;
+
+  getLikes() {
+    FirebaseFirestore.instance
+        .collection("Posts")
+        .orderBy("dateTime")
+        .get()
+        .then((value) {
+      for (var element in value.docs) {
+        element.reference.collection("Likes").get().then((value) {
+          if (element.id == uId) {
+            // print("islikebyme ${element.id == uId}");
+            isLikeByMe = true;
+          }
+          likes.add(value.docs.length);
+          postsId.add(element.id);
+        });
+      }
+    });
+  }
+
+  likePost({required String posId}) {
     FirebaseFirestore.instance
         .collection("Posts")
         .doc(posId)
@@ -272,5 +290,23 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
     }).catchError((error) {
       emit(LikePostErrorState());
     });
+  }
+
+  disLike({required String postId}) {
+    FirebaseFirestore.instance
+        .collection("Posts")
+        .doc(postId)
+        .collection("Likes")
+        .doc(userModel!.uId)
+        .delete()
+        .then((value) {
+      isLikeByMe = false;
+    });
+  }
+
+  changeStateOfLike({required String postId}) {
+    isLikeByMe ? disLike(postId: postId) : likePost(posId: postId);
+    print(isLikeByMe);
+    emit(ChangeLikeState());
   }
 }

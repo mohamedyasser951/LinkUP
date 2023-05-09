@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:socialapp/modules/login_screen/login_screen.dart';
+import 'package:socialapp/modules/Auth/login_screen/login_screen.dart';
 import 'package:socialapp/shared/componenet/component.dart';
 import 'package:socialapp/shared/componenet/constant.dart';
 import 'package:socialapp/shared/network/local/shared_helper.dart';

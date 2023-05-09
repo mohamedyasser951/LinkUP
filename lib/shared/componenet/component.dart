@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:socialapp/modules/login_screen/login_screen.dart';
+import 'package:socialapp/modules/Auth/login_screen/login_screen.dart';
 import 'package:socialapp/shared/network/local/shared_helper.dart';
 import 'package:socialapp/shared/style/icon_broken.dart';
 

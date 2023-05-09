@@ -12,35 +12,39 @@ import 'package:socialapp/shared/componenet/component.dart';
 import 'package:socialapp/shared/style/icon_broken.dart';
 
 class HomeLayout extends StatelessWidget {
-   HomeLayout({super.key});
+  HomeLayout({super.key});
 
-
-   List<CustomNavigationBarItem> NavigationBarItem = [
+  final List<CustomNavigationBarItem> navigationBarItem = [
     CustomNavigationBarItem(
+      title: const Text("Feeds"),
       icon: const Icon(IconBroken.Home),
     ),
     CustomNavigationBarItem(
+      title: const Text("Chats"),
       icon: const Icon(IconBroken.Chat),
     ),
     CustomNavigationBarItem(
+      title: const Text("Post"),
       icon: const Icon(IconBroken.Plus),
     ),
     CustomNavigationBarItem(
+      title: const Text("Users"),
       icon: const Icon(IconBroken.User1),
     ),
     CustomNavigationBarItem(
+      title: const Text("Profile"),
       icon: const Icon(IconBroken.Profile),
     ),
   ];
 
-  List<String> titles = [
+  final List<String> titles = [
     "Feeds",
     "Chats",
     "addPost",
     "Users",
     "Profile",
   ];
-  List<Widget> Screens = [
+  final List<Widget> Screens = [
     const HomeScreen(),
     const ChatScreen(),
     AddPost(),
@@ -79,7 +83,7 @@ class HomeLayout extends StatelessWidget {
           bottomNavigationBar: CustomNavigationBar(
             currentIndex: cubit.currentIndex,
             onTap: (index) => cubit.changeBottomNav(index),
-            items: NavigationBarItem,
+            items: navigationBarItem,
           ),
         );
       },

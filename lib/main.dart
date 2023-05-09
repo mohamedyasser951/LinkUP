@@ -6,10 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socialapp/Business%20Logic/chats/chats_cubit.dart';
 import 'package:socialapp/layout/cubit/cubit.dart';
 import 'package:socialapp/layout/home_layout.dart';
-import 'package:socialapp/modules/login_screen/cubit/cubit.dart';
-import 'package:socialapp/modules/login_screen/login_screen.dart';
+import 'package:socialapp/modules/Auth/login_screen/cubit/cubit.dart';
+import 'package:socialapp/modules/Auth/login_screen/login_screen.dart';
 import 'package:socialapp/modules/on_boarding/on_boarding.dart';
-import 'package:socialapp/modules/register_screen/cubit/cubit.dart';
+import 'package:socialapp/modules/Auth/register_screen/cubit/cubit.dart';
 import 'package:socialapp/shared/componenet/component.dart';
 import 'package:socialapp/shared/componenet/constant.dart';
 import 'package:socialapp/shared/network/local/shared_helper.dart';
@@ -55,7 +55,7 @@ void main() async {
   Widget StartWidget;
   if (onBoarding != null) {
     if (uId != null) {
-      StartWidget =  HomeLayout();
+      StartWidget = HomeLayout();
     } else {
       StartWidget = LoginScreen();
     }
@@ -76,9 +76,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => HomeLayoutCubit()..getUserData()
-            // ..getPosts(),
-            ),
+        BlocProvider(create: (context) => HomeLayoutCubit()..getUserData()..getLikes()),
         BlocProvider(create: ((context) => CubitLogin())),
         BlocProvider(create: ((context) => CubitRegister())),
         BlocProvider(

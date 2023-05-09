@@ -1,93 +1,29 @@
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:socialapp/layout/cubit/cubit.dart';
 import 'package:socialapp/layout/cubit/states.dart';
-import 'package:socialapp/models/post_model.dart';
 import 'package:socialapp/modules/comment_page/comment_page.dart';
 import 'package:socialapp/shared/componenet/component.dart';
 import 'package:socialapp/shared/style/icon_broken.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  var refreshController1 = RefreshController();
-  List<PostModel> posts = [];
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    // posts = HomeLayoutCubit.get(context).getPosts();
-
-    // print(HomeLayoutCubit.get(context).getPosts());
-    return Builder(
-      builder: (context) {
-        // return PostsBuilder(posts: posts);
-
-      return  SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const HomeBanner(),
-              PostsBuilder(posts: posts),
-              const SizedBox(
-                height: 300.0,
-              ),
-            ],
-          ),
-        );
-
-        // return ConditionalBuilder(
-        //     condition: posts.isNotEmpty,
-        //     builder: (context) {
-        //       return SmartRefresher(
-        //         controller: refreshController1,
-        //         physics: const BouncingScrollPhysics(),
-        //         onRefresh: () => _onRefresh(context),
-        //         child: SingleChildScrollView(
-        //           physics: const BouncingScrollPhysics(),
-        //           child: Column(
-        //             crossAxisAlignment: CrossAxisAlignment.start,
-        //             children: [
-        //               const HomeBanner(),
-        //               PostsBuilder(posts: posts),
-        //               const SizedBox(
-        //                 height: 300.0,
-        //               ),
-        //             ],
-        //           ),
-        //         ),
-        //       );
-        //     },
-        //     fallback: ((context) => Center(
-        //           child: CupertinoActivityIndicator(
-        //             radius: 12,
-        //             color: Theme.of(context).primaryColor,
-        //           ),
-        //         )));
-      },
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const [
+          HomeBanner(),
+          PostsBuilder(),
+          SizedBox(
+            height: 10.0,
+          )
+        ],
+      ),
     );
-  }
-
-  void _onRefresh(BuildContext context) async {
-    // Future.delayed(const Duration(seconds: 1)).then((value) {
-    // HomeLayoutCubit.get(context).posts = [];
-    // HomeLayoutCubit.get(context).getUserData();
-    // HomeLayoutCubit.get(context).getPosts();
-    refreshController1.refreshCompleted();
-    // });
   }
 }
 
@@ -117,7 +53,7 @@ class HomeBanner extends StatelessWidget {
               "Communicate with Friends",
               style: Theme.of(context)
                   .textTheme
-                  .subtitle1!
+                  .titleMedium!
                   .copyWith(color: Colors.white),
             ),
           )
@@ -127,26 +63,32 @@ class HomeBanner extends StatelessWidget {
   }
 }
 
-class PostsBuilder extends StatelessWidget {
-  final List<PostModel> posts;
+class PostsBuilder extends StatefulWidget {
   const PostsBuilder({
-    required this.posts,
     super.key,
   });
+
+  @override
+  State<PostsBuilder> createState() => _PostsBuilderState();
+}
+
+class _PostsBuilderState extends State<PostsBuilder> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
         stream: BlocProvider.of<HomeLayoutCubit>(context).getPosts(),
+        key: widget.key,
         builder: (context, snapshot) {
-          print(snapshot.data?.docs[0].data());
-
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
-
           return ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -162,6 +104,7 @@ class PostsBuilder extends StatelessWidget {
 }
 
 Widget buildPostItem(int index, var data, BuildContext context) {
+  var cubit = HomeLayoutCubit.get(context);
   return BlocBuilder<HomeLayoutCubit, HomeLayoutStates>(
     builder: (context, state) {
       return Card(
@@ -206,7 +149,7 @@ Widget buildPostItem(int index, var data, BuildContext context) {
                         "${data['dateTime']}",
                         style: Theme.of(context)
                             .textTheme
-                            .caption!
+                            .bodySmall!
                             .copyWith(height: 1.4),
                       ),
                     ],
@@ -224,7 +167,7 @@ Widget buildPostItem(int index, var data, BuildContext context) {
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Text(
                 "${data['text']}",
-                style: Theme.of(context).textTheme.subtitle2,
+                style: Theme.of(context).textTheme.titleSmall,
               ),
             ),
             if (data['postImage'] != '')
@@ -248,25 +191,33 @@ Widget buildPostItem(int index, var data, BuildContext context) {
                 children: [
                   InkWell(
                     onTap: () {
-                      // HomeLayoutCubit.get(context).likePost(
-                      //     posId: HomeLayoutCubit.get(context).postsId[index]);
+                      cubit.likePost(
+                          posId: HomeLayoutCubit.get(context).postsId[index]);
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        const Icon(
-                          IconBroken.Heart,
-                          size: 20,
-                          color: Colors.black54,
-                        ),
-                        const SizedBox(
-                          width: 4.0,
-                        ),
-                        Text(
-                          "10",
-                          style: Theme.of(context).textTheme.caption,
-                        )
-                      ],
+                    child: InkWell(
+                      onTap: () {
+                        cubit.changeStateOfLike(postId: cubit.postsId[index]);
+                        print(cubit.isLikeByMe);
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Icon(
+                            IconBroken.Heart,
+                            size: 20,
+                            color:
+                                cubit.isLikeByMe ? Colors.red : Colors.black54,
+                          ),
+                          const SizedBox(
+                            width: 4.0,
+                          ),
+                          Text(
+                            "0"
+                                .toString(),
+                            style: Theme.of(context).textTheme.bodySmall,
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   const Spacer(),

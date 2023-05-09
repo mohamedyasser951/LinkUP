@@ -92,6 +92,7 @@ class SocialGetPostsErrorState extends HomeLayoutIntialState {}
 
 //Like Post
 
+class ChangeLikeState extends HomeLayoutIntialState {} 
 class LikePostSuccessState extends HomeLayoutIntialState {}
 
 class LikePostErrorState extends HomeLayoutIntialState {}
