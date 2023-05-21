@@ -1,0 +1,4 @@
+#Thu Apr 06 13:14:13 EET 2023
+base.0=D\:\\flutter_projects\\LastSocialApp\\build\\app\\intermediates\\dex\\release\\minifyReleaseWithR8\\classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
