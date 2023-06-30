@@ -11,11 +11,11 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
+    return const SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           HomeBanner(),
           PostsBuilder(),
           SizedBox(
