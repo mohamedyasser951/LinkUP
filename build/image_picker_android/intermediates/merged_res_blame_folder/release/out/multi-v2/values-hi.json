@@ -4,13 +4,13 @@
             "outputFile": "D:\\flutter_projects\\LastSocialApp\\build\\image_picker_android\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-hi\\values-hi.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\moham\\.gradle\\caches\\transforms-3\\0ce731f8c62e88af9af421907435d7da\\transformed\\core-1.8.0\\res\\values-hi\\values-hi.xml",
+                    "source": "C:\\Users\\moham\\.gradle\\caches\\transforms-3\\0a46b1c714cc15abfb3a70e117b1f095\\transformed\\core-1.10.1\\res\\values-hi\\values-hi.xml",
                     "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,153,256,361,462,575,681,808",
+                        "endColumns": "97,102,104,100,112,105,126,100",
+                        "endOffsets": "148,251,356,457,570,676,803,904"
                     }
                 }
             ]
@@ -19,13 +19,13 @@
             "outputFile": "D:\\flutter_projects\\LastSocialApp\\build\\image_picker_android\\intermediates\\merged_res\\release\\values-hi\\values-hi.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\moham\\.gradle\\caches\\transforms-3\\0ce731f8c62e88af9af421907435d7da\\transformed\\core-1.8.0\\res\\values-hi\\values-hi.xml",
+                    "source": "C:\\Users\\moham\\.gradle\\caches\\transforms-3\\0a46b1c714cc15abfb3a70e117b1f095\\transformed\\core-1.10.1\\res\\values-hi\\values-hi.xml",
                     "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,153,256,361,462,575,681,808",
+                        "endColumns": "97,102,104,100,112,105,126,100",
+                        "endOffsets": "148,251,356,457,570,676,803,904"
                     }
                 }
             ]

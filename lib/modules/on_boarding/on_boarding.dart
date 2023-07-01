@@ -23,7 +23,7 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   List<OnBoardingModel> boardingData = [
     OnBoardingModel(
-        "assets/images/slider_2.png", "Share your Thought", "subTitle"),
+        "assets/images/slider_1.png", "Share your Thought", "subTitle"),
     OnBoardingModel("assets/images/slider_2.png", "Easy to Use !", "subTitle"),
     OnBoardingModel(
         "assets/images/slider_3.png", "Connect with Others", "subTitle")

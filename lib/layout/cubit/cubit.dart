@@ -1,9 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:io';
-import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:socialapp/layout/cubit/states.dart';
@@ -258,8 +256,6 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
         .snapshots();
   }
 
-  bool isLikeByMe = false;
-
   getLikes() {
     FirebaseFirestore.instance
         .collection("Posts")
@@ -268,10 +264,6 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
         .then((value) {
       for (var element in value.docs) {
         element.reference.collection("Likes").get().then((value) {
-          if (element.id == uId) {
-            // print("islikebyme ${element.id == uId}");
-            isLikeByMe = true;
-          }
           likes.add(value.docs.length);
           postsId.add(element.id);
         });
@@ -299,14 +291,31 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
         .collection("Likes")
         .doc(userModel!.uId)
         .delete()
-        .then((value) {
-      isLikeByMe = false;
-    });
+        .then((value) {});
   }
 
-  changeStateOfLike({required String postId}) {
-    isLikeByMe ? disLike(postId: postId) : likePost(posId: postId);
-    print(isLikeByMe);
-    emit(ChangeLikeState());
+  // bool isLikeByMe = false;
+
+  likedByMe({required String postId}) {
+    bool isLikedByMe = false;
+
+    FirebaseFirestore.instance
+        .collection("Posts")
+        .doc(postId)
+        .collection("Likes")
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        if (element.id == userModel!.uId) {
+          isLikedByMe = true;
+          disLike(postId: postId);
+        }
+      });
+      if (isLikedByMe == false) {
+        likePost(posId: postId);
+        print(isLikedByMe);
+      }
+    });
+    return isLikedByMe;
   }
 }

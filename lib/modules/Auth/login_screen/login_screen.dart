@@ -2,8 +2,8 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socialapp/layout/home_layout.dart';
-import 'package:socialapp/modules/Auth/login_screen/cubit/cubit.dart';
-import 'package:socialapp/modules/Auth/login_screen/cubit/states.dart';
+import 'package:socialapp/modules/Auth/login_screen/LoginCubit/cubit.dart';
+import 'package:socialapp/modules/Auth/login_screen/LoginCubit/states.dart';
 import 'package:socialapp/modules/Auth/register_screen/register_screen.dart';
 
 import 'package:socialapp/shared/componenet/component.dart';

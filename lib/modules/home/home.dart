@@ -103,10 +103,6 @@ class _PostsBuilderState extends State<PostsBuilder> {
   }
 }
 
-
-
-
-
 Widget buildPostItem(int index, var data, BuildContext context) {
   var cubit = HomeLayoutCubit.get(context);
   return BlocBuilder<HomeLayoutCubit, HomeLayoutStates>(
@@ -183,7 +179,6 @@ Widget buildPostItem(int index, var data, BuildContext context) {
                       image: NetworkImage("${data['postImage']}")),
                 ),
               ),
-
             const Divider(
               color: Colors.grey,
             ),
@@ -200,8 +195,9 @@ Widget buildPostItem(int index, var data, BuildContext context) {
                     },
                     child: InkWell(
                       onTap: () {
-                        cubit.changeStateOfLike(postId: cubit.postsId[index]);
-                        print(cubit.isLikeByMe);
+                        cubit.likedByMe(
+                            postId:
+                                HomeLayoutCubit.get(context).postsId[index]);
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -209,15 +205,17 @@ Widget buildPostItem(int index, var data, BuildContext context) {
                           Icon(
                             IconBroken.Heart,
                             size: 20,
-                            color:
-                                cubit.isLikeByMe ? Colors.red : Colors.black54,
+                            // color: cubit.likedByMe(
+                            //         postId: HomeLayoutCubit.get(context)
+                            //             .postsId[index])
+                            //     ? Colors.red
+                            //     : Colors.black54,
                           ),
                           const SizedBox(
                             width: 4.0,
                           ),
                           Text(
-                            "0"
-                                .toString(),
+                            "0".toString(),
                             style: Theme.of(context).textTheme.bodySmall,
                           )
                         ],
@@ -255,113 +253,3 @@ Widget buildPostItem(int index, var data, BuildContext context) {
     },
   );
 }
-
-
-
-//tags
- // Container(
-          //   width: double.infinity,
-          //   // height: 40.0,
-          //   child: Wrap(
-          //     children: [
-          //       Padding(
-          //         padding: const EdgeInsetsDirectional.only(end: 6),
-          //         child: Container(
-          //           height: 20.0,
-          //           child: MaterialButton(
-          //             padding: EdgeInsets.zero,
-          //             minWidth: 20,
-          //             onPressed: () {},
-          //             child: Text("#Software",
-          //                 style: Theme.of(context).textTheme.caption!.copyWith(
-          //                       color: Colors.blue,
-          //                     )),
-          //           ),
-          //         ),
-          //       ),
-          //       Padding(
-          //         padding: const EdgeInsetsDirectional.only(end: 6),
-          //         child: Container(
-          //           height: 20.0,
-          //           child: MaterialButton(
-          //             padding: EdgeInsets.zero,
-          //             minWidth: 20,
-          //             onPressed: () {},
-          //             child: Text("#Software",
-          //                 style: Theme.of(context).textTheme.caption!.copyWith(
-          //                       color: Colors.blue,
-          //                     )),
-          //           ),
-          //         ),
-          //       ),
-          //       Padding(
-          //         padding: const EdgeInsetsDirectional.only(end: 6),
-          //         child: Container(
-          //           height: 20.0,
-          //           child: MaterialButton(
-          //             padding: EdgeInsets.zero,
-          //             minWidth: 20,
-          //             onPressed: () {},
-          //             child: Text("#Development Software",
-          //                 style: Theme.of(context).textTheme.caption!.copyWith(
-          //                       color: Colors.blue,
-          //                     )),
-          //           ),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          // Container(
-          //   width: double.infinity,
-          //   // height: 40.0,
-          //   child: Wrap(
-          //     children: [
-          //       Padding(
-          //         padding: const EdgeInsetsDirectional.only(end: 6),
-          //         child: Container(
-          //           height: 20.0,
-          //           child: MaterialButton(
-          //             padding: EdgeInsets.zero,
-          //             minWidth: 20,
-          //             onPressed: () {},
-          //             child: Text("#Software",
-          //                 style: Theme.of(context).textTheme.caption!.copyWith(
-          //                       color: Colors.blue,
-          //                     )),
-          //           ),
-          //         ),
-          //       ),
-          //       Padding(
-          //         padding: const EdgeInsetsDirectional.only(end: 6),
-          //         child: Container(
-          //           height: 20.0,
-          //           child: MaterialButton(
-          //             padding: EdgeInsets.zero,
-          //             minWidth: 20,
-          //             onPressed: () {},
-          //             child: Text("#Software",
-          //                 style: Theme.of(context).textTheme.caption!.copyWith(
-          //                       color: Colors.blue,
-          //                     )),
-          //           ),
-          //         ),
-          //       ),
-          //       Padding(
-          //         padding: const EdgeInsetsDirectional.only(end: 6),
-          //         child: Container(
-          //           height: 20.0,
-          //           child: MaterialButton(
-          //             padding: EdgeInsets.zero,
-          //             minWidth: 20,
-          //             onPressed: () {},
-          //             child: Text("#Development Software",
-          //                 style: Theme.of(context).textTheme.caption!.copyWith(
-          //                       color: Colors.blue,
-          //                     )),
-          //           ),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),

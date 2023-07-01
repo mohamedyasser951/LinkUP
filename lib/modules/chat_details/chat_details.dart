@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:socialapp/Business%20Logic/chats/chats_cubit.dart';
-import 'package:socialapp/Business%20Logic/chats/chats_states.dart';
+import 'package:socialapp/modules/chats/ChatCubit/chats_cubit.dart';
+import 'package:socialapp/modules/chats/ChatCubit/chats_states.dart';
 import 'package:socialapp/models/user_model.dart';
 import 'package:socialapp/shared/componenet/constant.dart';
 import 'package:socialapp/shared/style/icon_broken.dart';
@@ -188,6 +188,10 @@ class ChatBody extends StatelessWidget {
                               recieverId: userModel.uId,
                               text: messageController.text,
                               dateTime: DateTime.now().toString());
+                          cubit.sendFCM(
+                              reciverToken: userModel.fcmToken!,
+                              message: messageController.text,
+                              title: userModel.name!);
                         } else if (cubit.imageMessage != null) {
                           cubit.sendChatImages(
                               imgFile: cubit.imageMessage!,

@@ -6,7 +6,7 @@ class UserModel {
   String? image;
   String? cover;
   String? bio;
-
+  String? fcmToken;
   UserModel({
     this.name,
     this.email,
@@ -15,6 +15,7 @@ class UserModel {
     this.bio ,
     this.cover,
     this.image ,
+    this.fcmToken,
   });
 
   UserModel.fromJson(Map<String, dynamic>? Json) {
@@ -25,6 +26,7 @@ class UserModel {
     bio = Json["bio"];
     cover = Json["cover"];
     image = Json["image"];
+    fcmToken = Json["fcmToken"];
   }
 
   Map<String, dynamic> toJson() {
@@ -36,6 +38,7 @@ class UserModel {
       "bio":bio,
       "cover":cover,
       "image":image,
+      "fcmToken":fcmToken
     };
   }
 }

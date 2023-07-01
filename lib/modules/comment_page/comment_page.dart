@@ -4,9 +4,11 @@ import 'package:socialapp/layout/cubit/cubit.dart';
 import 'package:socialapp/layout/cubit/states.dart';
 import 'package:socialapp/shared/style/icon_broken.dart';
 
+import 'comment_item.dart';
+
 class CommentScreen extends StatelessWidget {
   CommentScreen({super.key});
-  var commentController = TextEditingController();
+  final TextEditingController commentController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeLayoutCubit, HomeLayoutStates>(
@@ -22,7 +24,7 @@ class CommentScreen extends StatelessWidget {
             ),
             title: const Text("Comments"),
             actions: [
-              TextButton(onPressed: () {}, child:const Text("Post")),
+              TextButton(onPressed: () {}, child: const Text("Post")),
               const SizedBox(
                 width: 4.0,
               )
@@ -32,7 +34,7 @@ class CommentScreen extends StatelessWidget {
             children: [
               Expanded(
                   child: ListView.builder(
-                      itemBuilder: ((context, index) =>const buildCommentItem()),
+                      itemBuilder: ((context, index) => const CommentItem()),
                       itemCount: 5)),
               Row(
                 children: [
@@ -64,50 +66,12 @@ class CommentScreen extends StatelessWidget {
                           icon: const Icon(IconBroken.Camera)),
                     ),
                   )),
-                  
-                  
                 ],
               ),
             ],
           ),
         );
       },
-    );
-  }
-}
-
-class buildCommentItem extends StatelessWidget {
-  const buildCommentItem({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-      child: Row(children: [
-        const CircleAvatar(
-          radius: 25.0,
-          backgroundImage: NetworkImage(
-              "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
-        ),
-        const SizedBox(
-          width: 10.0,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children:const [
-            Text(
-              "Mohamed yasser",
-              style: TextStyle(fontWeight: FontWeight.w600),
-            ),
-            SizedBox(
-              height: 2,
-            ),
-            Text("Very Good!!"),
-          ],
-        ),
-      ]),
     );
   }
 }

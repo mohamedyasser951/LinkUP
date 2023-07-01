@@ -9,9 +9,9 @@ import 'package:socialapp/shared/style/icon_broken.dart';
 class UpdateProfileCreen extends StatelessWidget {
   UpdateProfileCreen({super.key});
 
-  var nameController = TextEditingController();
-  var bioController = TextEditingController();
-  var phoneController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController bioController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -82,9 +82,9 @@ class UpdateProfileCreen extends StatelessWidget {
                                     HomeLayoutCubit.get(context)
                                         .getCoverImage();
                                   },
-                                  icon:  CircleAvatar(
+                                  icon: CircleAvatar(
                                     backgroundColor: Colors.grey[200],
-                                    child:const Icon(IconBroken.Camera),
+                                    child: const Icon(IconBroken.Camera),
                                   ))
                             ],
                           ),
@@ -98,7 +98,6 @@ class UpdateProfileCreen extends StatelessWidget {
                               radius: 64.0,
                               child: CircleAvatar(
                                 radius: 60.0,
-                                
                                 backgroundImage: profileImage == null
                                     ? NetworkImage("${model.image}")
                                     : FileImage(profileImage) as ImageProvider,
@@ -109,7 +108,7 @@ class UpdateProfileCreen extends StatelessWidget {
                                   HomeLayoutCubit.get(context)
                                       .getProfileImage();
                                 },
-                                icon:  CircleAvatar(
+                                icon: CircleAvatar(
                                   backgroundColor: Colors.grey[200],
                                   child: const Icon(IconBroken.Camera),
                                 ))
@@ -135,8 +134,8 @@ class UpdateProfileCreen extends StatelessWidget {
                                       bio: bioController.text,
                                       phone: phoneController.text);
                                 },
-                                child:const Text("UpLoad profile")),
-                           const SizedBox(
+                                child: const Text("UpLoad profile")),
+                            const SizedBox(
                               height: 4.0,
                             ),
                             // if (state is SocialUpdateUserDataLoadingState)
@@ -154,8 +153,8 @@ class UpdateProfileCreen extends StatelessWidget {
                                       bio: bioController.text,
                                       phone: phoneController.text);
                                 },
-                                child:const Text("UpLoad cover")),
-                           const SizedBox(
+                                child: const Text("UpLoad cover")),
+                            const SizedBox(
                               height: 4.0,
                             ),
                             // if (state is SocialUpdateUserDataLoadingState)

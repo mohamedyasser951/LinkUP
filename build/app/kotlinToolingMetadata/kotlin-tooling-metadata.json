@@ -1,12 +1,13 @@
 {
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.1.0",
   "buildSystem": "Gradle",
   "buildSystemVersion": "7.4",
   "buildPlugin": "org.jetbrains.kotlin.gradle.plugin.KotlinAndroidPluginWrapper",
-  "buildPluginVersion": "1.6.10",
+  "buildPluginVersion": "1.7.10",
   "projectSettings": {
-    "isHmppEnabled": false,
-    "isCompatibilityMetadataVariantEnabled": true
+    "isHmppEnabled": true,
+    "isCompatibilityMetadataVariantEnabled": false,
+    "isKPMEnabled": false
   },
   "projectTargets": [
     {

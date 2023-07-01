@@ -1,4 +1,4 @@
-#Sun May 21 15:09:20 EET 2023
+#Sat Jul 01 18:24:57 EET 2023
 base.2=D\:\\flutter_projects\\LastSocialApp\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes3.dex
 path.2=classes3.dex
 base.1=D\:\\flutter_projects\\LastSocialApp\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes2.dex

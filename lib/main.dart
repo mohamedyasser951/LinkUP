@@ -3,13 +3,13 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:socialapp/Business%20Logic/chats/chats_cubit.dart';
+import 'package:socialapp/modules/chats/ChatCubit/chats_cubit.dart';
 import 'package:socialapp/layout/cubit/cubit.dart';
 import 'package:socialapp/layout/home_layout.dart';
-import 'package:socialapp/modules/Auth/login_screen/cubit/cubit.dart';
+import 'package:socialapp/modules/Auth/login_screen/LoginCubit/cubit.dart';
 import 'package:socialapp/modules/Auth/login_screen/login_screen.dart';
 import 'package:socialapp/modules/on_boarding/on_boarding.dart';
-import 'package:socialapp/modules/Auth/register_screen/cubit/cubit.dart';
+import 'package:socialapp/modules/Auth/register_screen/RegisterCubit/cubit.dart';
 import 'package:socialapp/shared/componenet/component.dart';
 import 'package:socialapp/shared/componenet/constant.dart';
 import 'package:socialapp/shared/network/local/shared_helper.dart';
@@ -27,22 +27,17 @@ void main() async {
   await Firebase.initializeApp();
   await SharedHelper.init();
 
-  var token = await FirebaseMessaging.instance.getToken();
+  // var token = await FirebaseMessaging.instance.getToken();
 
   // print("token is ${token}");
 
   //foreground fcm
   FirebaseMessaging.onMessage.listen(((event) {
-    customizedToast(message: "on message ", toastState: ToastState.SUCESS);
-
-    // print("on message ${event.data}");
+  
   }));
-  // when click on notification to open app
-  FirebaseMessaging.onMessageOpenedApp.listen((event) {
-    customizedToast(
-        message: "On meessageOpenedApp", toastState: ToastState.SUCESS);
 
-    // print("meessageOpenedApp ${event.data}");
+  FirebaseMessaging.onMessageOpenedApp.listen((event) {
+  
   });
 
   //background fcm
@@ -55,7 +50,7 @@ void main() async {
   Widget StartWidget;
   if (onBoarding != null) {
     if (uId != null) {
-      StartWidget = HomeLayout();
+      StartWidget = const HomeLayout();
     } else {
       StartWidget = LoginScreen();
     }
