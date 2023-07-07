@@ -16,46 +16,9 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          HomeBanner(),
           PostsBuilder(),
           SizedBox(
             height: 10.0,
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class HomeBanner extends StatelessWidget {
-  const HomeBanner({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      margin: const EdgeInsets.symmetric(horizontal: 8.0),
-      elevation: 5.0,
-      child: Stack(
-        alignment: AlignmentDirectional.bottomEnd,
-        children: [
-          const Image(
-              height: 200,
-              fit: BoxFit.cover,
-              width: double.infinity,
-              image: NetworkImage(
-                  "https://img.freepik.com/free-photo/positive-european-male-model-points-right-with-both-index-fingers-suggets-try-use-product-turns-aside_273609-38445.jpg?size=626&ext=jpg")),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              "Communicate with Friends",
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium!
-                  .copyWith(color: Colors.white),
-            ),
           )
         ],
       ),
@@ -202,7 +165,7 @@ Widget buildPostItem(int index, var data, BuildContext context) {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Icon(
+                          const Icon(
                             IconBroken.Heart,
                             size: 20,
                             // color: cubit.likedByMe(

@@ -22,8 +22,42 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
     FirebaseFirestore.instance.collection("Users").doc(uId).get().then((value) {
       userModel = UserModel.fromJson(value.data());
       emit(SocialGetUserSucessState());
+      getUserPosts(userId: uId!);
     }).catchError((error) {
       emit(SocialGetUserErrorState());
+    });
+  }
+
+  void search({required String searchText}) {
+    emit(SearchLoadingState());
+    FirebaseFirestore.instance
+        .collection("Users")
+        .where("name", isEqualTo: searchText)
+        .get()
+        .then((value) {
+      emit(SearchSuceessState(users: value.docs));
+    }).catchError((error) {
+      print(error.toString());
+      emit(SearchErrorState(error: error.toString()));
+    });
+  }
+
+  List<PostModel> userPosts = [];
+
+  void getUserPosts({required String userId}) {
+    emit(GetUserPostsLoadingState());
+    FirebaseFirestore.instance
+        .collection("Posts")
+        .orderBy("dateTime")
+        .snapshots()
+        .listen((event) {
+      userPosts = [];
+      for (var element in event.docs) {
+        if (element.data()["uId"] == userId) {
+          userPosts.add(PostModel.fromJson(element.data()));
+        }
+        print(userPosts.toString());
+      }
     });
   }
 

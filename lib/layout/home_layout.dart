@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socialapp/layout/cubit/cubit.dart';
 import 'package:socialapp/layout/cubit/states.dart';
+import 'package:socialapp/modules/Search/search_screen.dart';
 import 'package:socialapp/modules/add_post/add_post.dart';
 import 'package:socialapp/modules/chats/chat_screen.dart';
 import 'package:socialapp/modules/home/home.dart';
-import 'package:socialapp/modules/settings/setting_screen.dart';
-import 'package:socialapp/modules/users/users_screen.dart';
+import 'package:socialapp/modules/Profile/profile.dart';
 import 'package:socialapp/shared/componenet/component.dart';
 import 'package:socialapp/shared/style/icon_broken.dart';
 
@@ -25,16 +25,16 @@ class _HomeLayoutState extends State<HomeLayout> {
       icon: const Icon(IconBroken.Home),
     ),
     CustomNavigationBarItem(
-      title: const Text("Chats"),
-      icon: const Icon(IconBroken.Chat),
+      title: const Text("Search"),
+      icon: const Icon(IconBroken.Search),
     ),
     CustomNavigationBarItem(
       title: const Text("Post"),
       icon: const Icon(IconBroken.Plus),
     ),
     CustomNavigationBarItem(
-      title: const Text("Users"),
-      icon: const Icon(IconBroken.User1),
+      title: const Text("Chats"),
+      icon: const Icon(IconBroken.Chat),
     ),
     CustomNavigationBarItem(
       title: const Text("Profile"),
@@ -44,17 +44,17 @@ class _HomeLayoutState extends State<HomeLayout> {
 
   final List<String> titles = [
     "Feeds",
-    "Chats",
+    "Search",
     "addPost",
-    "Users",
+    "Chats",
     "Profile",
   ];
 
   final List<Widget> screens = [
     const HomeScreen(),
-    const ChatScreen(),
+    const SearchScreen(),
     AddPost(),
-    const UsersScreen(),
+    const ChatScreen(),
     const ProfileScreen(),
   ];
 
@@ -75,15 +75,11 @@ class _HomeLayoutState extends State<HomeLayout> {
               titles[cubit.currentIndex],
               style: const TextStyle(color: Colors.black),
             ),
-            actions: [
-              IconButton(
-                  onPressed: () {}, icon: const Icon(IconBroken.Notification)),
-              IconButton(
-                  onPressed: () {
-                    logOut(context);
-                  },
-                  icon: const Icon(IconBroken.Search))
-            ],
+            // actions: [
+            //   IconButton(
+            //       onPressed: () {}, icon: const Icon(IconBroken.Notification)),
+            //   IconButton(onPressed: () {}, icon: const Icon(IconBroken.Search))
+            // ],
           ),
           body: screens[cubit.currentIndex],
           bottomNavigationBar: CustomNavigationBar(

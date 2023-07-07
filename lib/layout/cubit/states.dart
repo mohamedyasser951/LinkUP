@@ -15,6 +15,28 @@ class SocialGetUserSucessState extends HomeLayoutStates {}
 
 class SocialGetUserErrorState extends HomeLayoutStates {}
 
+//Search
+class SearchLoadingState extends HomeLayoutStates {}
+
+class SearchSuceessState extends HomeLayoutStates {
+  List users;
+  SearchSuceessState({required this.users});
+}
+
+class SearchErrorState extends HomeLayoutStates {
+  final String error;
+  SearchErrorState({required this.error});
+}
+
+class GetUserPostsSuccessState extends HomeLayoutStates{
+}
+class GetUserPostsLoadingState extends HomeLayoutStates{
+}
+class GetUserPostsErrorState extends HomeLayoutStates{
+}
+
+
+
 //GetAllUsersStates
 class SocialGetAllUsersLoadingState extends HomeLayoutStates {}
 
@@ -92,9 +114,8 @@ class SocialGetPostsErrorState extends HomeLayoutIntialState {}
 
 //Like Post
 
-class ChangeLikeState extends HomeLayoutIntialState {} 
+class ChangeLikeState extends HomeLayoutIntialState {}
+
 class LikePostSuccessState extends HomeLayoutIntialState {}
 
 class LikePostErrorState extends HomeLayoutIntialState {}
-
-
