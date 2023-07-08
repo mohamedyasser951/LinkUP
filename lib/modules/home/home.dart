@@ -68,6 +68,7 @@ class _PostsBuilderState extends State<PostsBuilder> {
 
 Widget buildPostItem(int index, var data, BuildContext context) {
   var cubit = HomeLayoutCubit.get(context);
+  HomeLayoutCubit.get(context).getLikes(posId: data["uId"]);
   return BlocBuilder<HomeLayoutCubit, HomeLayoutStates>(
     builder: (context, state) {
       return Card(
@@ -152,37 +153,27 @@ Widget buildPostItem(int index, var data, BuildContext context) {
                 // mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   InkWell(
-                    onTap: () {
-                      cubit.likePost(
-                          posId: HomeLayoutCubit.get(context).postsId[index]);
+                    onTap: () async {
+                      // await cubit.likedByMe(postId: data["uId"]);
+                      print(cubit.likedByMe(postId: data["uId"]));
+                      print(cubit.peopleReacted.length);
                     },
-                    child: InkWell(
-                      onTap: () {
-                        cubit.likedByMe(
-                            postId:
-                                HomeLayoutCubit.get(context).postsId[index]);
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          const Icon(
-                            IconBroken.Heart,
-                            size: 20,
-                            // color: cubit.likedByMe(
-                            //         postId: HomeLayoutCubit.get(context)
-                            //             .postsId[index])
-                            //     ? Colors.red
-                            //     : Colors.black54,
-                          ),
-                          const SizedBox(
-                            width: 4.0,
-                          ),
-                          Text(
-                            "0".toString(),
-                            style: Theme.of(context).textTheme.bodySmall,
-                          )
-                        ],
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        const Icon(
+                          IconBroken.Heart,
+                          size: 20,
+                          color: Colors.black54,
+                        ),
+                        const SizedBox(
+                          width: 4.0,
+                        ),
+                        Text(
+                          cubit.peopleReacted.length.toString(),
+                          style: Theme.of(context).textTheme.bodySmall,
+                        )
+                      ],
                     ),
                   ),
                   const Spacer(),

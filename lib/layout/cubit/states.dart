@@ -49,35 +49,35 @@ class SocialNewPostAtate extends HomeLayoutStates {}
 
 //PickedProfileImage
 
-class SocialProfileImagePickedSuccesState extends HomeLayoutIntialState {}
+class SocialProfileImagePickedSuccesState extends HomeLayoutStates {}
 
-class SocialProfileImagePickedErrorState extends HomeLayoutIntialState {}
+class SocialProfileImagePickedErrorState extends HomeLayoutStates {}
 
 //PickedcoverImage
 
-class SocialCoverImagePickedSuccesState extends HomeLayoutIntialState {}
+class SocialCoverImagePickedSuccesState extends HomeLayoutStates {}
 
-class SocialCoverImagePickedErrorState extends HomeLayoutIntialState {}
+class SocialCoverImagePickedErrorState extends HomeLayoutStates {}
 
 //UploadProfileImage
 
-class SocialUploadProfileImageSuccessState extends HomeLayoutIntialState {}
+class SocialUploadProfileImageSuccessState extends HomeLayoutStates {}
 
-class SocialUploadProfileImageErrorState extends HomeLayoutIntialState {}
+class SocialUploadProfileImageErrorState extends HomeLayoutStates {}
 
 //UploadCoverImage
 
-class SocialUploadCoveImageSuccessState extends HomeLayoutIntialState {}
+class SocialUploadCoveImageSuccessState extends HomeLayoutStates {}
 
-class SocialUploadCoveImageErrorState extends HomeLayoutIntialState {}
+class SocialUploadCoveImageErrorState extends HomeLayoutStates {}
 
 //updateUserData
 
-class SocialUpdateUserDataLoadingState extends HomeLayoutIntialState {}
+class SocialUpdateUserDataLoadingState extends HomeLayoutStates {}
 
-// class SocialUpdateUserDataSuccessState extends HomeLayoutIntialState {}
+// class SocialUpdateUserDataSuccessState extends HomeLayoutStates {}
 
-class SocialUpdateUserDataErrorState extends HomeLayoutIntialState {}
+class SocialUpdateUserDataErrorState extends HomeLayoutStates {}
 
 //pickedPostImage
 class SocialPickedPostImageSuccessState extends HomeLayoutStates {}
@@ -85,37 +85,50 @@ class SocialPickedPostImageSuccessState extends HomeLayoutStates {}
 class SocialPickedPostImageErrorState extends HomeLayoutStates {}
 
 //crate new post
-class SocialCreateNewPostLoadingState extends HomeLayoutIntialState {}
+class SocialCreateNewPostLoadingState extends HomeLayoutStates {}
 
-class SocialCreateNewPostSuccessState extends HomeLayoutIntialState {}
+class SocialCreateNewPostSuccessState extends HomeLayoutStates {}
 
-class SocialCreateNewPostErrorState extends HomeLayoutIntialState {}
+class SocialCreateNewPostErrorState extends HomeLayoutStates {}
 
 //Uplaod new postImage
 
-class SocialUploadNewPostImageLoadingState extends HomeLayoutIntialState {}
+class SocialUploadNewPostImageLoadingState extends HomeLayoutStates {}
 
-class SocialUploadNewPostImageSuccessState extends HomeLayoutIntialState {}
+class SocialUploadNewPostImageSuccessState extends HomeLayoutStates {}
 
-class SocialUploadNewPostImageErrorState extends HomeLayoutIntialState {}
+class SocialUploadNewPostImageErrorState extends HomeLayoutStates {}
 
 class SocialDeletePostImageState extends HomeLayoutStates {}
 
 //Get Posts
 
-class SocialGetPostsSuccessState extends HomeLayoutIntialState {
+class SocialGetPostsSuccessState extends HomeLayoutStates {
   List<PostModel> posts;
   SocialGetPostsSuccessState({required this.posts});
 }
 
-class SocialGetPostsLoadingState extends HomeLayoutIntialState {}
+class SocialGetPostsLoadingState extends HomeLayoutStates {}
 
-class SocialGetPostsErrorState extends HomeLayoutIntialState {}
+class SocialGetPostsErrorState extends HomeLayoutStates {}
 
 //Like Post
+class LikePostSuccessState extends HomeLayoutStates {}
+class LikePostErrorState extends HomeLayoutStates {}
 
+
+//Dis likes
+class DisLikePostSuccessState extends HomeLayoutStates {}
+class DisLikePostErrorState extends HomeLayoutStates {}
+
+
+// Get Likes
+class GetLikesSuccessState extends HomeLayoutStates {}
+class GetLikesErrorState extends HomeLayoutStates {}
+
+
+//checked liked
 class ChangeLikeState extends HomeLayoutIntialState {}
 
-class LikePostSuccessState extends HomeLayoutIntialState {}
 
-class LikePostErrorState extends HomeLayoutIntialState {}
+

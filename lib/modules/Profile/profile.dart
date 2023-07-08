@@ -2,29 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socialapp/layout/cubit/cubit.dart';
 import 'package:socialapp/layout/cubit/states.dart';
-import 'package:socialapp/modules/home/home.dart';
+import 'package:socialapp/models/user_model.dart';
 import 'package:socialapp/modules/update_profile/update_profile_screen.dart';
 import 'package:socialapp/shared/componenet/component.dart';
 import 'package:socialapp/shared/style/icon_broken.dart';
+import 'package:socialapp/shared/widgets/post_item.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
-
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
+class ProfileScreen extends StatelessWidget {
+  UserModel? model;
+  ProfileScreen({super.key, this.model});
 
   @override
   Widget build(BuildContext context) {
+    if (model?.uId == null ) {
+      model = HomeLayoutCubit.get(context).userModel;
+    }
     return Builder(builder: (context) {
-      var model = HomeLayoutCubit.get(context).userModel;
-
       HomeLayoutCubit.get(context).getUserPosts(userId: model!.uId!);
 
       var cubit = HomeLayoutCubit.get(context);
@@ -53,7 +46,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     topRight: Radius.circular(4)),
                                 image: DecorationImage(
                                     fit: BoxFit.cover,
-                                    image: NetworkImage("${model.cover}")),
+                                    image: NetworkImage("${model!.cover}")),
                               ),
                             ),
                           ),
@@ -62,7 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             radius: 64.0,
                             child: CircleAvatar(
                               radius: 60.0,
-                              backgroundImage: NetworkImage("${model.image}"),
+                              backgroundImage: NetworkImage("${model!.image}"),
                             ),
                           )
                         ],
@@ -72,11 +65,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       height: 4.0,
                     ),
                     Text(
-                      "${model.name}",
+                      "${model!.name}",
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     Text(
-                      "${model.bio}",
+                      "${model!.bio}",
                       style: Theme.of(context).textTheme.caption,
                     ),
                     Padding(
@@ -92,7 +85,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   style: Theme.of(context).textTheme.caption,
                                 ),
                                 Text(
-                                  "100",
+                                  cubit.userPosts.length.toString(),
                                   style: Theme.of(context).textTheme.subtitle1,
                                 ),
                               ],
@@ -156,6 +149,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ],
                       ),
                     ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
                     cubit.userPosts.isEmpty
                         ? const Text("No Posts Yet !")
                         : ListView.separated(
@@ -164,56 +160,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             itemCount: cubit.userPosts.length,
                             separatorBuilder: (context, index) =>
                                 const SizedBox(
-                              height: 8.0,
-                            ),
-                            itemBuilder: (context, index) => Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(children: [
-                                  // CircleAvatar(
-                                  //     radius: 25.0,
-                                  //     backgroundImage: NetworkImage(
-                                  //       "${data['image']}",
-                                  //     )),
-                                  const SizedBox(
-                                    width: 15.0,
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                              cubit.userPosts[index].name!,
-                                              style:
-                                                  const TextStyle(height: 1.4),
-                                            ),
-                                            const SizedBox(
-                                              width: 5.0,
-                                            ),
-                                            const Icon(
-                                              Icons.check_circle,
-                                              size: 16,
-                                              color: Colors.indigo,
-                                            ),
-                                          ],
-                                        ),
-                                        Text(
-                                          cubit.userPosts[index].dateTime!,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall!
-                                              .copyWith(height: 1.4),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ])
-                              ],
-                            ),
-                          ),
+                                  height: 8.0,
+                                ),
+                            itemBuilder: (context, index) =>
+                                PostItem(postModel: cubit.userPosts[index])),
+                    const SizedBox(
+                      height: 5.0,
+                    ),
                   ]))));
         }),
       );

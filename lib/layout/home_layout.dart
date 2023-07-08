@@ -3,11 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socialapp/layout/cubit/cubit.dart';
 import 'package:socialapp/layout/cubit/states.dart';
-import 'package:socialapp/modules/Search/search_screen.dart';
 import 'package:socialapp/modules/add_post/add_post.dart';
-import 'package:socialapp/modules/chats/chat_screen.dart';
-import 'package:socialapp/modules/home/home.dart';
-import 'package:socialapp/modules/Profile/profile.dart';
 import 'package:socialapp/shared/componenet/component.dart';
 import 'package:socialapp/shared/style/icon_broken.dart';
 
@@ -19,6 +15,12 @@ class HomeLayout extends StatefulWidget {
 }
 
 class _HomeLayoutState extends State<HomeLayout> {
+  @override
+  void initState() {
+    HomeLayoutCubit.get(context).getUserData();
+    super.initState();
+  }
+
   final List<CustomNavigationBarItem> navigationBarItem = [
     CustomNavigationBarItem(
       title: const Text("Feeds"),
@@ -50,14 +52,6 @@ class _HomeLayoutState extends State<HomeLayout> {
     "Profile",
   ];
 
-  final List<Widget> screens = [
-    const HomeScreen(),
-    const SearchScreen(),
-    AddPost(),
-    const ChatScreen(),
-    const ProfileScreen(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeLayoutCubit, HomeLayoutStates>(
@@ -75,13 +69,8 @@ class _HomeLayoutState extends State<HomeLayout> {
               titles[cubit.currentIndex],
               style: const TextStyle(color: Colors.black),
             ),
-            // actions: [
-            //   IconButton(
-            //       onPressed: () {}, icon: const Icon(IconBroken.Notification)),
-            //   IconButton(onPressed: () {}, icon: const Icon(IconBroken.Search))
-            // ],
           ),
-          body: screens[cubit.currentIndex],
+          body: cubit.screens[cubit.currentIndex],
           bottomNavigationBar: CustomNavigationBar(
             currentIndex: cubit.currentIndex,
             onTap: (index) => cubit.changeBottomNav(index),

@@ -68,7 +68,7 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\mo
 	android:label
 		ADDED from D:\flutter_projects\LastSocialApp\android\app\src\main\AndroidManifest.xml:4:9-31
 	android:icon
-		ADDED from D:\flutter_projects\LastSocialApp\android\app\src\main\AndroidManifest.xml:6:9-43
+		ADDED from D:\flutter_projects\LastSocialApp\android\app\src\main\AndroidManifest.xml:6:9-45
 	android:usesCleartextTraffic
 		ADDED from D:\flutter_projects\LastSocialApp\android\app\src\debug\AndroidManifest.xml:4:18-53
 	android:name

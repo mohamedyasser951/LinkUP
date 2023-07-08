@@ -10,6 +10,7 @@ import 'package:socialapp/modules/Auth/login_screen/LoginCubit/cubit.dart';
 import 'package:socialapp/modules/Auth/login_screen/login_screen.dart';
 import 'package:socialapp/modules/on_boarding/on_boarding.dart';
 import 'package:socialapp/modules/Auth/register_screen/RegisterCubit/cubit.dart';
+import 'package:socialapp/modules/splash/Splash_Screen.dart';
 import 'package:socialapp/shared/componenet/component.dart';
 import 'package:socialapp/shared/componenet/constant.dart';
 import 'package:socialapp/shared/network/local/shared_helper.dart';
@@ -71,7 +72,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => HomeLayoutCubit()..getUserData()..getLikes()),
+        BlocProvider(create: (context) => HomeLayoutCubit()),
         BlocProvider(create: ((context) => CubitLogin())),
         BlocProvider(create: ((context) => CubitRegister())),
         BlocProvider(
@@ -94,7 +95,7 @@ class MyApp extends StatelessWidget {
                     statusBarIconBrightness: Brightness.light),
                 elevation: 0.0,
                 iconTheme: const IconThemeData(color: Colors.black))),
-        home: startWidget,
+        home: SplashScreen(startWidget: startWidget),
       ),
     );
   }

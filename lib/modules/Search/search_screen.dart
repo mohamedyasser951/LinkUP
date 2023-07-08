@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socialapp/layout/cubit/cubit.dart';
 import 'package:socialapp/layout/cubit/states.dart';
-
 import '../../shared/style/icon_broken.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -66,31 +65,38 @@ class SearchScreen extends StatelessWidget {
                   Expanded(
                       child: ListView.separated(
                           itemBuilder: (context, index) {
-                            return Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 28.0,
-                                  backgroundImage:
-                                      NetworkImage(state.users[index]["image"]),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Text(state.users[index]["name"]),
-                                    const SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      state.users[index]["bio"],
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ],
-                                )
-                              ],
+                            return InkWell(
+                              onTap: () {
+                                // navigateTo(
+                                //     context: context, widget: ProfileScreen(model: state.users[index] as UserModel,));
+                              },
+                              child: Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 28.0,
+                                    backgroundImage: NetworkImage(
+                                        state.users[index]["image"]),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(state.users[index]["name"]),
+                                      const SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        state.users[index]["bio"],
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
                             );
                           },
                           separatorBuilder: (context, index) => const SizedBox(

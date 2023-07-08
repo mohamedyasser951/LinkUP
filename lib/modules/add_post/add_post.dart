@@ -32,12 +32,14 @@ class AddPost extends StatelessWidget {
                 actions: [
                   TextButton(
                       onPressed: () {
-                        if (cubit.postImage != null) {
+                        if (textController.text != "" || cubit.postImage != null) {
+                          if (cubit.postImage != null) {
                           cubit.uplaodPostImage(
                               postText: textController.text, dateTime: timenow);
                         } else {
                           cubit.createNewPost(
                               postText: textController.text, dateTime: timenow);
+                        }
                         }
                       },
                       child: state is SocialCreateNewPostLoadingState
@@ -47,8 +49,7 @@ class AddPost extends StatelessWidget {
             body: SingleChildScrollView(
               child: Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: [
+                  child: Column(children: [
                     if (State is SocialCreateNewPostLoadingState)
                       const Padding(
                         padding: EdgeInsets.all(8.0),
@@ -71,17 +72,16 @@ class AddPost extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height/2.4,
+                      height: MediaQuery.of(context).size.height / 2.4,
                       child: TextFormField(
                         controller: textController,
                         maxLines: 10,
                         decoration: const InputDecoration(
-                      hintText: "What is on your mind....",
-                      border: InputBorder.none,
+                          hintText: "What is on your mind....",
+                          border: InputBorder.none,
                         ),
                       ),
                     ),
-                               
                     if (cubit.postImage != null)
                       Stack(alignment: Alignment.bottomCenter, children: [
                         Align(
